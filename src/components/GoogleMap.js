@@ -14,8 +14,8 @@ const containerStyle = {
 }
 
 const center = {
-  lat: 49.258,
-  lng: -123.194,
+  lat: 49.282729,
+  lng: -123.120738,
 }
 
 const options = {
@@ -25,9 +25,10 @@ const options = {
 
 const libraries = ['places']
 
-const reviewsRef = db.collection('reviews')
 const shopsRef = db.collection('shops')
-const category1Ref = db.collection('drink_categories').doc('1')
+const usersRef = db.collection('users')
+const reviewsRef = db.collection('reviews')
+const categoriesRef = db.collection('drink_categories')
 
 function Map() {
   const { isLoaded, loadError } = useLoadScript({
@@ -35,7 +36,9 @@ function Map() {
     libraries,
   })
 
-  const [shops, setShops] = useState([])
+  const [markers, setMarkers] = useState([])
+  const [reviews, setReviews] = useState([])
+  const [selected, setSelected] = useState(null)
 
   const mapRef = useRef()
 
@@ -45,7 +48,7 @@ function Map() {
 
   const handleSearch = () => {
     reviewsRef
-      .where('drink_category', '==', category1Ref)
+      .where('drink_category', '==', categoriesRef.doc('1'))
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -60,15 +63,28 @@ function Map() {
   useEffect(() => {
     shopsRef
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          if (doc.data().lat && doc.data().lng) {
-            setShops([...shops, { lat: doc.data().lat, lng: doc.data().lng }])
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (doc.data().geocode) {
+            setMarkers((markers) => [
+              ...markers,
+              { ref: doc.ref, ...doc.data() },
+            ])
           }
         })
       })
       .catch((error) => {
         console.log('Error getting shops documents: ', error)
+      })
+    reviewsRef
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          setReviews((reviews) => [...reviews, doc.data()])
+        })
+      })
+      .catch((error) => {
+        console.log('Error getting reviews documents: ', error)
       })
   }, [])
 
@@ -80,7 +96,7 @@ function Map() {
       mapContainerStyle={containerStyle}
       center={center}
       options={options}
-      zoom={10}
+      zoom={11}
       onMapLoad={onMapLoad}
     >
       {/* Child components, such as markers, info windows, etc. */}
@@ -96,13 +112,41 @@ function Map() {
         <button id="search-button" onClick={handleSearch}>
           search
         </button>
-        {shops.map((shop, i) => (
+        {markers.map((marker, i) => (
           <Marker
             key={i}
-            position={{ lat: shop.lat, lng: shop.lng }}
-            onClick={() => console.log('Marker clicked.')}
+            position={{
+              lat: marker.geocode.latitude,
+              lng: marker.geocode.longitude,
+            }}
+            onClick={() => setSelected(marker)}
           />
         ))}
+        {selected ? (
+          <InfoWindow
+            position={{
+              lat: selected.geocode.latitude,
+              lng: selected.geocode.longitude,
+            }}
+            onCloseClick={() => {
+              setSelected(null)
+            }}
+          >
+            <>
+              <h5>{selected.name}</h5>
+              {reviews.map((review, i) => {
+                if (selected.ref.isEqual(review.shop)) {
+                  return (
+                    <div key={i}>
+                      <h6>{review.drink_name}</h6>
+                      <p>{review.comment}</p>
+                    </div>
+                  )
+                }
+              })}
+            </>
+          </InfoWindow>
+        ) : null}
       </>
     </GoogleMap>
   )
