@@ -22,10 +22,6 @@ export default function Home() {
   return (
     <>
       <Map />
-      <form>
-        <input type="text" placeholder="search"></input>
-        <button type="submit">search</button>
-      </form>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
