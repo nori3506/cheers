@@ -7,6 +7,7 @@ import Home from "./Home"
 import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import GuestRoute from "./GuestRoute"
+import Header from "./Header"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <div className="w-100" style={{ maxWidth: "400px" }}>
       <Router>
         <AuthProvider>
+          <Header /> <br />
           <Switch>
             <PrivateRoute exact path="/" component={Home} />
             <GuestRoute path="/signup" component={Signup} />
