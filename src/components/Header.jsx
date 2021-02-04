@@ -8,7 +8,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { useAuth } from '../contexts/AuthContext'
-
+import Logout from './Logout'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,8 @@ const Header = () => {
                   onClick={handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle />
+                {currentUser.email}
+                <AccountCircle />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
@@ -70,8 +72,14 @@ const Header = () => {
                   open={open}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <div className="w-100 text-center mt-2">
+                      <Link to="/update-profile" className="w-100 mt-3">
+                        Profile Update
+                      </Link>
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}><Logout /></MenuItem>
                 </Menu>
               </div>
             )}
