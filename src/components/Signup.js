@@ -22,7 +22,7 @@ export default function Signup() {
     try {
       setError('')
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
+      await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
       history.push('/')
     } catch {
       setError('Failed to sign in')
