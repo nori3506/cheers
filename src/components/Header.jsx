@@ -54,7 +54,7 @@ const Header = () => {
                   onClick={handleMenu}
                   color="inherit"
                 >
-                {currentUser.email}
+                {currentUser.displayName}
                 <AccountCircle />
                 </IconButton>
                 <Menu

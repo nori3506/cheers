@@ -16,6 +16,9 @@ export function AuthProvider({ children }) {
       .then(result => {
         const user = result.user
         if (user) {
+          user.updateProfile({
+            displayName: name
+          })
           const uid = user.uid
           const timestamp = FirebaseTimestamp.now()
           const userInitialData = {
