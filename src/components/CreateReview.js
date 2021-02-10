@@ -3,8 +3,6 @@ import { withRouter } from 'react-router-dom';
 import Map from './GoogleMap'
 
 class CreateReview extends React.Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +21,6 @@ class CreateReview extends React.Component {
       createreview = (
         <div className='create-review-message'>
           Submitted
-        {/* jump to homepage or restaurant */}
         </div>
       );
     } else {
@@ -37,9 +34,6 @@ class CreateReview extends React.Component {
           <input　type='file' accept=".png, .jpg, .jpeg" name="images"/>
           <p>Shop*</p>
           <Map />
-          {/* <input required  name="shopname"/> */}
-           {/* <p>Category</p>
-           <input  name="category"/> */}
           <p>Category*</p>
           <select name="category" required >
           <option value="">--- What kind of drink? ---</option>
