@@ -8,6 +8,8 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import GuestRoute from "./GuestRoute"
 import Header from "./Header"
+import CreateReview from "./CreateReview"
+
 
 function App() {
   return (
@@ -22,11 +24,12 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <GuestRoute path="/signup" component={Signup} />
+            <PrivateRoute path="/createreview" component={CreateReview} />
           </Switch>
         </AuthProvider>
       </Router>
       </div>
-    </Container> 
+    </Container>
   )
 }
 
