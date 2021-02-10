@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {
   GoogleMap,
   useLoadScript,
-  StandaloneSearchBox,
   Marker,
   InfoWindow,
 } from '@react-google-maps/api'
@@ -36,6 +35,7 @@ function Map() {
     libraries,
   })
 
+  const [value, setValue] = useState('')
   const [markers, setMarkers] = useState([])
   const [reviews, setReviews] = useState([])
   const [selected, setSelected] = useState(null)
@@ -46,13 +46,21 @@ function Map() {
     mapRef.current = map
   }, [])
 
-  const handleSearch = () => {
+  const handleChange = (e) => setValue(e.target.value)
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    setReviews([])
+
     reviewsRef
-      .where('drink_category', '==', categoriesRef.doc('1'))
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (
+            doc.data().drink_name.toLowerCase().includes(value.toLowerCase())
+          ) {
+            setReviews((reviews) => [...reviews, doc.data()])
+          }
         })
       })
       .catch((error) => {
@@ -76,6 +84,7 @@ function Map() {
       .catch((error) => {
         console.log('Error getting shops documents: ', error)
       })
+
     reviewsRef
       .get()
       .then((snapshot) => {
@@ -101,17 +110,20 @@ function Map() {
     >
       {/* Child components, such as markers, info windows, etc. */}
       <>
-        <StandaloneSearchBox>
+        <form onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search place or drink"
+            value={value}
+            onChange={handleChange}
             id="search-box"
           />
-        </StandaloneSearchBox>
-        <button id="search-filter">filter</button>
-        <button id="search-button" onClick={handleSearch}>
-          search
-        </button>
+          <button id="search-filter">filter</button>
+          <button id="search-button" type="submit">
+            search
+          </button>
+        </form>
+
         {markers.map((marker, i) => (
           <Marker
             key={i}
