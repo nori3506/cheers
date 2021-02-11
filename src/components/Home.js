@@ -17,8 +17,9 @@ export default function Home() {
               <Map />
               <Card>
                 <Card.Body>
-                  <h2 className="text-center mb-4">Profile</h2>
-                  {currentUser.email}
+                  <h2 className="text-center mb-4">Shop List</h2>
+                  <p><Link to="/">Cactus Club Denman st.</Link></p>
+                  <p><Link to="/">Guu Restaurant</Link> </p>
                 </Card.Body>
               </Card>
               <Link to="/CreateReview">Create Review</Link>
