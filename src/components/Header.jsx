@@ -43,7 +43,7 @@ const Header = () => {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              Cheers!
+              <div className=""><Link to="/" style={{ color: "white" }}>Cheers!</Link></div>
           </Typography>
             {(
               <div>
