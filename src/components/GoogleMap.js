@@ -36,7 +36,7 @@ function Map() {
   })
 
   const [value, setValue] = useState('')
-  const [markers, setMarkers] = useState([])
+  const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [selected, setSelected] = useState(null)
 
@@ -51,7 +51,7 @@ function Map() {
   const handleSearch = (e) => {
     e.preventDefault()
     setReviews([])
-    setMarkers([])
+    setShops([])
 
     reviewsRef
       .get()
@@ -65,8 +65,8 @@ function Map() {
               .data()
               .shop.get()
               .then((shop) => {
-                setMarkers((markers) => [
-                  ...markers,
+                setShops((shops) => [
+                  ...shops,
                   { ref: shop.ref, ...shop.data() },
                 ])
               })
@@ -87,10 +87,7 @@ function Map() {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().geocode) {
-            setMarkers((markers) => [
-              ...markers,
-              { ref: doc.ref, ...doc.data() },
-            ])
+            setShops((shops) => [...shops, { ref: doc.ref, ...doc.data() }])
           }
         })
       })
@@ -114,15 +111,15 @@ function Map() {
   if (!isLoaded) return 'Loading map'
 
   return (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      options={options}
-      zoom={11}
-      onMapLoad={onMapLoad}
-    >
-      {/* Child components, such as markers, info windows, etc. */}
-      <>
+    <>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        options={options}
+        zoom={11}
+        onMapLoad={onMapLoad}
+      >
+        {/* Child components, such as shops, info windows, etc. */}
         <form onSubmit={handleSearch}>
           <input
             type="text"
@@ -136,7 +133,7 @@ function Map() {
           </button>
         </form>
 
-        {markers.map((marker, i) => (
+        {shops.map((marker, i) => (
           <Marker
             key={i}
             position={{
@@ -171,8 +168,16 @@ function Map() {
             </>
           </InfoWindow>
         ) : null}
-      </>
-    </GoogleMap>
+      </GoogleMap>
+      <div>
+        <h1>Shop List</h1>
+        <ul>
+          {shops.map((shop) => (
+            <li key={shop.name}>{shop.name}</li>
+          ))}
+        </ul>
+      </div>
+    </>
   )
 }
 
