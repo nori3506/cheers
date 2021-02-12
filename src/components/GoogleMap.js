@@ -25,9 +25,9 @@ const options = {
 const libraries = ['places']
 
 const shopsRef = db.collection('shops')
-const usersRef = db.collection('users')
+// const usersRef = db.collection('users')
 const reviewsRef = db.collection('reviews')
-const categoriesRef = db.collection('drink_categories')
+// const categoriesRef = db.collection('drink_categories')
 
 function Map() {
   const { isLoaded, loadError } = useLoadScript({
@@ -51,15 +51,28 @@ function Map() {
   const handleSearch = (e) => {
     e.preventDefault()
     setReviews([])
+    setMarkers([])
 
     reviewsRef
       .get()
       .then((snapshot) => {
-        snapshot.forEach((doc) => {
+        snapshot.forEach((review) => {
           if (
-            doc.data().drink_name.toLowerCase().includes(value.toLowerCase())
+            review.data().drink_name.toLowerCase().includes(value.toLowerCase())
           ) {
-            setReviews((reviews) => [...reviews, doc.data()])
+            setReviews((reviews) => [...reviews, review.data()])
+            review
+              .data()
+              .shop.get()
+              .then((shop) => {
+                setMarkers((markers) => [
+                  ...markers,
+                  { ref: shop.ref, ...shop.data() },
+                ])
+              })
+              .catch((error) => {
+                console.log('Error getting shops documents: ', error)
+              })
           }
         })
       })
@@ -118,7 +131,6 @@ function Map() {
             onChange={handleChange}
             id="search-box"
           />
-          <button id="search-filter">filter</button>
           <button id="search-button" type="submit">
             search
           </button>

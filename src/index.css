@@ -41,9 +41,5 @@ button[id^='search'] {
 }
 
 #search-button {
-  top: 9rem;
-}
-
-#search-filter {
   top: 5rem;
 }
