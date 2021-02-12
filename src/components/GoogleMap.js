@@ -9,12 +9,7 @@ import { db } from '../firebase/index'
 
 const containerStyle = {
   width: '100%',
-  height: '600px',
-}
-
-const center = {
-  lat: 49.282729,
-  lng: -123.120738,
+  height: '400px',
 }
 
 const options = {
@@ -22,12 +17,17 @@ const options = {
   zoomControl: true,
 }
 
+const center = {
+  lat: 49.282729,
+  lng: -123.120738,
+}
+
+const zoom = 11
+
 const libraries = ['places']
 
 const shopsRef = db.collection('shops')
-// const usersRef = db.collection('users')
 const reviewsRef = db.collection('reviews')
-// const categoriesRef = db.collection('drink_categories')
 
 function Map() {
   const { isLoaded, loadError } = useLoadScript({
@@ -35,6 +35,16 @@ function Map() {
     libraries,
   })
 
+  const [range, setRange] = useState({
+    min: {
+      lat: center.lat - 180 / Math.pow(2, zoom),
+      lng: center.lng - 360 / Math.pow(2, zoom),
+    },
+    max: {
+      lat: center.lat + 180 / Math.pow(2, zoom),
+      lng: center.lng + 360 / Math.pow(2, zoom),
+    },
+  })
   const [value, setValue] = useState('')
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
@@ -42,12 +52,26 @@ function Map() {
 
   const mapRef = useRef()
 
-  const onMapLoad = useCallback((map) => {
+  const handleLoad = useCallback((map) => {
     mapRef.current = map
   }, [])
-
-  const handleChange = (e) => setValue(e.target.value)
-
+  const handleTextChange = (e) => setValue(e.target.value)
+  const handleRangeChange = () => {
+    if (mapRef.current) {
+      const newCenter = mapRef.current.getCenter().toJSON()
+      const newZoom = mapRef.current.zoom
+      setRange({
+        min: {
+          lat: newCenter.lat - 180 / Math.pow(2, newZoom),
+          lng: newCenter.lng - 360 / Math.pow(2, newZoom),
+        },
+        max: {
+          lat: newCenter.lat + 180 / Math.pow(2, newZoom),
+          lng: newCenter.lng + 360 / Math.pow(2, newZoom),
+        },
+      })
+    }
+  }
   const handleSearch = (e) => {
     e.preventDefault()
     setReviews([])
@@ -112,37 +136,44 @@ function Map() {
 
   return (
     <>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search place or drink"
+          value={value}
+          onChange={handleTextChange}
+        />
+        <button type="submit">search</button>
+      </form>
+
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
         options={options}
-        zoom={11}
-        onMapLoad={onMapLoad}
+        zoom={zoom}
+        onLoad={handleLoad}
+        onCenterChanged={handleRangeChange}
+        onZoomChanged={handleRangeChange}
       >
         {/* Child components, such as shops, info windows, etc. */}
-        <form onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Search place or drink"
-            value={value}
-            onChange={handleChange}
-            id="search-box"
-          />
-          <button id="search-button" type="submit">
-            search
-          </button>
-        </form>
-
-        {shops.map((marker, i) => (
-          <Marker
-            key={i}
-            position={{
-              lat: marker.geocode.latitude,
-              lng: marker.geocode.longitude,
-            }}
-            onClick={() => setSelected(marker)}
-          />
-        ))}
+        {shops.map((shop, i) => {
+          const lat = shop.geocode.latitude
+          const lng = shop.geocode.longitude
+          if (
+            lat >= range.min.lat &&
+            lat <= range.max.lat &&
+            lng >= range.min.lng &&
+            lng <= range.max.lng
+          ) {
+            return (
+              <Marker
+                key={i}
+                position={{ lat, lng }}
+                onClick={() => setSelected(shop)}
+              />
+            )
+          }
+        })}
         {selected ? (
           <InfoWindow
             position={{
@@ -169,12 +200,30 @@ function Map() {
           </InfoWindow>
         ) : null}
       </GoogleMap>
+
       <div>
         <h1>Shop List</h1>
         <ul>
-          {shops.map((shop) => (
-            <li key={shop.name}>{shop.name}</li>
-          ))}
+          {shops.map((shop) => {
+            const lat = shop.geocode.latitude
+            const lng = shop.geocode.longitude
+            if (
+              lat >= range.min.lat &&
+              lat <= range.max.lat &&
+              lng >= range.min.lng &&
+              lng <= range.max.lng
+            ) {
+              return (
+                <li
+                  key={shop.name}
+                  onClick={() => setSelected(shop)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {shop.name}
+                </li>
+              )
+            }
+          })}
         </ul>
       </div>
     </>
