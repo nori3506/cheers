@@ -44,7 +44,7 @@ const Header = () => {
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
               <div className=""><Link to="/" style={{ color: "white" }}>Cheers!</Link></div>
-          </Typography>
+            </Typography>
             {(
               <div>
                 <IconButton
@@ -74,7 +74,7 @@ const Header = () => {
                 >
                   <MenuItem onClick={handleClose}>
                     <div className="w-100 text-center mt-2">
-                      <Link to="/update-profile" className="w-100 mt-3">
+                      <Link to="/profile" className="w-100 mt-3">
                         Profile
                       </Link>
                     </div>
