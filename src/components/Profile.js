@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import axios from 'axios'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { TextInput } from './UIkit'
 import { Link } from 'react-router-dom'
@@ -75,7 +74,7 @@ export default function Profile() {
 
   return (
     <>
-      <img src={photoURL} alt="uploaded" className="w-100" />
+      <img src={photoURL} className="w-100" />
       <input
         type={"file"}
         onChange={ handlePhoto }

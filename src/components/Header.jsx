@@ -44,7 +44,7 @@ const Header = () => {
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
               <div className=""><Link to="/" style={{ color: "white" }}>Cheers!</Link></div>
-          </Typography>
+            </Typography>
             {(
               <div>
                 <IconButton
