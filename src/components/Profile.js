@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
-import { TextInput } from './UIkit'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { db, strage } from '../firebase/index'
