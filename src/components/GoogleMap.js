@@ -6,6 +6,7 @@ import {
   InfoWindow,
 } from '@react-google-maps/api'
 import { db } from '../firebase/index'
+import { Link, useHistory } from 'react-router-dom'
 
 const containerStyle = {
   width: '100%',
@@ -118,7 +119,6 @@ function Map() {
       .catch((error) => {
         console.log('Error getting shops documents: ', error)
       })
-
     reviewsRef
       .get()
       .then((snapshot) => {
@@ -219,7 +219,8 @@ function Map() {
                   onClick={() => setSelected(shop)}
                   style={{ cursor: 'pointer' }}
                 >
-                  {shop.name}
+                {shop.name}
+                <Link to="#">{shop.name}</Link>
                 </li>
               )
             }

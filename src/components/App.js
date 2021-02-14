@@ -28,7 +28,7 @@ function App() {
               <GuestRoute path="/signup" component={Signup} />
                 <PrivateRoute path="/createreview" component={CreateReview} />
                 <PrivateRoute path="/Profile" component={Profile} />
-                <PrivateRoute path="/displayreview" component={DisplayReview} />
+                <PrivateRoute exact path={"/shop/:id"} component={DisplayReview} />
             </Switch>
           </AuthProvider>
         </Router>
