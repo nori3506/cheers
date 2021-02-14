@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute"
 import GuestRoute from "./GuestRoute"
 import Header from "./Header"
 import CreateReview from "./CreateReview"
+import Profile from "./Profile"
 
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <GuestRoute path="/signup" component={Signup} />
-            <PrivateRoute path="/createreview" component={CreateReview} />
+              <PrivateRoute path="/createreview" component={CreateReview} />
+              <PrivateRoute path="/Profile" component={Profile} />
           </Switch>
         </AuthProvider>
       </Router>
