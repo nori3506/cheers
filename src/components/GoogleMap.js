@@ -219,8 +219,9 @@ function Map() {
                   onClick={() => setSelected(shop)}
                   style={{ cursor: 'pointer' }}
                 >
-                {shop.name}
-                <Link to="#">{shop.name}</Link>
+                  <Link to={'shop/' + shop.ref.id} style={{ color: "black" }}>
+                    {shop.name}
+                  </Link>
                 </li>
               )
             }
