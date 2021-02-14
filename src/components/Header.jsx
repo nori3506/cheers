@@ -74,7 +74,7 @@ const Header = () => {
                 >
                   <MenuItem onClick={handleClose}>
                     <div className="w-100 text-center mt-2">
-                      <Link to="/profile" className="w-100 mt-3">
+                      <Link to="/profile" className="w-100 mt-3 black-color">
                         Profile
                       </Link>
                     </div>
