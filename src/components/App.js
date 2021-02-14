@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute"
 import GuestRoute from "./GuestRoute"
 import Header from "./Header"
 import CreateReview from "./CreateReview"
+import DisplayReview from './DisplayReview'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <GuestRoute path="/signup" component={Signup} />
             <PrivateRoute path="/createreview" component={CreateReview} />
+            <PrivateRoute path="/displayreview" component={DisplayReview} />
           </Switch>
         </AuthProvider>
       </Router>
@@ -34,3 +36,5 @@ function App() {
 }
 
 export default App;
+
+
