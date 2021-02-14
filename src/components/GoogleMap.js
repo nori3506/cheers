@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {
   GoogleMap,
   useLoadScript,
-  StandaloneSearchBox,
   Marker,
   InfoWindow,
 } from '@react-google-maps/api'
@@ -10,12 +9,7 @@ import { db } from '../firebase/index'
 
 const containerStyle = {
   width: '100%',
-  height: '600px',
-}
-
-const center = {
-  lat: 49.282729,
-  lng: -123.120738,
+  height: '400px',
 }
 
 const options = {
@@ -23,12 +17,17 @@ const options = {
   zoomControl: true,
 }
 
+const center = {
+  lat: 49.282729,
+  lng: -123.120738,
+}
+
+const zoom = 11
+
 const libraries = ['places']
 
 const shopsRef = db.collection('shops')
-const usersRef = db.collection('users')
 const reviewsRef = db.collection('reviews')
-const categoriesRef = db.collection('drink_categories')
 
 function Map() {
   const { isLoaded, loadError } = useLoadScript({
@@ -36,23 +35,69 @@ function Map() {
     libraries,
   })
 
-  const [markers, setMarkers] = useState([])
+  const [range, setRange] = useState({
+    min: {
+      lat: center.lat - 180 / Math.pow(2, zoom),
+      lng: center.lng - 360 / Math.pow(2, zoom),
+    },
+    max: {
+      lat: center.lat + 180 / Math.pow(2, zoom),
+      lng: center.lng + 360 / Math.pow(2, zoom),
+    },
+  })
+  const [value, setValue] = useState('')
+  const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [selected, setSelected] = useState(null)
 
   const mapRef = useRef()
 
-  const onMapLoad = useCallback((map) => {
+  const handleLoad = useCallback((map) => {
     mapRef.current = map
   }, [])
+  const handleTextChange = (e) => setValue(e.target.value)
+  const handleRangeChange = () => {
+    if (mapRef.current) {
+      const newCenter = mapRef.current.getCenter().toJSON()
+      const newZoom = mapRef.current.zoom
+      setRange({
+        min: {
+          lat: newCenter.lat - 180 / Math.pow(2, newZoom),
+          lng: newCenter.lng - 360 / Math.pow(2, newZoom),
+        },
+        max: {
+          lat: newCenter.lat + 180 / Math.pow(2, newZoom),
+          lng: newCenter.lng + 360 / Math.pow(2, newZoom),
+        },
+      })
+    }
+  }
+  const handleSearch = (e) => {
+    e.preventDefault()
+    setReviews([])
+    setShops([])
 
-  const handleSearch = () => {
     reviewsRef
-      .where('drink_category', '==', categoriesRef.doc('1'))
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+      .then((snapshot) => {
+        snapshot.forEach((review) => {
+          if (
+            review.data().drink_name.toLowerCase().includes(value.toLowerCase())
+          ) {
+            setReviews((reviews) => [...reviews, review.data()])
+            review
+              .data()
+              .shop.get()
+              .then((shop) => {
+                setShops((shops) => [
+                  ...shops,
+                  { ref: shop.ref, ...shop.data() },
+                ])
+              })
+              .catch((error) => {
+                console.log('Error getting shops documents: ', error)
+              })
+          }
         })
       })
       .catch((error) => {
@@ -66,16 +111,14 @@ function Map() {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           if (doc.data().geocode) {
-            setMarkers((markers) => [
-              ...markers,
-              { ref: doc.ref, ...doc.data() },
-            ])
+            setShops((shops) => [...shops, { ref: doc.ref, ...doc.data() }])
           }
         })
       })
       .catch((error) => {
         console.log('Error getting shops documents: ', error)
       })
+
     reviewsRef
       .get()
       .then((snapshot) => {
@@ -92,36 +135,45 @@ function Map() {
   if (!isLoaded) return 'Loading map'
 
   return (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      options={options}
-      zoom={11}
-      onMapLoad={onMapLoad}
-    >
-      {/* Child components, such as markers, info windows, etc. */}
-      <>
-        <StandaloneSearchBox>
-          <input
-            type="text"
-            placeholder="Search place or drink"
-            id="search-box"
-          />
-        </StandaloneSearchBox>
-        <button id="search-filter">filter</button>
-        <button id="search-button" onClick={handleSearch}>
-          search
-        </button>
-        {markers.map((marker, i) => (
-          <Marker
-            key={i}
-            position={{
-              lat: marker.geocode.latitude,
-              lng: marker.geocode.longitude,
-            }}
-            onClick={() => setSelected(marker)}
-          />
-        ))}
+    <>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search place or drink"
+          value={value}
+          onChange={handleTextChange}
+        />
+        <button type="submit">search</button>
+      </form>
+
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        options={options}
+        zoom={zoom}
+        onLoad={handleLoad}
+        onCenterChanged={handleRangeChange}
+        onZoomChanged={handleRangeChange}
+      >
+        {/* Child components, such as shops, info windows, etc. */}
+        {shops.map((shop, i) => {
+          const lat = shop.geocode.latitude
+          const lng = shop.geocode.longitude
+          if (
+            lat >= range.min.lat &&
+            lat <= range.max.lat &&
+            lng >= range.min.lng &&
+            lng <= range.max.lng
+          ) {
+            return (
+              <Marker
+                key={i}
+                position={{ lat, lng }}
+                onClick={() => setSelected(shop)}
+              />
+            )
+          }
+        })}
         {selected ? (
           <InfoWindow
             position={{
@@ -147,8 +199,34 @@ function Map() {
             </>
           </InfoWindow>
         ) : null}
-      </>
-    </GoogleMap>
+      </GoogleMap>
+
+      <div>
+        <h1>Shop List</h1>
+        <ul>
+          {shops.map((shop) => {
+            const lat = shop.geocode.latitude
+            const lng = shop.geocode.longitude
+            if (
+              lat >= range.min.lat &&
+              lat <= range.max.lat &&
+              lng >= range.min.lng &&
+              lng <= range.max.lng
+            ) {
+              return (
+                <li
+                  key={shop.name}
+                  onClick={() => setSelected(shop)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {shop.name}
+                </li>
+              )
+            }
+          })}
+        </ul>
+      </div>
+    </>
   )
 }
 
