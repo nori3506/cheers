@@ -175,6 +175,14 @@ function Map() {
         {shops.map((shop, i) => {
           const lat = shop.geocode.latitude
           const lng = shop.geocode.longitude
+
+          let reviewNum = 0
+          reviews.forEach((review) => {
+            if (review.shop && review.shop.isEqual(shop.ref)) {
+              reviewNum++
+            }
+          })
+
           if (
             lat >= range.min.lat &&
             lat <= range.max.lat &&
@@ -185,6 +193,7 @@ function Map() {
               <Marker
                 key={i}
                 position={{ lat, lng }}
+                label={reviewNum.toString()}
                 onClick={() => setSelected(shop)}
               />
             )
