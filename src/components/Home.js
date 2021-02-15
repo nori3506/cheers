@@ -19,7 +19,7 @@ export default function Home() {
                 <Card.Body>
                 </Card.Body>
               </Card>
-              <Link to="/CreateReview" className="black-color">Create Review</Link>
+              <Link to="/CreateReview" className="blue-color">Create Review</Link>
             </>
           )
         } else {

@@ -52,10 +52,18 @@ a,
 a:hover,
 a:visited
  {
-  color: white;
+  color: black;
   text-decoration: none;
 }
 
 .black-color{
   color: black !important;
+}
+
+.white-color{
+  color: white !important;
+}
+
+.blue-color{
+  color: blue !important;
 }
