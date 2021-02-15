@@ -55,7 +55,7 @@ function Map() {
   const handleLoad = useCallback((map) => {
     mapRef.current = map
   }, [])
-  const handleTextChange = (e) => setValue(e.target.value)
+  const handleTextChange = (e) => setValue(e.target.value.toLowerCase())
   const handleRangeChange = () => {
     if (mapRef.current) {
       const newCenter = mapRef.current.getCenter().toJSON()
@@ -74,30 +74,46 @@ function Map() {
   }
   const handleSearch = (e) => {
     e.preventDefault()
+
     setReviews([])
     setShops([])
+
+    let shopRefs = []
 
     reviewsRef
       .get()
       .then((snapshot) => {
-        snapshot.forEach((review) => {
+        snapshot.forEach((newReview) => {
           if (
-            review.data().drink_name.toLowerCase().includes(value.toLowerCase())
+            newReview.data().drink_name &&
+            newReview.data().drink_name.toLowerCase().includes(value)
           ) {
-            setReviews((reviews) => [...reviews, review.data()])
-            review
-              .data()
-              .shop.get()
-              .then((shop) => {
-                setShops((shops) => [
-                  ...shops,
-                  { ref: shop.ref, ...shop.data() },
-                ])
-              })
-              .catch((error) => {
-                console.log('Error getting shops documents: ', error)
-              })
+            setReviews((reviews) => [...reviews, newReview.data()])
+
+            let duplicated = false
+            shopRefs.forEach((shopRef) => {
+              if (shopRef.isEqual(newReview.data().shop)) {
+                duplicated = true
+              }
+            })
+
+            if (!duplicated) {
+              shopRefs.push(newReview.data().shop)
+            }
           }
+        })
+
+        shopRefs.forEach((shopRef) => {
+          shopRef
+            .get()
+            .then((newShop) => {
+              setShops((shops) => {
+                return [...shops, { ref: newShop.ref, ...newShop.data() }]
+              })
+            })
+            .catch((error) => {
+              console.log('Error getting shops documents: ', error)
+            })
         })
       })
       .catch((error) => {
