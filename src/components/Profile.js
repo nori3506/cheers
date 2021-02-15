@@ -120,7 +120,6 @@ export default function Profile() {
 
     //Age, Gender, Fav Drink Update
     promises.push(db.collection('users').doc(currentUser.uid).get().then((doc) => {
-      console.log(doc.data())
       if (doc.data().age != age) {
         db.collection('users').doc(currentUser.uid).update({age: age})
       }
