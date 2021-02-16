@@ -45,7 +45,7 @@ export default function Profile() {
       setFavDrink(res.data().favDrink)
     })
     
-    strage.ref(currentUser.photoURL).getDownloadURL().then(url => {
+    strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
       setPhotoURL(url)
     })
   },[])
