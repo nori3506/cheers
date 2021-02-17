@@ -9,27 +9,34 @@ import { db } from '../firebase/index'
 class CreateReview extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {value: ''};
+      this.state = {comment: ''};
+      this.state = {drink_name: ''};
       this.state = {
         isSubmitted: false,
       };
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.test = this.test.bind(this);
     }
 
     handleChange(event) {
-      this.setState({value: event.target.value});
+      this.setState({comment: event.target.value});
+    }
+    test(event) {
+      this.setState({drink_name: event.target.value});
     }
 
+
+
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
+        // alert('A name was submitted: ' + this.state.comment);
         this.setState({isSubmitted:true})
         this.props.history.push('/')
         db.collection("reviews").add({
-        comment:this.state.value,
-
-  })
+        comment:this.state.comment,
+        drink_name:this.state.drink_name
+        })
         // event.preventDefault();
       }
 
@@ -46,8 +53,9 @@ class CreateReview extends React.Component {
             <form  onSubmit={()=>{this.handleSubmit()}} >
               <p>Title*</p>
               <input 　required　name="title" value={this.state.value} onChange={this.handleChange}/>
+              {/* delete ↑ */}
               <p>Drink name*</p>
-              <input required name="drink_name" />
+              <input required name="drink_name" onChange={this.test}/>
               <p>images</p>
               <input　type='file' accept=".png, .jpg, .jpeg" name="images"/>
               <p>Shop*</p>
