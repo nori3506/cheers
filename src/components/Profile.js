@@ -31,16 +31,16 @@ export default function Profile() {
     setReviews([])
     const getReviews = reviewsRef.get().then((snapshot) => {
       snapshot.forEach((review) => {
-        if (review.data().user.id.includes(currentUser.uid)) {
+        if (review.data()?.user?.id.includes(currentUser.uid)) {
           setReviews((reviews) => [...reviews, review.data()])
         }
       })
     })
 
     db.collection('users').doc(currentUser.uid).get().then(res => {
-      setAge(res.data().age)
-      setGender(res.data().gender)
-      setFavDrink(res.data().favDrink)
+      setAge(res.data()?.age)
+      setGender(res.data()?.gender)
+      setFavDrink(res.data()?.favDrink)
     })
     
     strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
