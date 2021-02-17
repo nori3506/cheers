@@ -6,8 +6,6 @@ import "firebase/firestore";
 import { db } from '../firebase/index'
 
 
-
-
 class CreateReview extends React.Component {
     constructor(props) {
       super(props);
