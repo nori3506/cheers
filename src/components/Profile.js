@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { Form, Button, Alert, Tabs, Tab, } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { db, strage } from '../firebase/index'
 import { SelectInput, TextInput } from './UIkit';
@@ -25,7 +24,6 @@ export default function Profile() {
   const { currentUser, updatePassword, updateEmail } = useAuth()
   const [error, setError] = useState('')
   const [message,setMessage] = useState('')
-  const history = useHistory()
   const [reviews, setReviews] = useState([])
   
   useEffect(() => {
@@ -33,19 +31,19 @@ export default function Profile() {
     setReviews([])
     const getReviews = reviewsRef.get().then((snapshot) => {
       snapshot.forEach((review) => {
-        if (review.data().user.id.includes(currentUser.uid)) {
+        if (review.data()?.user?.id.includes(currentUser.uid)) {
           setReviews((reviews) => [...reviews, review.data()])
         }
       })
     })
 
     db.collection('users').doc(currentUser.uid).get().then(res => {
-      setAge(res.data().age)
-      setGender(res.data().gender)
-      setFavDrink(res.data().favDrink)
+      setAge(res.data()?.age)
+      setGender(res.data()?.gender)
+      setFavDrink(res.data()?.favDrink)
     })
     
-    strage.ref(currentUser.photoURL).getDownloadURL().then(url => {
+    strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
       setPhotoURL(url)
     })
   },[])
@@ -59,7 +57,6 @@ export default function Profile() {
         [gender, setGender] = useState(""),
         [favDrink, setFavDrink] = useState("");
         
-
   const inputDisplayName = useCallback((event) => {
     setDisplayName(event.target.value)
   }, [setDisplayName]);
@@ -130,7 +127,6 @@ export default function Profile() {
         db.collection('users').doc(currentUser.uid).update({favDrink: favDrink})     
       }
     }))
-
     
     Promise.all(promises).then(() => {
       setMessage('Profile was successfully updated')
@@ -246,11 +242,9 @@ export default function Profile() {
           </Form>
         </Tab>
         <Tab eventKey="reviews" title="Reviews">
-          {reviews && reviews.map((review) => {
+          {reviews && reviews.map((review, i) => {
             return (
-              <>
-                <li>{review.comment}</li>
-              </>
+              <li key={i}>{review.comment}</li>
             )
           })}
         </Tab>
