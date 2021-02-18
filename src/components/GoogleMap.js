@@ -45,17 +45,19 @@ function Map() {
       lng: center.lng + 360 / Math.pow(2, zoom),
     },
   })
-  const [value, setValue] = useState('')
+  const [drink, setDrink] = useState('')
+  const [place, setPlace] = useState('')
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [selected, setSelected] = useState(null)
 
   const mapRef = useRef()
 
-  const handleLoad = useCallback((map) => {
+  const handleLoad = useCallback(map => {
     mapRef.current = map
   }, [])
-  const handleTextChange = (e) => setValue(e.target.value.toLowerCase())
+  const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
+  const handlePlaceChange = e => setPlace(e.target.value.toLowerCase())
   const handleRangeChange = () => {
     if (mapRef.current) {
       const newCenter = mapRef.current.getCenter().toJSON()
@@ -72,7 +74,7 @@ function Map() {
       })
     }
   }
-  const handleSearch = (e) => {
+  const handleSearch = e => {
     e.preventDefault()
 
     setReviews([])
@@ -82,16 +84,18 @@ function Map() {
 
     reviewsRef
       .get()
-      .then((snapshot) => {
-        snapshot.forEach((newReview) => {
+      .then(snapshot => {
+        snapshot.forEach(newReview => {
           if (
+            newReview.data().shop &&
             newReview.data().drink_name &&
-            newReview.data().drink_name.toLowerCase().includes(value)
+            newReview.data().drink_name.toLowerCase().includes(drink)
           ) {
-            setReviews((reviews) => [...reviews, newReview.data()])
+            setReviews(reviews => [...reviews, newReview.data()])
+            console.log('set review')
 
             let duplicated = false
-            shopRefs.forEach((shopRef) => {
+            shopRefs.forEach(shopRef => {
               if (shopRef.isEqual(newReview.data().shop)) {
                 duplicated = true
               }
@@ -103,20 +107,25 @@ function Map() {
           }
         })
 
-        shopRefs.forEach((shopRef) => {
+        shopRefs.forEach(shopRef => {
           shopRef
             .get()
-            .then((newShop) => {
-              setShops((shops) => {
-                return [...shops, { ref: newShop.ref, ...newShop.data() }]
-              })
+            .then(newShop => {
+              if (
+                newShop.data().name &&
+                newShop.data().name.toLowerCase().includes(place)
+              ) {
+                setShops(shops => {
+                  return [...shops, { ref: newShop.ref, ...newShop.data() }]
+                })
+              }
             })
-            .catch((error) => {
+            .catch(error => {
               console.log('Error getting shops documents: ', error)
             })
         })
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Error getting reviews documents: ', error)
       })
   }
@@ -124,25 +133,25 @@ function Map() {
   useEffect(() => {
     shopsRef
       .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
+      .then(snapshot => {
+        snapshot.forEach(doc => {
           if (doc.data().geocode) {
-            setShops((shops) => [...shops, { ref: doc.ref, ...doc.data() }])
+            setShops(shops => [...shops, { ref: doc.ref, ...doc.data() }])
           }
         })
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Error getting shops documents: ', error)
       })
 
     reviewsRef
       .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          setReviews((reviews) => [...reviews, doc.data()])
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          setReviews(reviews => [...reviews, doc.data()])
         })
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Error getting reviews documents: ', error)
       })
   }, [])
@@ -153,12 +162,24 @@ function Map() {
   return (
     <>
       <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search place or drink"
-          value={value}
-          onChange={handleTextChange}
-        />
+        <label>
+          Drink
+          <input
+            type="text"
+            placeholder="Search drink"
+            value={drink}
+            onChange={handleDrinkChange}
+          />
+        </label>
+        <label>
+          Place
+          <input
+            type="text"
+            placeholder="Search place"
+            value={place}
+            onChange={handlePlaceChange}
+          />
+        </label>
         <button type="submit">search</button>
       </form>
 
@@ -177,7 +198,7 @@ function Map() {
           const lng = shop.geocode.longitude
 
           let reviewNum = 0
-          reviews.forEach((review) => {
+          reviews.forEach(review => {
             if (review.shop && review.shop.isEqual(shop.ref)) {
               reviewNum++
             }
@@ -229,7 +250,7 @@ function Map() {
       <div>
         <h1>Shop List</h1>
         <ul>
-          {shops.map((shop) => {
+          {shops.map(shop => {
             const lat = shop.geocode.latitude
             const lng = shop.geocode.longitude
             if (
