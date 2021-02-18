@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
 } from '@react-google-maps/api'
-import { db } from '../firebase/index'
 
 const containerStyle = {
   width: '100%',
@@ -26,14 +25,13 @@ const zoom = 11
 
 const libraries = ['places']
 
-const shopsRef = db.collection('shops')
-const reviewsRef = db.collection('reviews')
-
-function Map() {
+function Map(props) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyDD0yhWzFyyF-ipcWomUf39xmycbnf1zSw',
     libraries,
   })
+
+  const { shops, reviews } = props
 
   const [range, setRange] = useState({
     min: {
@@ -45,10 +43,6 @@ function Map() {
       lng: center.lng + 360 / Math.pow(2, zoom),
     },
   })
-  const [drink, setDrink] = useState('')
-  const [place, setPlace] = useState('')
-  const [shops, setShops] = useState([])
-  const [reviews, setReviews] = useState([])
   const [selected, setSelected] = useState(null)
 
   const mapRef = useRef()
@@ -56,8 +50,7 @@ function Map() {
   const handleLoad = useCallback(map => {
     mapRef.current = map
   }, [])
-  const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
-  const handlePlaceChange = e => setPlace(e.target.value.toLowerCase())
+
   const handleRangeChange = () => {
     if (mapRef.current) {
       const newCenter = mapRef.current.getCenter().toJSON()
@@ -74,115 +67,12 @@ function Map() {
       })
     }
   }
-  const handleSearch = e => {
-    e.preventDefault()
-
-    setReviews([])
-    setShops([])
-
-    let shopRefs = []
-
-    reviewsRef
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(newReview => {
-          if (
-            newReview.data().shop &&
-            newReview.data().drink_name &&
-            newReview.data().drink_name.toLowerCase().includes(drink)
-          ) {
-            setReviews(reviews => [...reviews, newReview.data()])
-            console.log('set review')
-
-            let duplicated = false
-            shopRefs.forEach(shopRef => {
-              if (shopRef.isEqual(newReview.data().shop)) {
-                duplicated = true
-              }
-            })
-
-            if (!duplicated) {
-              shopRefs.push(newReview.data().shop)
-            }
-          }
-        })
-
-        shopRefs.forEach(shopRef => {
-          shopRef
-            .get()
-            .then(newShop => {
-              if (
-                newShop.data().name &&
-                newShop.data().name.toLowerCase().includes(place)
-              ) {
-                setShops(shops => {
-                  return [...shops, { ref: newShop.ref, ...newShop.data() }]
-                })
-              }
-            })
-            .catch(error => {
-              console.log('Error getting shops documents: ', error)
-            })
-        })
-      })
-      .catch(error => {
-        console.log('Error getting reviews documents: ', error)
-      })
-  }
-
-  useEffect(() => {
-    shopsRef
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          if (doc.data().geocode) {
-            setShops(shops => [...shops, { ref: doc.ref, ...doc.data() }])
-          }
-        })
-      })
-      .catch(error => {
-        console.log('Error getting shops documents: ', error)
-      })
-
-    reviewsRef
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          setReviews(reviews => [...reviews, doc.data()])
-        })
-      })
-      .catch(error => {
-        console.log('Error getting reviews documents: ', error)
-      })
-  }, [])
 
   if (loadError) return 'Error loading map'
   if (!isLoaded) return 'Loading map'
 
   return (
     <>
-      <form onSubmit={handleSearch}>
-        <label>
-          Drink
-          <input
-            type="text"
-            placeholder="Search drink"
-            value={drink}
-            onChange={handleDrinkChange}
-          />
-        </label>
-        <label>
-          Place
-          <input
-            type="text"
-            placeholder="Search place"
-            value={place}
-            onChange={handlePlaceChange}
-          />
-        </label>
-        <button type="submit">search</button>
-      </form>
-
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -235,8 +125,10 @@ function Map() {
               {reviews.map((review, i) => {
                 if (selected.ref.isEqual(review.shop)) {
                   return (
-                    <div key={i}>
+                    <div key={review.ref.id}>
                       <h6>{review.drink_name}</h6>
+                      <p>{review.drink_category}</p>
+                      <p>${review.price}</p>
                       <p>{review.comment}</p>
                     </div>
                   )
@@ -261,7 +153,7 @@ function Map() {
             ) {
               return (
                 <li
-                  key={shop.name}
+                  key={shop.ref.id}
                   onClick={() => setSelected(shop)}
                   style={{ cursor: 'pointer' }}
                 >
