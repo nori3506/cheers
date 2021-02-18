@@ -31,7 +31,7 @@ export default function Profile() {
     setReviews([])
     const getReviews = reviewsRef.get().then((snapshot) => {
       snapshot.forEach((review) => {
-        if (review.data()?.user?.id.includes(currentUser.uid)) {
+        if (review.data()?.user?.id?.includes(currentUser.uid)) {
           setReviews((reviews) => [...reviews, review.data()])
         }
       })
