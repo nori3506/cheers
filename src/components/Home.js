@@ -21,31 +21,17 @@ export default function Home() {
   const [placeCategory, setPlaceCategory] = useState('')
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
+  const [disabled, setDisabled] = useState(false)
 
   const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
   const handleDrinkCategoryChange = e => setDrinkCategory(e.target.value)
   const handlePlaceChange = e => setPlace(e.target.value.toLowerCase())
   const handlePlaceCategoryChange = e => setPlaceCategory(e.target.value)
-  const handlePriceMaxChange = e => {
-    const newPriceMax = Number(e.target.value)
-    if (newPriceMax >= priceMin) {
-      setPriceMax(newPriceMax)
-    } else {
-      setPriceMax(newPriceMax)
-      setPriceMin(newPriceMax)
-    }
-  }
-  const handlePriceMinChange = e => {
-    const newPriceMin = Number(e.target.value)
-    if (newPriceMin <= priceMax) {
-      setPriceMax(newPriceMin)
-    } else {
-      setPriceMax(newPriceMin)
-      setPriceMin(newPriceMin)
-    }
-  }
+  const handlePriceMaxChange = e => setPriceMax(Number(e.target.value))
+  const handlePriceMinChange = e => setPriceMin(Number(e.target.value))
   const handleSearch = e => {
     e.preventDefault()
+    setDisabled(true)
     setReviews([])
     setShops([])
     let shopRefs = []
@@ -107,14 +93,17 @@ export default function Home() {
                   { ref: newShop.ref, ...newShop.data() },
                 ])
               }
+              setDisabled(false)
             })
             .catch(error => {
               console.log('Error getting shops documents: ', error)
+              setDisabled(false)
             })
         })
       })
       .catch(error => {
         console.log('Error getting reviews documents: ', error)
+        setDisabled(false)
       })
   }
 
@@ -204,7 +193,9 @@ export default function Home() {
               onChange={handlePriceMinChange}
             />
           </label>
-          <button type="submit">search</button>
+          <button type="submit" disabled={disabled}>
+            search
+          </button>
         </form>
 
         <Map shops={shops} reviews={reviews} />
