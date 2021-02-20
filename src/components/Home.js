@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
+import beerLogo from '../icons/beer.svg';
 
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
@@ -208,7 +209,8 @@ export default function Home() {
         </form>
 
         <Map shops={shops} reviews={reviews} />
-
+        {/* Example how to use SVG file. import first at top */}
+        <img src={beerLogo} alt="React Logo" style={{ width: '30px' }} />
         <Link to="/CreateReview" className="blue-color">
           Create Review
         </Link>
