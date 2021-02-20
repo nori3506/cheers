@@ -30,8 +30,10 @@ export default function Home() {
   const handlePriceMaxChange = e => setPriceMax(Number(e.target.value))
   const handlePriceMinChange = e => setPriceMin(Number(e.target.value))
   const handleSearch = e => {
-    setDisabled(true)
     e.preventDefault()
+    setDisabled(true)
+    setReviews([])
+    setShops([])
 
     let reviewsQuery
     if (drinkCategory) {
@@ -45,7 +47,6 @@ export default function Home() {
         .where('price', '>=', priceMin)
     }
 
-    setReviews([])
     let shopRefs = []
     reviewsQuery
       .get()
@@ -74,7 +75,6 @@ export default function Home() {
 
         if (shopRefs.length === 0) return setDisabled(false)
 
-        setShops([])
         shopRefs.forEach(shopRef => {
           shopRef
             .get()
