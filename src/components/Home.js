@@ -21,7 +21,7 @@ export default function Home() {
   const [placeCategory, setPlaceCategory] = useState('')
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(true)
 
   const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
   const handleDrinkCategoryChange = e => setDrinkCategory(e.target.value)
@@ -30,37 +30,30 @@ export default function Home() {
   const handlePriceMaxChange = e => setPriceMax(Number(e.target.value))
   const handlePriceMinChange = e => setPriceMin(Number(e.target.value))
   const handleSearch = e => {
-    e.preventDefault()
     setDisabled(true)
-    setReviews([])
-    setShops([])
-    let shopRefs = []
+    e.preventDefault()
 
     let reviewsQuery
-    if (drinkCategory && priceMax) {
+    if (drinkCategory) {
       reviewsQuery = reviewsRef
         .where('drink_category', '==', drinkCategory)
-        .where('price', '<=', priceMax)
-        .where('price', '>=', priceMin)
-    } else if (drinkCategory) {
-      reviewsQuery = reviewsRef
-        .where('drink_category', '==', drinkCategory)
-        .where('price', '>=', priceMin)
-    } else if (priceMax) {
-      reviewsQuery = reviewsRef
         .where('price', '<=', priceMax)
         .where('price', '>=', priceMin)
     } else {
-      reviewsQuery = reviewsRef.where('price', '>=', priceMin)
+      reviewsQuery = reviewsRef
+        .where('price', '<=', priceMax)
+        .where('price', '>=', priceMin)
     }
 
+    setReviews([])
+    let shopRefs = []
     reviewsQuery
       .get()
       .then(snapshot => {
         snapshot.forEach(newReview => {
           if (
-            newReview.data().shop &&
-            newReview.data().drink_name &&
+            newReview.data().shop && // this line to be removed once data structure set up
+            newReview.data().drink_name && // this line to be removed once data structure set up
             newReview.data().drink_name.toLowerCase().includes(drink)
           ) {
             setReviews(reviews => [
@@ -79,12 +72,15 @@ export default function Home() {
           }
         })
 
+        if (shopRefs.length === 0) return setDisabled(false)
+
+        setShops([])
         shopRefs.forEach(shopRef => {
           shopRef
             .get()
             .then(newShop => {
               if (
-                newShop.data().name &&
+                newShop.data().name && // this line to be removed once data structure set up
                 newShop.data().name.toLowerCase().includes(place) &&
                 (!placeCategory || newShop.data().category === placeCategory)
               ) {
@@ -108,28 +104,18 @@ export default function Home() {
   }
 
   useEffect(() => {
-    reviewsRef
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          setReviews(reviews => [...reviews, { ref: doc.ref, ...doc.data() }])
-        })
-      })
-      .catch(error => {
-        console.log('Error getting reviews documents: ', error)
+    Promise.all([reviewsRef.get(), shopsRef.get()]).then(results => {
+      results[0].forEach(doc => {
+        setReviews(reviews => [...reviews, { ref: doc.ref, ...doc.data() }])
       })
 
-    shopsRef
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          if (!doc.data().geocode) return
-          setShops(shops => [...shops, { ref: doc.ref, ...doc.data() }])
-        })
+      results[1].forEach(doc => {
+        if (!doc.data().geocode) return // this line to be removed once data structure set up
+        setShops(shops => [...shops, { ref: doc.ref, ...doc.data() }])
       })
-      .catch(error => {
-        console.log('Error getting shops documents: ', error)
-      })
+
+      setDisabled(false)
+    })
   }, [])
 
   if (currentUser) {

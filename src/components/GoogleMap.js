@@ -142,26 +142,30 @@ function Map(props) {
       <div>
         <h1>Shop List</h1>
         <ul>
-          {shops.map(shop => {
-            const lat = shop.geocode.latitude
-            const lng = shop.geocode.longitude
-            if (
-              lat >= range.min.lat &&
-              lat <= range.max.lat &&
-              lng >= range.min.lng &&
-              lng <= range.max.lng
-            ) {
-              return (
-                <li
-                  key={shop.ref.id}
-                  onClick={() => setSelected(shop)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {shop.name}
-                </li>
-              )
-            }
-          })}
+          {shops
+            .filter(shop => {
+              const lat = shop.geocode.latitude
+              const lng = shop.geocode.longitude
+              if (
+                lat >= range.min.lat &&
+                lat <= range.max.lat &&
+                lng >= range.min.lng &&
+                lng <= range.max.lng
+              ) {
+                return true
+              } else {
+                return false
+              }
+            })
+            .map(shop => (
+              <li
+                key={shop.ref.id}
+                onClick={() => setSelected(shop)}
+                style={{ cursor: 'pointer' }}
+              >
+                {shop.name}
+              </li>
+            ))}
         </ul>
       </div>
     </>
