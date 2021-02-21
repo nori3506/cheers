@@ -33,12 +33,12 @@ export default function Profile() {
     setReviews([])
     reviewsRef.get().then((snapshot) => {
       snapshot.forEach((review) => {
-        if (review.data()?.user?.id?.includes(currentUser.uid)) {
-          setReviews((reviews) => [...reviews, review.data()])
+        if (review.data().user.id == currentUser.uid) {
           db.collection('shops').doc(review.data().shop.id).get().then(
             snapshot => {
               const shop = snapshot.data()
-              setShops((shops) => [...shops, shop])
+              setReviews((reviews) => [...reviews, { ref: review.ref, ...review.data(), shop: shop }])
+              // setShops((shops) => [...shops, shop])
             })
         }
       })
@@ -249,7 +249,7 @@ export default function Profile() {
           </Form>
         </Tab>
         <Tab eventKey="reviews" title="Reviews"> 
-          <Reviews reviews={reviews} shops={shops} />
+          <Reviews reviews={reviews} />
         </Tab>
       </Tabs>
     </>
