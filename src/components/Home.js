@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
-import beerLogo from '../icons/beer.svg';
+import beerLogo from '../assets/icons/beer.svg';
 
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
