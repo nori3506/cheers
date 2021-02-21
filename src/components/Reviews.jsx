@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 import { ButtonInput } from './UIkit'
 import { db } from '../firebase/index'
+const reviewsRef = db.collection('reviews')
 
-const Reviews = (props) => {
+const Reviews = () => {
+  const [reviews, setReviews] = useState([])
+  const { currentUser } = useAuth()
+
+  useEffect(() => {
+    reviewsRef.get().then((snapshot) => {
+      snapshot.forEach((review) => {
+        if (review?.data()?.user?.id == currentUser.uid) {
+          db.collection('shops').doc(review.data().shop.id).get().then(
+            snapshot => {
+              const shop = snapshot.data()
+              setReviews((reviews) => [...reviews, { ref: review.ref, ...review.data(), shop: shop }])
+            }
+          )
+        }
+      })
+    })
+  }, [])
+
   
   function handleDelete(review) {
     if (window.confirm('Are you Sure to Delete This Review?')) {
@@ -11,13 +31,15 @@ const Reviews = (props) => {
         snapshot.forEach(doc => {
           if (doc.id === review.ref.id) {
             db.collection('reviews').doc(doc.id).delete();
+            const newReviews = reviews.filter(review => review.ref.id !== doc.id)
+            setReviews(newReviews)
           }
         })
       })
     }
   }
   
-  const reviewItems = props.reviews.map((review, i) => {
+  const reviewItems = reviews.map((review, i) => {
     return (
       <div className="reviews-background reviews-area">
         <h2 className="u-text-small">{review.drink_name} <span className="normal-font-weight">at</span> {review.shop.name}</h2>

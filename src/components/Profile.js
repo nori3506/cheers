@@ -25,25 +25,8 @@ export default function Profile() {
   const { currentUser, updatePassword, updateEmail } = useAuth()
   const [error, setError] = useState('')
   const [message,setMessage] = useState('')
-  const [reviews, setReviews] = useState([])
-  const [shops, setShops] = useState([])
   
   useEffect(() => {
-    const reviewsRef = db.collection('reviews')
-    setReviews([])
-    reviewsRef.get().then((snapshot) => {
-      snapshot.forEach((review) => {
-        if (review.data().user.id == currentUser.uid) {
-          db.collection('shops').doc(review.data().shop.id).get().then(
-            snapshot => {
-              const shop = snapshot.data()
-              setReviews((reviews) => [...reviews, { ref: review.ref, ...review.data(), shop: shop }])
-              // setShops((shops) => [...shops, shop])
-            })
-        }
-      })
-    })
-
     db.collection('users').doc(currentUser.uid).get().then(res => {
       setAge(res.data()?.age)
       setGender(res.data()?.gender)
@@ -249,7 +232,7 @@ export default function Profile() {
           </Form>
         </Tab>
         <Tab eventKey="reviews" title="Reviews"> 
-          <Reviews reviews={reviews} />
+          <Reviews />
         </Tab>
       </Tabs>
     </>
