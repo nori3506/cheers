@@ -29,6 +29,79 @@ export default function Home() {
   const handlePlaceCategoryChange = e => setPlaceCategory(e.target.value)
   const handlePriceMaxChange = e => setPriceMax(Number(e.target.value))
   const handlePriceMinChange = e => setPriceMin(Number(e.target.value))
+  // const handleSearch = e => {
+  //   e.preventDefault()
+  //   setDisabled(true)
+  //   setReviews([])
+  //   setShops([])
+
+  //   let reviewsQuery
+  //   if (drinkCategory) {
+  //     reviewsQuery = reviewsRef
+  //       .where('drink_category', '==', drinkCategory)
+  //       .where('price', '<=', priceMax)
+  //       .where('price', '>=', priceMin)
+  //   } else {
+  //     reviewsQuery = reviewsRef
+  //       .where('price', '<=', priceMax)
+  //       .where('price', '>=', priceMin)
+  //   }
+
+  //   let shopRefs = []
+  //   reviewsQuery
+  //     .get()
+  //     .then(snapshot => {
+  //       snapshot.forEach(newReview => {
+  //         if (
+  //           newReview.data().shop && // this line to be removed once data structure set up
+  //           newReview.data().drink_name && // this line to be removed once data structure set up
+  //           newReview.data().drink_name.toLowerCase().includes(drink)
+  //         ) {
+  //           setReviews(reviews => [
+  //             ...reviews,
+  //             { ref: newReview.ref, ...newReview.data() },
+  //           ])
+  //           let duplicated = false
+  //           shopRefs.forEach(ref => {
+  //             if (ref.isEqual(newReview.data().shop)) {
+  //               duplicated = true
+  //             }
+  //           })
+  //           if (!duplicated) {
+  //             shopRefs.push(newReview.data().shop)
+  //           }
+  //         }
+  //       })
+
+  //       if (shopRefs.length === 0) return setDisabled(false)
+
+  //       shopRefs.forEach(shopRef => {
+  //         shopRef
+  //           .get()
+  //           .then(newShop => {
+  //             if (
+  //               newShop.data().name && // this line to be removed once data structure set up
+  //               newShop.data().name.toLowerCase().includes(place) &&
+  //               (!placeCategory || newShop.data().category === placeCategory)
+  //             ) {
+  //               setShops(shops => [
+  //                 ...shops,
+  //                 { ref: newShop.ref, ...newShop.data() },
+  //               ])
+  //             }
+  //             setDisabled(false)
+  //           })
+  //           .catch(error => {
+  //             console.log('Error getting shops documents: ', error)
+  //             setDisabled(false)
+  //           })
+  //       })
+  //     })
+  //     .catch(error => {
+  //       console.log('Error getting reviews documents: ', error)
+  //       setDisabled(false)
+  //     })
+  // }
   const handleSearch = e => {
     e.preventDefault()
     setDisabled(true)
@@ -47,58 +120,67 @@ export default function Home() {
         .where('price', '>=', priceMin)
     }
 
-    let shopRefs = []
-    reviewsQuery
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(newReview => {
+    let shopsQuery
+    if (placeCategory) {
+      shopsQuery = shopsRef.where('category', '==', placeCategory)
+    } else {
+      shopsQuery = shopsRef
+    }
+
+    let newReviews = []
+    let newShops = []
+
+    Promise.all([reviewsQuery.get(), shopsQuery.get()])
+      .then(snapshots => {
+        snapshots[0].forEach(newReview => {
           if (
             newReview.data().shop && // this line to be removed once data structure set up
             newReview.data().drink_name && // this line to be removed once data structure set up
             newReview.data().drink_name.toLowerCase().includes(drink)
           ) {
-            setReviews(reviews => [
-              ...reviews,
-              { ref: newReview.ref, ...newReview.data() },
-            ])
-            let duplicated = false
-            shopRefs.forEach(ref => {
-              if (ref.isEqual(newReview.data().shop)) {
-                duplicated = true
-              }
-            })
-            if (!duplicated) {
-              shopRefs.push(newReview.data().shop)
-            }
+            newReviews.push({ ref: newReview.ref, ...newReview.data() })
           }
         })
 
-        if (shopRefs.length === 0) return setDisabled(false)
-
-        shopRefs.forEach(shopRef => {
-          shopRef
-            .get()
-            .then(newShop => {
-              if (
-                newShop.data().name && // this line to be removed once data structure set up
-                newShop.data().name.toLowerCase().includes(place) &&
-                (!placeCategory || newShop.data().category === placeCategory)
-              ) {
-                setShops(shops => [
-                  ...shops,
-                  { ref: newShop.ref, ...newShop.data() },
-                ])
-              }
-              setDisabled(false)
-            })
-            .catch(error => {
-              console.log('Error getting shops documents: ', error)
-              setDisabled(false)
-            })
+        snapshots[1].forEach(newShop => {
+          if (
+            newShop.data().name && // this line to be removed once data structure set up
+            newShop.data().name.toLowerCase().includes(place)
+          ) {
+            newShops.push({ ref: newShop.ref, ...newShop.data() })
+          }
         })
+
+        setReviews(
+          newReviews.filter(newReview => {
+            let match = false
+            for (let i = 0; i < newShops.length; i++) {
+              if (newReview.shop.isEqual(newShops[i].ref)) {
+                match = true
+                break
+              }
+            }
+            return match
+          })
+        )
+
+        setShops(
+          newShops.filter(newShop => {
+            let match = false
+            for (let i = 0; i < newReviews.length; i++) {
+              if (newReviews[i].shop.isEqual(newShop.ref)) {
+                match = true
+                break
+              }
+            }
+            return match
+          })
+        )
+
+        setDisabled(false)
       })
       .catch(error => {
-        console.log('Error getting reviews documents: ', error)
+        console.log('Failed to search: ', error)
         setDisabled(false)
       })
   }

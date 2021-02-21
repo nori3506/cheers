@@ -80,6 +80,7 @@ function Map(props) {
               reviewNum++
             }
           })
+          if (reviewNum === 0) return null
 
           return (
             <Marker
@@ -105,18 +106,16 @@ function Map(props) {
           >
             <>
               <h5>{selected.name}</h5>
-              {reviews.map((review, i) => {
-                if (selected.ref.isEqual(review.shop)) {
-                  return (
-                    <div key={review.ref.id}>
-                      <h6>{review.drink_name}</h6>
-                      <p>{review.drink_category}</p>
-                      <p>${review.price}</p>
-                      <p>{review.comment}</p>
-                    </div>
-                  )
-                }
-              })}
+              {reviews
+                .filter(review => selected.ref.isEqual(review.shop))
+                .map((review, i) => (
+                  <div key={review.ref.id}>
+                    <h6>{review.drink_name}</h6>
+                    <p>{review.drink_category}</p>
+                    <p>${review.price}</p>
+                    <p>{review.comment}</p>
+                  </div>
+                ))}
             </>
           </InfoWindow>
         ) : null}
