@@ -9,7 +9,7 @@ import GuestRoute from "./GuestRoute"
 import Header from "./Header"
 import CreateReview from "./CreateReview"
 import Profile from "./Profile"
-import '../App.scss';
+import '../assets/App.scss';
 
 
 function App() {

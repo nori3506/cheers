@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Reviews from './Reviews'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -24,19 +25,8 @@ export default function Profile() {
   const { currentUser, updatePassword, updateEmail } = useAuth()
   const [error, setError] = useState('')
   const [message,setMessage] = useState('')
-  const [reviews, setReviews] = useState([])
   
   useEffect(() => {
-    const reviewsRef = db.collection('reviews')
-    setReviews([])
-    const getReviews = reviewsRef.get().then((snapshot) => {
-      snapshot.forEach((review) => {
-        if (review.data()?.user?.id.includes(currentUser.uid)) {
-          setReviews((reviews) => [...reviews, review.data()])
-        }
-      })
-    })
-
     db.collection('users').doc(currentUser.uid).get().then(res => {
       setAge(res.data()?.age)
       setGender(res.data()?.gender)
@@ -241,12 +231,8 @@ export default function Profile() {
             </Button>
           </Form>
         </Tab>
-        <Tab eventKey="reviews" title="Reviews">
-          {reviews && reviews.map((review, i) => {
-            return (
-              <li key={i}>{review.comment}</li>
-            )
-          })}
+        <Tab eventKey="reviews" title="Reviews"> 
+          <Reviews />
         </Tab>
       </Tabs>
     </>
