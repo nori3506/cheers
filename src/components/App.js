@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute"
 import GuestRoute from "./GuestRoute"
 import Header from "./Header"
 import CreateReview from "./CreateReview"
+import Automap from "./Automap"
 import Profile from "./Profile"
 import '../App.scss';
 
@@ -26,6 +27,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <GuestRoute path="/signup" component={Signup} />
                 <PrivateRoute path="/createreview" component={CreateReview} />
+                <PrivateRoute path="/Automap" component={Automap} />
                 <PrivateRoute path="/Profile" component={Profile} />
             </Switch>
           </AuthProvider>
@@ -36,3 +38,4 @@ function App() {
 }
 
 export default App;
+
