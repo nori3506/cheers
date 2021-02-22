@@ -24,15 +24,27 @@ const Reviews = () => {
     })
   }, [])
 
-  
   function handleDelete(review) {
+    const promises = []
     if (window.confirm('Are you Sure to Delete This Review?')) {
       db.collection('reviews').get().then((snapshot) => {
-        snapshot.forEach(doc => {
-          if (doc.id === review.ref.id) {
-            db.collection('reviews').doc(doc.id).delete();
-            const newReviews = reviews.filter(review => review.ref.id !== doc.id)
-            setReviews(newReviews)
+         snapshot.forEach(doc => {
+           if (doc.id === review.ref.id) {
+             promises.push(db.collection('reviews').doc(doc.id).delete());
+             Promise.all(promises).then(() => {
+              const newReviews = reviews.filter(review => review.ref.id !== doc.id)
+              setReviews(newReviews)
+              const shopDocRef = db.collection('shops').doc(doc.data().shop.id)
+              let query = db.collection('reviews').where("shop", "==", shopDocRef)
+              query.get().then(querySnapshot => {
+                if (querySnapshot.empty) {
+                  shopDocRef.delete()
+                }
+              })
+              .catch(function (error) {
+                console.log("Error getting documents: ", error);
+              })
+            })
           }
         })
       })
