@@ -59,7 +59,7 @@ const Reviews = () => {
         <li>{review.rating}</li>
         <li>{review.drink_category}</li>
         <p>"{review.comment}"</p>
-        <Link to="/" className="blue-color">Edit</Link>
+        <Link to={'/review/edit/' + review.ref.id} className="blue-color">Edit</Link>
         <ButtonInput label={"Delete"} onClick={() =>handleDelete(review)}/>
       </div>
     )
