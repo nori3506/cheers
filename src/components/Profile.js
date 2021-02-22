@@ -103,6 +103,10 @@ export default function Profile() {
       promises.push(currentUser.updateProfile({
         displayName: displayName
       }))
+
+      promises.push(db.collection('users').doc(currentUser.uid).get().then((doc) => {
+        db.collection('users').doc(currentUser.uid).update({name: displayName})
+      }))
     }
 
     //Age, Gender, Fav Drink Update
