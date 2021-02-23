@@ -4,10 +4,12 @@ import Map from './GoogleMap'
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { db } from '../firebase/index'
-import PlacesAutocomplete,{
+import Automap from "./Automap"
+import drinkCategories from '../lib/drinkCategories'
+import PlacesAutocomplete, {
   geocodeByAddress,
-  getLatLng
-} from "react-places-autocomplete"
+  getLatLng,
+} from 'react-places-autocomplete';
 
 
 
@@ -15,30 +17,28 @@ class CreateReview extends React.Component {
   constructor(props) {
     super(props);
     this.state = { drink_name: '' };
-    this.state = { drink_category: '' };
     this.state = { price: '' };
     this.state = { rating: '' };
     this.state = { comment: '' };
     this.state = { image: '' };
+    this.state = {drinkCategory: ''};
     this.state = {
       isSubmitted: false,
     };
+    this.state = { address: '' };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.drink_name = this.drink_name.bind(this);
-    this.drink_category = this.drink_category.bind(this);
     this.price = this.price.bind(this);
     this.rating = this.rating.bind(this);
     this.comment = this.comment.bind(this);
     this.image = this.image.bind(this);
+    this.drinkCategory = this.drinkCategory.bind(this);
   }
 
 
   drink_name(event) {
     this.setState({ drink_name: event.target.value });
-  }
-  drink_category(event) {
-    this.setState({ drink_category: event.target.value });
   }
   price(event) {
     this.setState({ price: event.target.value });
@@ -52,21 +52,37 @@ class CreateReview extends React.Component {
   image(event) {
     this.setState({ image: event.target.value })
   }
+  drinkCategory(event){
+    this.setState({drinkCategory: event.target.value})
+  }
+
+
   handleSubmit(event) {
     this.setState({ isSubmitted: true })
     this.props.history.push('/')
     let user = firebase.auth().currentUser.uid;
     db.collection("reviews").add({
       drink_name: this.state.drink_name,
-      drink_category: this.state.drink_category,
       price: this.state.price,
       rating: this.state.rating,
       comment: this.state.comment,
       image: this.state.comment,
+      drinkcategory: this.state.drinkCategory,
       user: user
     })
     // event.preventDefault();
   }
+
+  handleChange = address => {
+    this.setState({ address });
+  };
+
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
 
 
 
@@ -89,29 +105,54 @@ class CreateReview extends React.Component {
           <p>images</p>
           <input type='file' accept=".png, .jpg, .jpeg" name="images" onChange={this.image} />
           <p>Shop*</p>
-          {/* <Map /> */}
-          <p>Category*</p>
-          <select name="category" required onChange={this.drink_category}>
-            <option value="">--- What kind of drink? ---</option>
-            <option value="drink_categories/1">Beer</option>
-            <option value="drink_categories/2">Wine</option>
-            <option value="drink_categories/3">Whiskey</option>
-            <option value="drink_categories/4">Sake</option>
-            <option value="drink_categories/5">Gin</option>
-            <option value="drink_categories/6">Rum</option>
-            <option value="drink_categories/7">Tequila</option>
-            <option value="drink_categories/8">Vodka</option>
-            <option value="drink_categories/9">Brandy</option>
-            <option value="drink_categories/10">Vermouth</option>
-            <option value="drink_categories/11">Everclear</option>
-            <option value="drink_categories/12">Absinthe</option>
-            <option value="drink_categories/13">Mead</option>
-            <option value="drink_categories/14">A liqueur</option>
-            <option value="drink_categories/15">Ethanol</option>
-            <option value="drink_categories/16">Hard Ciders</option>
-            <option value="drink_categories/17">Non-alcohol</option>
-            <option value="drink_categories/18">Others</option>
-          </select>
+          {/* <Automap /> */}
+          <PlacesAutocomplete
+            value={this.state.address}
+            onChange={this.handleChange}
+            onSelect={this.handleSelect}
+          >
+            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+              <div>
+                <input
+                  {...getInputProps({
+                    placeholder: 'Search Places ...',
+                    className: 'location-search-input',
+                  })}
+                />
+                <div className="autocomplete-dropdown-container">
+                  {loading && <div>Loading...</div>}
+                  {suggestions.map(suggestion => {
+                    const className = suggestion.active
+                      ? 'suggestion-item--active'
+                      : 'suggestion-item';
+                    // inline style for demonstration purpose
+                    const style = suggestion.active
+                      ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                    return (
+                      <div
+                        {...getSuggestionItemProps(suggestion, {
+                          className,
+                          style,
+                        })}
+                      >
+                        <span>{suggestion.description}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+      </PlacesAutocomplete>
+          <p>Drink category*</p>
+            <select  onChange={this.drinkCategory}>
+              <option value="">Select drink category</option>
+              {drinkCategories.map(category => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           <p>Price</p>
           <input onChange={this.price} />
           <p>Rating</p>

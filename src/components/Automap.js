@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom';
 import Map from './GoogleMap'
 import firebase from "firebase/app";
@@ -8,6 +8,7 @@ import PlacesAutocomplete,{
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete"
+
 
 
 
@@ -22,6 +23,7 @@ export default function Automap(){
       setCoordinates(latLng);
     }
 
+
 return(
     <PlacesAutocomplete
       value ={address}
@@ -30,8 +32,8 @@ return(
       >
       {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
       <div>
-        <p>Latitude:{coordinates.lat}</p>
-        <p>Longitude:{coordinates.lng}</p>
+        {/* <p>Latitude:{coordinates.lat}</p>
+        <p>Longitude:{coordinates.lng}</p> */}
 
         <input {...getInputProps({placeholder: "Storename"})}/>
         <div>
