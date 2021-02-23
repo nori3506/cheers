@@ -5,6 +5,7 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api'
+import { Link } from 'react-router-dom'
 
 const containerStyle = {
   width: '100%',
