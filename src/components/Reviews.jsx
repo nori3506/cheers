@@ -24,15 +24,27 @@ const Reviews = () => {
     })
   }, [])
 
-  
   function handleDelete(review) {
+    const promises = []
     if (window.confirm('Are you Sure to Delete This Review?')) {
       db.collection('reviews').get().then((snapshot) => {
-        snapshot.forEach(doc => {
-          if (doc.id === review.ref.id) {
-            db.collection('reviews').doc(doc.id).delete();
-            const newReviews = reviews.filter(review => review.ref.id !== doc.id)
-            setReviews(newReviews)
+         snapshot.forEach(doc => {
+           if (doc.id === review.ref.id) {
+             promises.push(db.collection('reviews').doc(doc.id).delete());
+             Promise.all(promises).then(() => {
+              const newReviews = reviews.filter(review => review.ref.id !== doc.id)
+              setReviews(newReviews)
+              const shopDocRef = db.collection('shops').doc(doc.data().shop.id)
+              let query = db.collection('reviews').where("shop", "==", shopDocRef)
+              query.get().then(querySnapshot => {
+                if (querySnapshot.empty) {
+                  shopDocRef.delete()
+                }
+              })
+              .catch(function (error) {
+                console.log("Error getting documents: ", error);
+              })
+            })
           }
         })
       })
@@ -47,7 +59,7 @@ const Reviews = () => {
         <li>{review.rating}</li>
         <li>{review.drink_category}</li>
         <p>"{review.comment}"</p>
-        <Link to="/" className="blue-color">Edit</Link>
+        <Link to={'/review/edit/' + review.ref.id} className="blue-color">Edit</Link>
         <ButtonInput label={"Delete"} onClick={() =>handleDelete(review)}/>
       </div>
     )
