@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Map from './GoogleMap'
 import firebase from "firebase/app";
 import "firebase/firestore";
-import { db } from '../firebase/index'
+import { db, storage } from '../firebase/index'
 import Automap from "./Automap"
 import drinkCategories from '../lib/drinkCategories'
 import PlacesAutocomplete, {
@@ -77,14 +77,6 @@ class CreateReview extends React.Component {
     this.setState({ address });
   };
 
-  handleSelect = address => {
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error));
-  };
-
-
 
   render() {
 
@@ -105,11 +97,10 @@ class CreateReview extends React.Component {
           <p>images</p>
           <input type='file' accept=".png, .jpg, .jpeg" name="images" onChange={this.image} />
           <p>Shop*</p>
-          {/* <Automap /> */}
           <PlacesAutocomplete
             value={this.state.address}
             onChange={this.handleChange}
-            onSelect={this.handleSelect}
+            onSelect={this.handleChange}
           >
             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
               <div>
