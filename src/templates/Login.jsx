@@ -46,7 +46,7 @@ const Login = () => {
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        New to use? <Link to="/signup">Sign Up</Link>
+        New to use? <Link to="/signup" className="blue-color">Sign Up</Link>
       </div>
     </>
   )

@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
 } from '@react-google-maps/api'
-import { db } from '../firebase/index'
-import { Link, useHistory } from 'react-router-dom'
 
 const containerStyle = {
   width: '100%',
@@ -27,14 +25,13 @@ const zoom = 11
 
 const libraries = ['places']
 
-const shopsRef = db.collection('shops')
-const reviewsRef = db.collection('reviews')
-
-function Map() {
+function Map(props) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyDD0yhWzFyyF-ipcWomUf39xmycbnf1zSw',
     libraries,
   })
+
+  const { shops, reviews } = props
 
   const [range, setRange] = useState({
     min: {
@@ -46,17 +43,14 @@ function Map() {
       lng: center.lng + 360 / Math.pow(2, zoom),
     },
   })
-  const [value, setValue] = useState('')
-  const [shops, setShops] = useState([])
-  const [reviews, setReviews] = useState([])
   const [selected, setSelected] = useState(null)
 
   const mapRef = useRef()
 
-  const handleLoad = useCallback((map) => {
+  const handleLoad = useCallback(map => {
     mapRef.current = map
   }, [])
-  const handleTextChange = (e) => setValue(e.target.value)
+
   const handleRangeChange = () => {
     if (mapRef.current) {
       const newCenter = mapRef.current.getCenter().toJSON()
@@ -73,79 +67,12 @@ function Map() {
       })
     }
   }
-  const handleSearch = (e) => {
-    e.preventDefault()
-    setReviews([])
-    setShops([])
-
-    reviewsRef
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((review) => {
-          if (
-            review.data().drink_name.toLowerCase().includes(value.toLowerCase())
-          ) {
-            setReviews((reviews) => [...reviews, review.data()])
-            review
-              .data()
-              .shop.get()
-              .then((shop) => {
-                setShops((shops) => [
-                  ...shops,
-                  { ref: shop.ref, ...shop.data() },
-                ])
-              })
-              .catch((error) => {
-                console.log('Error getting shops documents: ', error)
-              })
-          }
-        })
-      })
-      .catch((error) => {
-        console.log('Error getting reviews documents: ', error)
-      })
-  }
-
-  useEffect(() => {
-    shopsRef
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          if (doc.data().geocode) {
-            setShops((shops) => [...shops, { ref: doc.ref, ...doc.data() }])
-          }
-        })
-      })
-      .catch((error) => {
-        console.log('Error getting shops documents: ', error)
-      })
-    reviewsRef
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          setReviews((reviews) => [...reviews, doc.data()])
-        })
-      })
-      .catch((error) => {
-        console.log('Error getting reviews documents: ', error)
-      })
-  }, [])
 
   if (loadError) return 'Error loading map'
   if (!isLoaded) return 'Loading map'
 
   return (
     <>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search place or drink"
-          value={value}
-          onChange={handleTextChange}
-        />
-        <button type="submit">search</button>
-      </form>
-
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -159,6 +86,14 @@ function Map() {
         {shops.map((shop, i) => {
           const lat = shop.geocode.latitude
           const lng = shop.geocode.longitude
+
+          let reviewNum = 0
+          reviews.forEach(review => {
+            if (review.shop && review.shop.isEqual(shop.ref)) {
+              reviewNum++
+            }
+          })
+
           if (
             lat >= range.min.lat &&
             lat <= range.max.lat &&
@@ -169,6 +104,7 @@ function Map() {
               <Marker
                 key={i}
                 position={{ lat, lng }}
+                label={reviewNum.toString()}
                 onClick={() => setSelected(shop)}
               />
             )
@@ -189,8 +125,10 @@ function Map() {
               {reviews.map((review, i) => {
                 if (selected.ref.isEqual(review.shop)) {
                   return (
-                    <div key={i}>
+                    <div key={review.ref.id}>
                       <h6>{review.drink_name}</h6>
+                      <p>{review.drink_category}</p>
+                      <p>${review.price}</p>
                       <p>{review.comment}</p>
                     </div>
                   )
@@ -204,7 +142,7 @@ function Map() {
       <div>
         <h1>Shop List</h1>
         <ul>
-          {shops.map((shop) => {
+          {shops.map(shop => {
             const lat = shop.geocode.latitude
             const lng = shop.geocode.longitude
             if (
@@ -215,7 +153,7 @@ function Map() {
             ) {
               return (
                 <li
-                  key={shop.name}
+                  key={shop.ref.id}
                   onClick={() => setSelected(shop)}
                   style={{ cursor: 'pointer' }}
                 >

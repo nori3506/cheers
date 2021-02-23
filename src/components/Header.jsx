@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { strage } from '../firebase/index'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,6 +29,16 @@ const Header = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [photoURL, setPhotoURL] = useState("");
+
+  useEffect(() => {
+    if (currentUser && currentUser.photoURL) {
+      strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
+        setPhotoURL(url)
+      }) 
+    }
+  }, [])
+
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,7 +66,9 @@ const Header = () => {
                   color="inherit"
                 >
                 {currentUser.displayName}
-                <AccountCircle />
+                {photoURL!=="" ? 
+                  <img src={photoURL} style={{ width: "45px" }} /> : <AccountCircle />                    
+                }
                 </IconButton>
                 <Menu
                   id="menu-appbar"
@@ -74,7 +87,7 @@ const Header = () => {
                 >
                   <MenuItem onClick={handleClose}>
                     <div className="w-100 text-center mt-2">
-                      <Link to="/profile" className="w-100 mt-3">
+                      <Link to="/profile" className="w-100 mt-3 black-color">
                         Profile
                       </Link>
                     </div>

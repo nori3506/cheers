@@ -107,7 +107,7 @@ const DisplayReview = () => {
 
     return (
         <div>
-            <p>test this is a comment {data}!</p>
+            <p>this is a comment {data}!</p>
             <p>Hello this is test {data}!</p>
         </div>
     )

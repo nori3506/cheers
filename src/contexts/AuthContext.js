@@ -24,6 +24,9 @@ export function AuthProvider({ children }) {
           const userInitialData = {
             uid: uid,
             name: name,
+            age: "",
+            gender: "",
+            favDrink:"",
             created_at: timestamp,
             updated_at: timestamp,
           }
@@ -38,6 +41,14 @@ export function AuthProvider({ children }) {
 
   function logout() {
     return auth.signOut()
+  }
+
+  function updateEmail(email) {
+    return currentUser.updateEmail(email)
+  }
+
+  function updatePassword(password) {
+    return currentUser.updatePassword(password)
   }
 
   useEffect(() => {
@@ -55,7 +66,9 @@ export function AuthProvider({ children }) {
     currentUser,
     signup,
     login,
-    logout
+    logout,
+    updateEmail,
+    updatePassword
   }
 
   return (

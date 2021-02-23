@@ -27,7 +27,7 @@ const Logout = () => {
 
   return (
     <div className="w-100 text-center mt-2">
-      <Button variant="link" onClick={handleLogout}>
+      <Button variant="link" onClick={handleLogout} className="black-color">
         Log Out
       </Button>
     </div>

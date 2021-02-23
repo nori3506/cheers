@@ -10,7 +10,8 @@ import Header from "./Header"
 import CreateReview from "./CreateReview"
 import DisplayReview from './DisplayReview'
 import Profile from "./Profile"
-import '../App.scss';
+import EditReview from "./EditReview"
+import '../assets/App.scss';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <PrivateRoute path="/createreview" component={CreateReview} />
                 <PrivateRoute path="/Profile" component={Profile} />
                 <PrivateRoute exact path={"/shop/:id"} component={DisplayReview} />
+                <PrivateRoute exact path={"/review/edit/:id"} component={EditReview} />
             </Switch>
           </AuthProvider>
         </Router>
