@@ -10,7 +10,8 @@ import Header from "./Header"
 import CreateReview from "./CreateReview"
 import Automap from "./Automap"
 import Profile from "./Profile"
-import '../App.scss';
+import EditReview from "./EditReview"
+import '../assets/App.scss';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <PrivateRoute path="/createreview" component={CreateReview} />
                 <PrivateRoute path="/Automap" component={Automap} />
                 <PrivateRoute path="/Profile" component={Profile} />
+                <PrivateRoute exact path={"/review/edit/:id"} component={EditReview} />
             </Switch>
           </AuthProvider>
         </Router>
