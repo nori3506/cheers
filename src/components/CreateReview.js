@@ -6,10 +6,7 @@ import "firebase/firestore";
 import { db, storage } from '../firebase/index'
 import Automap from "./Automap"
 import drinkCategories from '../lib/drinkCategories'
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Imageupload from './imageUpload'
 
 class CreateReview extends React.Component {
@@ -25,7 +22,6 @@ class CreateReview extends React.Component {
       isSubmitted: false,
     };
     this.state = { address: '' };
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.drink_name = this.drink_name.bind(this);
     this.price = this.price.bind(this);
@@ -34,7 +30,6 @@ class CreateReview extends React.Component {
     this.image = this.image.bind(this);
     this.drinkCategory = this.drinkCategory.bind(this);
   }
-
 
   drink_name(event) {
     this.setState({ drink_name: event.target.value });
@@ -54,7 +49,6 @@ class CreateReview extends React.Component {
   drinkCategory(event){
     this.setState({drinkCategory: event.target.value})
   }
-
 
   handleSubmit(event) {
     this.setState({ isSubmitted: true })
@@ -78,10 +72,7 @@ class CreateReview extends React.Component {
     this.setState({ address });
   };
 
-
   render() {
-
-
     let createreview
     if (this.state.isSubmitted) {
       createreview = (
@@ -91,7 +82,6 @@ class CreateReview extends React.Component {
       );
     } else {
       createreview = (
-
         <form onSubmit={() => { this.handleSubmit() }} >
           <p>Drink name*</p>
           <input required name="drink_name" onChange={this.drink_name} />
@@ -135,17 +125,17 @@ class CreateReview extends React.Component {
                 </div>
               </div>
             )}
-      </PlacesAutocomplete>
-      <Imageupload　/>
+          </PlacesAutocomplete>
+          <Imageupload　/>
           <p>Drink category*</p>
-            <select  onChange={this.drinkCategory}>
-              <option value="">Select drink category</option>
-              {drinkCategories.map(category => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+          <select  onChange={this.drinkCategory}>
+            <option value="">Select drink category</option>
+            {drinkCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
           <p>Price</p>
           <input onChange={this.price} />
           <p>Rating</p>
@@ -155,7 +145,8 @@ class CreateReview extends React.Component {
           <input
             type='submit'
             value='Submit'
-            style={{ display: "block" }} />
+            style={{ display: "block" }}
+          />
         </form>
       );
     }
@@ -166,4 +157,5 @@ class CreateReview extends React.Component {
     );
   }
 }
+
 export default CreateReview
