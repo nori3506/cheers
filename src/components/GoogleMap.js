@@ -5,6 +5,7 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api'
+import { Link } from 'react-router-dom'
 
 const containerStyle = {
   width: '100%',
@@ -157,7 +158,9 @@ function Map(props) {
                   onClick={() => setSelected(shop)}
                   style={{ cursor: 'pointer' }}
                 >
-                  {shop.name}
+                  <Link to={'shop/' + shop.ref.id} style={{ color: "black" }}>
+                    {shop.name}
+                  </Link>
                 </li>
               )
             }
