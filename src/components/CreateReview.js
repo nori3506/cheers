@@ -10,6 +10,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import Imageupload from './imageUpload'
 
 
 
@@ -94,8 +95,8 @@ class CreateReview extends React.Component {
         <form onSubmit={() => { this.handleSubmit() }} >
           <p>Drink name*</p>
           <input required name="drink_name" onChange={this.drink_name} />
-          <p>images</p>
-          <input type='file' accept=".png, .jpg, .jpeg" name="images" onChange={this.image} />
+          {/* <p>images</p>
+          <input type='file' accept=".png, .jpg, .jpeg" name="images" onChange={this.image} /> */}
           <p>Shop*</p>
           <PlacesAutocomplete
             value={this.state.address}
@@ -135,6 +136,7 @@ class CreateReview extends React.Component {
               </div>
             )}
       </PlacesAutocomplete>
+      <Imageupload　/>
           <p>Drink category*</p>
             <select  onChange={this.drinkCategory}>
               <option value="">Select drink category</option>

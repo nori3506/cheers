@@ -1,58 +1,52 @@
-// import React, { useState } from "react";
-// import firebase, { storage } from "./firebase/firebase";
-// import "./App.css";
-// function Imageupload() {
-//   const [image, setImage] = useState("");
-//   const [imageUrl, setImageUrl] = useState("");
-//   const handleImage = event => {
-//     const image = event.target.files[0];
-//     setImage(image);
-//   };
-//   const onSubmit = event => {
-//     event.preventDefault();
-//     if (image === "") {
-//       console.log("ファイルが選択されていません");
-//     }
-//     // アップロード処理
-//     const uploadTask = storage.ref(`/images/${image.name}`).put(image);
-//     uploadTask.on(
-//       firebase.storage.TaskEvent.STATE_CHANGED,
-//       next,
-//       error,
-//       complete
-//     );
-//   };
-//   const next = snapshot => {
-//     // 進行中のsnapshotを得る
-//     // アップロードの進行度を表示
-//     const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//     console.log(percent + "% done");
-//     console.log(snapshot);
-//   };
-//   const error = error => {
-//     // エラーハンドリング
-//     console.log(error);
-//   };
-//   const complete = () => {
-//     // 完了後の処理
-//     // 画像表示のため、アップロードした画像のURLを取得
-//     storage
-//       .ref("images")
-//       .child(image.name)
-//       .getDownloadURL()
-//       .then(fireBaseUrl => {
-//         setImageUrl(fireBaseUrl);
-//       });
-//   };
-//   return (
-//     <div className="App">
-//       <h1>画像アップロード</h1>
-//       <form onSubmit={onSubmit}>
-//         <input type="file" onChange={handleImage} />
-//         <button>Upload</button>
-//       </form>
-//       <img src={imageUrl} alt="uploaded" />
-//     </div>
-//   );
-// }
-// export default Imageupload
+import React, { useCallback, useState, useEffect } from 'react'
+import { useAuth } from '../contexts/AuthContext'
+import { db, strage } from '../firebase/index'
+import { SelectInput, TextInput } from './UIkit';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Reviews from './Reviews'
+
+
+
+export default function Imageupload() {
+
+  const [photoURL, setPhotoURL] = useState("");
+  const { currentUser, updatePassword, updateEmail } = useAuth()
+  const [message,setMessage] = useState('')
+
+     // Profile Image Update(Indipendent Action from Others)
+  const handlePhoto = (event) => {
+    const image = event.target.files[0];
+    const fullPath = "reviewPhoto/" + currentUser.uid + image.name
+    let storageRef = strage.ref().child(fullPath);
+    storageRef.put(image)
+    //   .then(res => {
+    //     currentUser.updateProfile({
+    //       photoURL: fullPath
+    //     })
+    //     .then(() => {
+    //       strage.ref(currentUser.photoURL).getDownloadURL().then(url => {
+    //         setPhotoURL(url)
+    //         setMessage('Profile Image was successfully updated')
+    //       })
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
+    //   })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  return (
+    <>
+        <p>images</p>
+        <img src={photoURL} className="w-100" />
+        <input type={"file"} onChange={ handlePhoto }/>
+
+    </>
+  )
+}
