@@ -12,8 +12,6 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import Imageupload from './imageUpload'
 
-
-
 class CreateReview extends React.Component {
   constructor(props) {
     super(props);
@@ -61,7 +59,8 @@ class CreateReview extends React.Component {
   handleSubmit(event) {
     this.setState({ isSubmitted: true })
     this.props.history.push('/')
-    let user = firebase.auth().currentUser.uid;
+    let currentUserUid = firebase.auth().currentUser.uid;
+    let userRef = db.collection('users').doc(currentUserUid)
     db.collection("reviews").add({
       drink_name: this.state.drink_name,
       price: this.state.price,
@@ -69,9 +68,10 @@ class CreateReview extends React.Component {
       comment: this.state.comment,
       image: this.state.comment,
       drinkcategory: this.state.drinkCategory,
-      user: user
+      user: userRef
+    }).catch(e =>{
+      console.log(e)
     })
-    // event.preventDefault();
   }
 
   handleChange = address => {
@@ -167,12 +167,3 @@ class CreateReview extends React.Component {
   }
 }
 export default CreateReview
-
-
-
-
-
-
-
-
-
