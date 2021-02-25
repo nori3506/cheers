@@ -25,14 +25,14 @@ export default function Profile() {
   const { currentUser, updatePassword, updateEmail } = useAuth()
   const [error, setError] = useState('')
   const [message,setMessage] = useState('')
-  
+
   useEffect(() => {
     db.collection('users').doc(currentUser.uid).get().then(res => {
       setAge(res.data()?.age)
       setGender(res.data()?.gender)
       setFavDrink(res.data()?.favDrink)
     })
-    
+
     strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
       setPhotoURL(url)
     })
@@ -46,7 +46,7 @@ export default function Profile() {
         [age, setAge] = useState(""),
         [gender, setGender] = useState(""),
         [favDrink, setFavDrink] = useState("");
-        
+
   const inputDisplayName = useCallback((event) => {
     setDisplayName(event.target.value)
   }, [setDisplayName]);
@@ -78,7 +78,7 @@ export default function Profile() {
 
   const updateUserProfile = (e) => {
     e.preventDefault()
-    
+
     if (password !== passwordConfirm) {
       return setError('passwords do not match')
     }
@@ -87,7 +87,7 @@ export default function Profile() {
     setLoading(true)
     setError("")
     setMessage("")
-    
+
     // Email Update
     if(email !== currentUser.email) {
       promises.push(updateEmail(email))
@@ -118,17 +118,17 @@ export default function Profile() {
         db.collection('users').doc(currentUser.uid).update({gender: gender})
       }
       if (doc.data().favDrink != favDrink) {
-        db.collection('users').doc(currentUser.uid).update({favDrink: favDrink})     
+        db.collection('users').doc(currentUser.uid).update({favDrink: favDrink})
       }
     }))
-    
+
     Promise.all(promises).then(() => {
       setMessage('Profile was successfully updated')
     }).catch(() => {
       setError('Failed to update profile')
     }).finally(() => {
       setLoading(false)
-    })    
+    })
   }
 
   // Profile Image Update(Indipendent Action from Others)
@@ -154,7 +154,7 @@ export default function Profile() {
       .catch(error => {
         console.log(error);
       })
-  } 
+  }
 
   return (
     <>
@@ -162,7 +162,7 @@ export default function Profile() {
         <Tab eventKey="profile" title="Profile">
           <Form onSubmit={updateUserProfile}>
             {message && <Alert variant="success">{message}</Alert>}
-            {error && <Alert variant="danger">{error}</Alert>} 
+            {error && <Alert variant="danger">{error}</Alert>}
             <img src={photoURL} className="w-100" />
             <input
               type={"file"}
@@ -170,28 +170,28 @@ export default function Profile() {
             />
             <TextInput
               fullWidth={true} label={"User Name"} multiline={false} required={true}
-              rows={1} value={ displayName } type={"text"} onChange={inputDisplayName} 
+              rows={1} value={ displayName } type={"text"} onChange={inputDisplayName}
             />
-            
+
             <TextInput required
               fullWidth={true} label={"Email"} multiline={false} required={true}
-              rows={1} value={ email } type={"email"} onChange={inputEmail} 
-            /> 
+              rows={1} value={ email } type={"email"} onChange={inputEmail}
+            />
 
             <TextInput
               fullWidth={true} label={"Password"} multiline={false} autoComplete="new-password"
-              rows={1} type={"password"} onChange={inputPassword} 
-            /> 
+              rows={1} type={"password"} onChange={inputPassword}
+            />
 
             <TextInput
               fullWidth={true} label={"Password Confirm"} multiline={false}
-              rows={1} type={"password"} onChange={inputPasswordConfirm} 
-            /> 
+              rows={1} type={"password"} onChange={inputPasswordConfirm}
+            />
 
             <TextInput
               fullWidth={true} label={"Favorite Drink"} multiline={false}
-              rows={1} value={ favDrink } type={"text"} onChange={inputFavDrink} 
-            /> 
+              rows={1} value={ favDrink } type={"text"} onChange={inputFavDrink}
+            />
 
             <FormControl className={classes.formControl}>
               <InputLabel id="demo-simple-select-required-label">Gender</InputLabel>
@@ -235,7 +235,7 @@ export default function Profile() {
             </Button>
           </Form>
         </Tab>
-        <Tab eventKey="reviews" title="Reviews"> 
+        <Tab eventKey="reviews" title="Reviews">
           <Reviews />
         </Tab>
       </Tabs>
