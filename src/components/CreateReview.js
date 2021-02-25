@@ -36,7 +36,7 @@ export default function CreateReview() {
       })
       if (isExistShop) {
         let userRef = db.collection('users').doc(currentUserUid)
-        db.collection("reviews").doc(drinkName).set({
+        db.collection("reviews").doc().set({
           drink_name: drinkName,
           price: price,
           rating: rating,
@@ -49,13 +49,14 @@ export default function CreateReview() {
           console.log(e)
         })
       } else {
-        db.collection('shops').doc(address).set({
+        let randomID = Math.random().toString(32).substring(2)
+        db.collection('shops').doc(randomID).set({
           name: address,
           geocode: formatGeoCode
         })
-        let shopRef = db.collection('shops').doc(address)
+        let shopRef = db.collection('shops').doc(randomID)
         let userRef = db.collection('users').doc(currentUserUid)
-        db.collection("reviews").doc(drinkName).set({
+        db.collection("reviews").doc().set({
           drink_name: drinkName,
           price: price,
           rating: rating,
