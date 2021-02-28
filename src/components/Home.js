@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
-import beerLogo from '../assets/icons/beer.svg';
+import beerLogo from '../assets/icons/beer.svg'
 
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
@@ -30,79 +30,6 @@ export default function Home() {
   const handlePlaceCategoryChange = e => setPlaceCategory(e.target.value)
   const handlePriceMaxChange = e => setPriceMax(Number(e.target.value))
   const handlePriceMinChange = e => setPriceMin(Number(e.target.value))
-  // const handleSearch = e => {
-  //   e.preventDefault()
-  //   setDisabled(true)
-  //   setReviews([])
-  //   setShops([])
-
-  //   let reviewsQuery
-  //   if (drinkCategory) {
-  //     reviewsQuery = reviewsRef
-  //       .where('drink_category', '==', drinkCategory)
-  //       .where('price', '<=', priceMax)
-  //       .where('price', '>=', priceMin)
-  //   } else {
-  //     reviewsQuery = reviewsRef
-  //       .where('price', '<=', priceMax)
-  //       .where('price', '>=', priceMin)
-  //   }
-
-  //   let shopRefs = []
-  //   reviewsQuery
-  //     .get()
-  //     .then(snapshot => {
-  //       snapshot.forEach(newReview => {
-  //         if (
-  //           newReview.data().shop && // this line to be removed once data structure set up
-  //           newReview.data().drink_name && // this line to be removed once data structure set up
-  //           newReview.data().drink_name.toLowerCase().includes(drink)
-  //         ) {
-  //           setReviews(reviews => [
-  //             ...reviews,
-  //             { ref: newReview.ref, ...newReview.data() },
-  //           ])
-  //           let duplicated = false
-  //           shopRefs.forEach(ref => {
-  //             if (ref.isEqual(newReview.data().shop)) {
-  //               duplicated = true
-  //             }
-  //           })
-  //           if (!duplicated) {
-  //             shopRefs.push(newReview.data().shop)
-  //           }
-  //         }
-  //       })
-
-  //       if (shopRefs.length === 0) return setDisabled(false)
-
-  //       shopRefs.forEach(shopRef => {
-  //         shopRef
-  //           .get()
-  //           .then(newShop => {
-  //             if (
-  //               newShop.data().name && // this line to be removed once data structure set up
-  //               newShop.data().name.toLowerCase().includes(place) &&
-  //               (!placeCategory || newShop.data().category === placeCategory)
-  //             ) {
-  //               setShops(shops => [
-  //                 ...shops,
-  //                 { ref: newShop.ref, ...newShop.data() },
-  //               ])
-  //             }
-  //             setDisabled(false)
-  //           })
-  //           .catch(error => {
-  //             console.log('Error getting shops documents: ', error)
-  //             setDisabled(false)
-  //           })
-  //       })
-  //     })
-  //     .catch(error => {
-  //       console.log('Error getting reviews documents: ', error)
-  //       setDisabled(false)
-  //     })
-  // }
   const handleSearch = e => {
     e.preventDefault()
     setDisabled(true)
@@ -187,16 +114,21 @@ export default function Home() {
   }
 
   useEffect(() => {
+    let newReviews = []
+    let newShops = []
+
     Promise.all([reviewsRef.get(), shopsRef.get()]).then(results => {
       results[0].forEach(doc => {
-        setReviews(reviews => [...reviews, { ref: doc.ref, ...doc.data() }])
+        newReviews.push({ ref: doc.ref, ...doc.data() })
       })
 
       results[1].forEach(doc => {
         if (!doc.data().geocode) return // this line to be removed once data structure set up
-        setShops(shops => [...shops, { ref: doc.ref, ...doc.data() }])
+        newShops.push({ ref: doc.ref, ...doc.data() })
       })
 
+      setReviews(newReviews)
+      setShops(newShops)
       setDisabled(false)
     })
   }, [])
