@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { db, storage } from '../firebase/index'
@@ -19,57 +19,69 @@ export default function CreateReview() {
   const [shopName, setShopName] = useState("");
   const [geoCode, setGeoCode] = useState([]);
   const [address, setAddress] = useState("");
+  const history = useHistory()
+
   let currentUserUid = firebase.auth().currentUser.uid;
+
+  function reviewRegisterForExistShop(existShop){
+    let userRef = db.collection('users').doc(currentUserUid)
+    db.collection("reviews").doc().set({
+      drink_name: drinkName,
+      price: price,
+      rating: rating,
+      comment: comment,
+      // image: comment,
+      drink_category: drinkCategory,
+      user: userRef,
+      shop: existShop,
+    })
+      history.push( '/shop/'+existShop.id)
+  }
+
+  function reviewRegisterForNewShop(formatGeoCode) {
+    let randomID = Math.random().toString(32).substring(2)
+    db.collection('shops').doc(randomID).set({
+      name: address,
+      geocode: formatGeoCode
+    })
+    let shopRef = db.collection('shops').doc(randomID)
+    let userRef = db.collection('users').doc(currentUserUid)
+    db.collection("reviews").doc().set({
+      drink_name: drinkName,
+      price: price,
+      rating: rating,
+      comment: comment,
+      drinkcategory: drinkCategory,
+      user: userRef,
+      shop: shopRef,
+    })
+    history.push( '/shop/'+randomID)
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
     let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]));
-    shopsRef.get().then(querySnapshot => {
-      let isExistShop = false
-      let existShop
-      querySnapshot.forEach(shop => {
-        if (formatGeoCode.latitude === shop.data().geocode.latitude &&
-          formatGeoCode.longitude === shop.data().geocode.longitude) {
-          isExistShop = true
-          existShop = shop.ref
+    try {
+      shopsRef.get().then(querySnapshot => {
+        let isExistShop = false
+        let existShop
+        querySnapshot.forEach(shop => {
+          if (formatGeoCode.latitude === shop.data().geocode.latitude &&
+            formatGeoCode.longitude === shop.data().geocode.longitude) {
+            isExistShop = true
+            existShop = shop.ref
+          }
+        })
+        if (isExistShop) {
+          reviewRegisterForExistShop(existShop)
+        } else {
+          reviewRegisterForNewShop(formatGeoCode)
         }
-      })
-      if (isExistShop) {
-        let userRef = db.collection('users').doc(currentUserUid)
-        db.collection("reviews").doc().set({
-          drink_name: drinkName,
-          price: price,
-          rating: rating,
-          comment: comment,
-          // image: comment,
-          drinkcategory: drinkCategory,
-          user: userRef,
-          shop: existShop,
-        }).catch(e =>{
-          console.log(e)
-        })
-      } else {
-        let randomID = Math.random().toString(32).substring(2)
-        db.collection('shops').doc(randomID).set({
-          name: address,
-          geocode: formatGeoCode
-        })
-        let shopRef = db.collection('shops').doc(randomID)
-        let userRef = db.collection('users').doc(currentUserUid)
-        db.collection("reviews").doc().set({
-          drink_name: drinkName,
-          price: price,
-          rating: rating,
-          comment: comment,
-          // image: comment,
-          drinkcategory: drinkCategory,
-          user: userRef,
-          shop: shopRef,
-        }).catch(e =>{
-          console.log(e)
-        })
-      }
-    })
+      })  
+    } catch {
+      console.log(e)
+    }
+    
   }
 
   const inputDrinkName = (event) =>{
