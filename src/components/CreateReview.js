@@ -42,7 +42,7 @@ export default function CreateReview() {
           rating: rating,
           comment: comment,
           // image: comment,
-          drinkcategory: drinkCategory,
+          drink_category: drinkCategory,
           user: userRef,
           shop: existShop,
         }).catch(e =>{
