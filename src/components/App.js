@@ -1,36 +1,34 @@
-import React from "react"
-import Signup from "./Signup"
-import { Container } from "react-bootstrap"
-import { AuthProvider } from "../contexts/AuthContext"
+import React from 'react'
+import Signup from './Signup'
+import { Container } from 'react-bootstrap'
+import { AuthProvider } from '../contexts/AuthContext'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Home from "./Home"
-import PrivateRoute from "./PrivateRoute"
-import GuestRoute from "./GuestRoute"
-import Header from "./Header"
-import CreateReview from "./CreateReview"
+import Home from './Home'
+import PrivateRoute from './PrivateRoute'
+import GuestRoute from './GuestRoute'
+import Header from './Header'
+import CreateReview from './CreateReview'
 import DisplayReview from './DisplayReview'
-import Profile from "./Profile"
-import EditReview from "./EditReview"
-import '../assets/App.scss';
-
+import Profile from './Profile'
+import EditReview from './EditReview'
 
 function App() {
   return (
     <Container
       className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: '100vh' }}
     >
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+      <div className="w-100" style={{ maxWidth: '400px' }}>
         <Router>
           <AuthProvider>
             <Header /> <br />
             <Switch>
               <Route exact path="/" component={Home} />
               <GuestRoute path="/signup" component={Signup} />
-                <PrivateRoute path="/createreview" component={CreateReview} />
-                <PrivateRoute path="/Profile" component={Profile} />
-                <PrivateRoute exact path={"/shop/:id"} component={DisplayReview} />
-                <PrivateRoute exact path={"/review/edit/:id"} component={EditReview} />
+              <PrivateRoute path="/createreview" component={CreateReview} />
+              <PrivateRoute path="/Profile" component={Profile} />
+              <PrivateRoute exact path={'/shop/:id'} component={DisplayReview} />
+              <PrivateRoute exact path={'/review/edit/:id'} component={EditReview} />
             </Switch>
           </AuthProvider>
         </Router>
@@ -39,4 +37,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
