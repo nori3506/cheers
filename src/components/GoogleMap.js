@@ -5,7 +5,6 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api'
-import { Link } from 'react-router-dom'
 
 const containerStyle = {
   width: '100%',
@@ -51,13 +50,15 @@ function Map(props) {
   }
 
   useEffect(() => {
-    const newShopsOnMap = shops.filter(shop =>
-      bounds.contains({
-        lat: shop.geocode.latitude,
-        lng: shop.geocode.longitude,
-      })
-    )
-    setShopsOnMap(newShopsOnMap)
+    if (bounds) {
+      const newShopsOnMap = shops.filter(shop =>
+        bounds.contains({
+          lat: shop.geocode.latitude,
+          lng: shop.geocode.longitude,
+        })
+      )
+      setShopsOnMap(newShopsOnMap)
+    }
   }, [shops, bounds])
 
   if (loadError) return 'Error loading map'

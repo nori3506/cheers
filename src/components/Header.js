@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { strage } from '../firebase/index'
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { useAuth } from '../contexts/AuthContext'
-import Logout from './Logout'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import { useAuth } from '../contexts/AuthContext'
+import { strage } from '../firebase/index'
+import Logout from './Logout'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -22,41 +22,49 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-}));
+}))
 
-const Header = () => {
+export default function Header() {
   const { currentUser } = useAuth()
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const [photoURL, setPhotoURL] = useState("");
+  const classes = useStyles()
+
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [photoURL, setPhotoURL] = useState('')
+
+  const open = Boolean(anchorEl)
 
   useEffect(() => {
     if (currentUser && currentUser.photoURL) {
-      strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
-        setPhotoURL(url)
-      }) 
+      strage
+        .ref(currentUser.photoURL)
+        .getDownloadURL()
+        .then(url => {
+          setPhotoURL(url)
+        })
     }
   }, [])
 
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   return (
-    currentUser &&(
+    currentUser && (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              <div className=""><Link to="/" style={{ color: "white" }}>Cheers!</Link></div>
+              <div className="">
+                <Link to="/" style={{ color: 'white' }}>
+                  Cheers!
+                </Link>
+              </div>
             </Typography>
-            {(
+            {
               <div>
                 <IconButton
                   aria-label="account of current user"
@@ -65,10 +73,12 @@ const Header = () => {
                   onClick={handleMenu}
                   color="inherit"
                 >
-                {currentUser.displayName}
-                {photoURL!=="" ? 
-                  <img src={photoURL} style={{ width: "45px" }} /> : <AccountCircle />                    
-                }
+                  {currentUser.displayName}
+                  {photoURL !== '' ? (
+                    <img src={photoURL} style={{ width: '45px' }} />
+                  ) : (
+                    <AccountCircle />
+                  )}
                 </IconButton>
                 <Menu
                   id="menu-appbar"
@@ -92,15 +102,15 @@ const Header = () => {
                       </Link>
                     </div>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}><Logout /></MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Logout />
+                  </MenuItem>
                 </Menu>
               </div>
-            )}
+            }
           </Toolbar>
         </AppBar>
       </div>
     )
-  );
+  )
 }
-
-export default Header;

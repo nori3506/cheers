@@ -194,7 +194,7 @@ export default function Home() {
               onChange={handlePriceMinChange}
             />
           </label>
-          <button type="submit" disabled={disabled}>
+          <button className="search-buttton" type="submit" disabled={disabled}>
             search
           </button>
         </form>
