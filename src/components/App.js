@@ -18,7 +18,7 @@ function App() {
     <Router>
       <AuthProvider>
         <Header />
-        <Container className="container">
+        <Container>
           <Switch>
             <Route exact path="/" component={Home} />
             <GuestRoute path="/signup" component={Signup} />

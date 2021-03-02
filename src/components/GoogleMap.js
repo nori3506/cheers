@@ -1,10 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from '@react-google-maps/api'
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 
 const containerStyle = {
   width: '100%',
@@ -124,14 +119,9 @@ function Map(props) {
       </GoogleMap>
 
       <div>
-        <h1>Shop List</h1>
         <ul>
           {shopsOnMap.map(shop => (
-            <li
-              key={shop.ref.id}
-              onClick={() => setSelected(shop)}
-              style={{ cursor: 'pointer' }}
-            >
+            <li key={shop.ref.id} onClick={() => setSelected(shop)} style={{ cursor: 'pointer' }}>
               {shop.name}
             </li>
           ))}

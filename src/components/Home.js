@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import Map from './GoogleMap'
 import Login from '../templates/Login'
-import { Link } from 'react-router-dom'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
-import beerLogo from '../assets/icons/beer.svg'
 
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
@@ -43,9 +41,7 @@ export default function Home() {
         .where('price', '<=', priceMax)
         .where('price', '>=', priceMin)
     } else {
-      reviewsQuery = reviewsRef
-        .where('price', '<=', priceMax)
-        .where('price', '>=', priceMin)
+      reviewsQuery = reviewsRef.where('price', '<=', priceMax).where('price', '>=', priceMin)
     }
 
     let shopsQuery
@@ -188,11 +184,7 @@ export default function Home() {
           </label>
           <label>
             Price min
-            <input
-              type="number"
-              value={priceMin}
-              onChange={handlePriceMinChange}
-            />
+            <input type="number" value={priceMin} onChange={handlePriceMinChange} />
           </label>
           <button className="search-buttton" type="submit" disabled={disabled}>
             search
@@ -200,11 +192,6 @@ export default function Home() {
         </form>
 
         <Map shops={shops} reviews={reviews} />
-        {/* Example how to use SVG file. import first at top */}
-        <img src={beerLogo} alt="React Logo" style={{ width: '30px' }} />
-        <Link to="/CreateReview" className="blue-color">
-          Create Review
-        </Link>
       </>
     )
   } else {
