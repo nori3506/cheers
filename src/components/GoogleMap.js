@@ -101,19 +101,19 @@ function Map(props) {
               setSelected(null)
             }}
           >
-            <>
+            <div className="info-window">
               <h5>{selected.name}</h5>
               {reviews
                 .filter(review => selected.ref.isEqual(review.shop))
                 .map((review, i) => (
                   <div key={review.ref.id}>
-                    <h6>{review.drink_name}</h6>
+                    <h2>{review.drink_name}</h2>
                     <p>{review.drink_category}</p>
                     <p>${review.price}</p>
                     <p>{review.comment}</p>
                   </div>
                 ))}
-            </>
+            </div>
           </InfoWindow>
         ) : null}
       </GoogleMap>
