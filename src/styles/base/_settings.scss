@@ -1,16 +1,11 @@
-// Below is just examples, to be modified
-
 // Colors
-$main-color: hotpink;
-// Font Size
-$font-size-small: 0.75rem;
-$font-size-medium: 1rem;
-$font-size-large: 2rem;
-// Spacing
-$xs-size: 0.5rem;
-$s-size: 1rem;
-$m-size: 1.75rem;
-$l-size: 2.75rem;
-$xl-size: 4rem;
+$main-color: #3d1600;
+$accent-color: #de9e48;
+
+// Breakpoints
 $tablet-breakpoint: 600px;
-$desktop-breakpoint: 1080px;
+$pc-breakpoint: 960px;
+
+// Header & Footer Height
+$header-height: 56px;
+$footer-height: 84px;
