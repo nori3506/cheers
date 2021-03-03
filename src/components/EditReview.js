@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useCallback } from 'react'
-import { db, strage } from '../firebase/index'
+import { db, storage } from '../firebase/index'
 import { useAuth } from '../contexts/AuthContext'
 import { Form, Button, Alert, Tabs, Tab, } from 'react-bootstrap'
 import { SelectInput, TextInput } from './UIkit';
@@ -30,7 +30,7 @@ export default function EditReview() {
       setComment(doc.data().comment)
     })
 
-    strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
+    storage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
       setPhotoURL(url)
     })
   }, [])
@@ -112,14 +112,14 @@ export default function EditReview() {
   const handlePhoto = (event) => {
     const image = event.target.files[0];
     const fullPath = "reviewPhoto/" + currentUser.uid + image.name
-    let storageRef = strage.ref().child(fullPath);
+    let storageRef = storage.ref().child(fullPath);
     storageRef.put(image)
       .then(res => {
         currentUser.updateProfile({
           photoURL: fullPath
         })
         .then(() => {
-          strage.ref(currentUser.photoURL).getDownloadURL().then(url => {
+          storage.ref(currentUser.photoURL).getDownloadURL().then(url => {
             setPhotoURL(url)
             setMessage('Profile Image was successfully updated')
           })

@@ -19,7 +19,11 @@ export default function CreateReview() {
   const [shopName, setShopName] = useState("");
   const [geoCode, setGeoCode] = useState([]);
   const [address, setAddress] = useState("");
-  const history = useHistory()
+  const [image, setImage] = useState("");
+  const [preview, setPreview] = useState("")
+  const [photoURL, setPhotoURL] = useState("");
+  const [message, setMessage] = useState('');
+  const history = useHistory();
 
   let currentUserUid = firebase.auth().currentUser.uid;
 
@@ -59,6 +63,29 @@ export default function CreateReview() {
   }
 
   function handleSubmit(e) {
+    
+    const randomPhotoId = Math.random().toString(32).substring(2)
+    const image = e.target.files[0];
+    const fullPath = "reviewPhoto/" + randomPhotoId + image.name
+    let storageRef = storage.ref().child(fullPath);
+    storageRef.put(image)
+    //   .then(res => {
+    //     currentUser.updateProfile({
+    //       photoURL: fullPath
+    //     })
+    //     .then(() => {
+    //       storage.ref(currentUser.photoURL).getDownloadURL().then(url => {
+    //         setPhotoURL(url)
+    //         setMessage('Profile Image was successfully updated')
+    //       })
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
+    //   })
+      .catch(error => {
+        console.log(error);
+      })
     e.preventDefault()
     let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]));
     try {
@@ -92,6 +119,10 @@ export default function CreateReview() {
     setComment(event.target.value)
   }
 
+  const inputImage = (event) => {
+    setImage(event.target.files[0])
+  }
+
   const inputDrinkCategory = (event) =>{
     setDrinkCategory(event.target.value)
   }
@@ -115,6 +146,12 @@ export default function CreateReview() {
       })
       .catch(error => console.error('Error', error));
   };
+
+  const handleImageChange = event => {
+    const { files } = event.target;
+    setImage(event.target.files[0])
+    setPreview(window.URL.createObjectURL(files[0]));
+  }
 
   return (
     <>
@@ -162,7 +199,7 @@ export default function CreateReview() {
             </div>
           )}
         </PlacesAutocomplete>
-        <Imageupload　/>
+        <Imageupload onChange={ handleImageChange } photoURL={preview} />
         <p>Drink category*</p>
         <select  onChange={inputDrinkCategory}>
           <option value="">Select drink category</option>

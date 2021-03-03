@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { strage } from '../firebase/index'
+import { storage } from '../firebase/index'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -33,7 +33,7 @@ const Header = () => {
 
   useEffect(() => {
     if (currentUser && currentUser.photoURL) {
-      strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
+      storage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
         setPhotoURL(url)
       }) 
     }
