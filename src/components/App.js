@@ -1,6 +1,5 @@
 import React from 'react'
 import Signup from './Signup'
-import { Container } from 'react-bootstrap'
 import { AuthProvider } from '../contexts/AuthContext'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
@@ -18,7 +17,7 @@ function App() {
     <Router>
       <AuthProvider>
         <Header />
-        <Container>
+        <div className="container wrapper">
           <Switch>
             <Route exact path="/" component={Home} />
             <GuestRoute path="/signup" component={Signup} />
@@ -27,7 +26,7 @@ function App() {
             <PrivateRoute exact path={'/shop/:id'} component={DisplayReview} />
             <PrivateRoute exact path={'/review/edit/:id'} component={EditReview} />
           </Switch>
-        </Container>
+        </div>
         <Footer />
       </AuthProvider>
     </Router>

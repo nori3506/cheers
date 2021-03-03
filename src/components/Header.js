@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { strage } from '../firebase/index'
 import backArrowIcon from '../assets/icons/back-arrow.svg'
 
-export default function Header(props) {
-  // fetch user profile image (currently not used) ========== //
+export default function Header({ title }) {
+  // Fetch user profile image (currently not used) ========== //
   const { currentUser } = useAuth()
 
-  const [photoURL, setPhotoURL] = useState('')
+  const [photoURL, setPhotoURL] = useState('hey')
 
   useEffect(() => {
     if (currentUser && currentUser.photoURL) {
@@ -23,6 +23,22 @@ export default function Header(props) {
   // ======================================================== //
 
   let history = useHistory()
+  let location = useLocation()
+  let pageTitle
+
+  switch (location.pathname) {
+    case '/':
+      pageTitle = 'Home'
+      break
+    case '/CreateReview':
+      pageTitle = 'New Review'
+      break
+    case '/profile':
+      pageTitle = 'Profile'
+      break
+    default:
+      pageTitle = ''
+  }
 
   return (
     currentUser && (
@@ -36,7 +52,7 @@ export default function Header(props) {
               onClick={() => history.goBack()}
             />
           </Link>
-          <h1 className="header__title">page name</h1>
+          <h1 className="header__title">{pageTitle}</h1>
         </div>
       </header>
     )

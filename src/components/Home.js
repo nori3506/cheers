@@ -9,7 +9,7 @@ import placeCategories from '../lib/placeCategories'
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
 
-export default function Home() {
+export default function Home({ title, setTitle }) {
   const { currentUser } = useAuth()
 
   const [drink, setDrink] = useState('')
@@ -127,6 +127,10 @@ export default function Home() {
       setShops(newShops)
       setDisabled(false)
     })
+  }, [])
+
+  useEffect(() => {
+    console.log(title)
   }, [])
 
   if (currentUser) {
