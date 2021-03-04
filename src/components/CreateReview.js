@@ -16,23 +16,24 @@ export default function CreateReview() {
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("");
   const [drinkCategory, setDrinkCategory] = useState("");
-  const [shopName, setShopName] = useState("");
   const [geoCode, setGeoCode] = useState([]);
   const [address, setAddress] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("")
-  const [photoURL, setPhotoURL] = useState("");
   const [message, setMessage] = useState('');
   const history = useHistory();
 
   let currentUserUid = firebase.auth().currentUser.uid;
+  let fullPath = "";
 
   function reviewRegisterForExistShop(existShop){
     let userRef = db.collection('users').doc(currentUserUid)
     const randomPhotoId = Math.random().toString(32).substring(2)
-    const fullPath = "reviewPhoto/" + randomPhotoId + image.name
-    let storageRef = storage.ref().child(fullPath);
-    storageRef.put(image)
+    if (image !== null) {
+      fullPath = "reviewPhoto/" + randomPhotoId + image.name;
+      let storageRef = storage.ref().child(fullPath);
+      storageRef.put(image)
+    }
     
     db.collection("reviews").doc().set({
       drink_name: drinkName,
@@ -44,22 +45,23 @@ export default function CreateReview() {
       shop: existShop,
       fullPath: fullPath,
     })
-      history.push( '/shop/'+existShop.id)
+    history.push( '/shop/'+existShop.id)
   }
 
   function reviewRegisterForNewShop(formatGeoCode) {
     let randomID = Math.random().toString(32).substring(2)
+    const randomPhotoId = Math.random().toString(32).substring(2)
+    if (image !== null) {
+      fullPath = "reviewPhoto/" + randomPhotoId + image.name;
+      let storageRef = storage.ref().child(fullPath);
+      storageRef.put(image)
+    }
     db.collection('shops').doc(randomID).set({
       name: address,
       geocode: formatGeoCode
     })
     let shopRef = db.collection('shops').doc(randomID)
     let userRef = db.collection('users').doc(currentUserUid)
-    const randomPhotoId = Math.random().toString(32).substring(2)
-    const fullPath = "reviewPhoto/" + randomPhotoId + image.name
-    let storageRef = storage.ref().child(fullPath);
-    storageRef.put(image)
-
     db.collection("reviews").doc().set({
       drink_name: drinkName,
       price: price,
