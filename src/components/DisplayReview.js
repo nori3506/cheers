@@ -24,7 +24,7 @@ const DisplayReview = () => {
               userRef.doc(review.data().user.id)
               .get()
               .then(snapshot => {           
-                setReviews((reviews) => [...reviews, { ...review.data(), shop: shop.data(), user: snapshot }])
+                setReviews((reviews) => [...reviews, { ...review.data(), shop: shop.data(), user: snapshot, ref: review.ref }])
               }).catch(function(error) {
                  console.log("Error getting document:", error);
               });										 
@@ -56,7 +56,7 @@ const DisplayReview = () => {
           if (currentUser.uid == review.user.id) {
             return (
               <>
-                <Link to={'/review/edit/' + review.id} className="blue-color">Edit</Link>
+                <Link to={'/review/edit/' + review.ref.id} className="blue-color">Edit</Link>
                 <ButtonInput label={"Delete"} onClick={() => handleDelete(review)} />
               </>
             )
