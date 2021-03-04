@@ -1,7 +1,6 @@
 import React, { useState, useEffect,useCallback } from 'react'
-import { db, strage } from '../firebase/index'
-import { useAuth } from '../contexts/AuthContext'
-import { Form, Button, Alert, Tabs, Tab, } from 'react-bootstrap'
+import { db, storage } from '../firebase/index'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { SelectInput, TextInput } from './UIkit';
 import drinkCategories from '../lib/drinkCategories'
 
@@ -13,37 +12,26 @@ export default function EditReview() {
   const [rating, setRating] = useState()
   const [comment, setComment] = useState("")
   const [photoURL, setPhotoURL] = useState("");
-  const { currentUser, updatePassword, updateEmail } = useAuth()
+  const [image, setImage] = useState(null);
   let review_id = window.location.pathname.split('/review/edit/', 2)[1]
   const [error, setError] = useState('')
   const [message,setMessage] = useState('')
-  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const reviewRef = db.collection('reviews').doc(review_id)
     reviewRef.get().then(doc => {
+      const imageFulPath = doc.data().fullPath;
       setReview(doc.data())
       setDrinkName(doc.data().drink_name)
       setDrinkCategory(doc.data().drinkcategory)
       setPrice(doc.data().price)
       setRating(doc.data().rating)
       setComment(doc.data().comment)
-    })
-
-    strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
-      setPhotoURL(url)
+      storage.ref(imageFulPath)?.getDownloadURL().then(url => {
+        setPhotoURL(url)
+      })
     })
   }, [])
-
-
-  // const aaa = () => {
-  //   console.log("hoge")
-  // }
-  // const updateReview = () => {
-  //   console.log("hogehoge")
-  // }
-
-
 
   const inputDrinkName = useCallback((event) => {
     setDrinkName(event.target.value)
@@ -65,22 +53,29 @@ export default function EditReview() {
     setComment(event.target.value)
   }, [setComment]);
 
-
-
-
-
   const updateReview = (e) => {
     e.preventDefault()
-
-
+    if (image !== null) {
+      let randomID = Math.random().toString(32).substring(2)
+      const fullPath = "reviewPhoto/" + randomID + image.name
+      let storageRef = storage.ref().child(fullPath);
+      storageRef.put(image)
+        .then(res => {
+          db.collection('reviews').doc(review_id).update({fullPath: fullPath})
+          .catch(error => {
+              console.log(error);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        })  
+    }
     const promises = []
-    setLoading(true)
     setError("")
     setMessage("")
 
-  //drink name,category price etc,,,
+    //drink name,category price etc,,,
     promises.push(db.collection('reviews').doc(review_id).get().then((doc) => {
-
       if (doc.data().drink_name != drinkName) {
         db.collection('reviews').doc(review_id).update({drink_name: drinkName})
       }
@@ -102,41 +97,20 @@ export default function EditReview() {
       setMessage('Review was successfully updated')
     }).catch(() => {
       setError('Failed to update review')
-    }).finally(() => {
-      setLoading(false)
     })
+   }
 
-
+  const handleImageChange = event => {
+    const { files } = event.target;
+    setImage(event.target.files[0])
+    setPhotoURL(window.URL.createObjectURL(files[0]));
   }
-
-  const handlePhoto = (event) => {
-    const image = event.target.files[0];
-    const fullPath = "reviewPhoto/" + currentUser.uid + image.name
-    let storageRef = strage.ref().child(fullPath);
-    storageRef.put(image)
-      .then(res => {
-        currentUser.updateProfile({
-          photoURL: fullPath
-        })
-        .then(() => {
-          strage.ref(currentUser.photoURL).getDownloadURL().then(url => {
-            setPhotoURL(url)
-            setMessage('Profile Image was successfully updated')
-          })
-        })
-        .catch(error => {
-            console.log(error);
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
 
   return (
     <>
       <Form onSubmit={updateReview}>
+        {message && <Alert variant="success">{message}</Alert>}
+        {error && <Alert variant="danger">{error}</Alert>}
         <TextInput
           fullWidth={true} label={"Drink name"} multiline={false} required={true}
           rows={1} value={drinkName} type={"text"} onChange={inputDrinkName}
@@ -168,7 +142,7 @@ export default function EditReview() {
         <img src={photoURL} className="w-100" />
         <input
               type={"file"}
-              onChange={ handlePhoto }
+              onChange={ handleImageChange }
           />
 
         <Button

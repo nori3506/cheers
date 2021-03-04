@@ -1,11 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react'
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from '@react-google-maps/api'
-import { Link } from 'react-router-dom'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 
 const containerStyle = {
   width: '100%',
@@ -34,16 +28,8 @@ function Map(props) {
 
   const { shops, reviews } = props
 
-  const [range, setRange] = useState({
-    min: {
-      lat: center.lat - 180 / Math.pow(2, zoom),
-      lng: center.lng - 360 / Math.pow(2, zoom),
-    },
-    max: {
-      lat: center.lat + 180 / Math.pow(2, zoom),
-      lng: center.lng + 360 / Math.pow(2, zoom),
-    },
-  })
+  const [bounds, setBounds] = useState(null)
+  const [shopsOnMap, setShopsOnMap] = useState(shops)
   const [selected, setSelected] = useState(null)
 
   const mapRef = useRef()
@@ -52,22 +38,23 @@ function Map(props) {
     mapRef.current = map
   }, [])
 
-  const handleRangeChange = () => {
+  const handleBoundsChange = () => {
     if (mapRef.current) {
-      const newCenter = mapRef.current.getCenter().toJSON()
-      const newZoom = mapRef.current.zoom
-      setRange({
-        min: {
-          lat: newCenter.lat - 180 / Math.pow(2, newZoom),
-          lng: newCenter.lng - 360 / Math.pow(2, newZoom),
-        },
-        max: {
-          lat: newCenter.lat + 180 / Math.pow(2, newZoom),
-          lng: newCenter.lng + 360 / Math.pow(2, newZoom),
-        },
-      })
+      setBounds(mapRef.current.getBounds())
     }
   }
+
+  useEffect(() => {
+    if (bounds) {
+      const newShopsOnMap = shops.filter(shop =>
+        bounds.contains({
+          lat: shop.geocode.latitude,
+          lng: shop.geocode.longitude,
+        })
+      )
+      setShopsOnMap(newShopsOnMap)
+    }
+  }, [shops, bounds])
 
   if (loadError) return 'Error loading map'
   if (!isLoaded) return 'Loading map'
@@ -80,36 +67,29 @@ function Map(props) {
         options={options}
         zoom={zoom}
         onLoad={handleLoad}
-        onCenterChanged={handleRangeChange}
-        onZoomChanged={handleRangeChange}
+        onBoundsChanged={handleBoundsChange}
       >
         {/* Child components, such as shops, info windows, etc. */}
-        {shops.map((shop, i) => {
-          const lat = shop.geocode.latitude
-          const lng = shop.geocode.longitude
-
+        {shopsOnMap.map((shop, i) => {
           let reviewNum = 0
           reviews.forEach(review => {
             if (review.shop && review.shop.isEqual(shop.ref)) {
               reviewNum++
             }
           })
+          if (reviewNum === 0) return null
 
-          if (
-            lat >= range.min.lat &&
-            lat <= range.max.lat &&
-            lng >= range.min.lng &&
-            lng <= range.max.lng
-          ) {
-            return (
-              <Marker
-                key={i}
-                position={{ lat, lng }}
-                label={reviewNum.toString()}
-                onClick={() => setSelected(shop)}
-              />
-            )
-          }
+          return (
+            <Marker
+              key={i}
+              position={{
+                lat: shop.geocode.latitude,
+                lng: shop.geocode.longitude,
+              }}
+              label={reviewNum.toString()}
+              onClick={() => setSelected(shop)}
+            />
+          )
         })}
         {selected ? (
           <InfoWindow
@@ -121,50 +101,30 @@ function Map(props) {
               setSelected(null)
             }}
           >
-            <>
+            <div className="info-window">
               <h5>{selected.name}</h5>
-              {reviews.map((review, i) => {
-                if (selected.ref.isEqual(review.shop)) {
-                  return (
-                    <div key={review.ref.id}>
-                      <h6>{review.drink_name}</h6>
-                      <p>{review.drink_category}</p>
-                      <p>${review.price}</p>
-                      <p>{review.comment}</p>
-                    </div>
-                  )
-                }
-              })}
-            </>
+              {reviews
+                .filter(review => selected.ref.isEqual(review.shop))
+                .map((review, i) => (
+                  <div key={review.ref.id}>
+                    <h2>{review.drink_name}</h2>
+                    <p>{review.drink_category}</p>
+                    <p>${review.price}</p>
+                    <p>{review.comment}</p>
+                  </div>
+                ))}
+            </div>
           </InfoWindow>
         ) : null}
       </GoogleMap>
 
       <div>
-        <h1>Shop List</h1>
         <ul>
-          {shops.map(shop => {
-            const lat = shop.geocode.latitude
-            const lng = shop.geocode.longitude
-            if (
-              lat >= range.min.lat &&
-              lat <= range.max.lat &&
-              lng >= range.min.lng &&
-              lng <= range.max.lng
-            ) {
-              return (
-                <li
-                  key={shop.ref.id}
-                  onClick={() => setSelected(shop)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <Link to={'shop/' + shop.ref.id} style={{ color: "black" }}>
-                    {shop.name}
-                  </Link>
-                </li>
-              )
-            }
-          })}
+          {shopsOnMap.map(shop => (
+            <li key={shop.ref.id} onClick={() => setSelected(shop)} style={{ cursor: 'pointer' }}>
+              {shop.name}
+            </li>
+          ))}
         </ul>
       </div>
     </>

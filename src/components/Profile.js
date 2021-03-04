@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { Form, Button, Alert, Tabs, Tab, } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
-import { db, strage } from '../firebase/index'
+import { db, storage } from '../firebase/index'
 import { SelectInput, TextInput } from './UIkit';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,7 +33,7 @@ export default function Profile() {
       setFavDrink(res.data()?.favDrink)
     })
 
-    strage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
+    storage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
       setPhotoURL(url)
     })
   },[])
@@ -135,14 +135,14 @@ export default function Profile() {
   const handlePhoto = (event) => {
     const image = event.target.files[0];
     const fullPath = "profileImage/" + currentUser.uid + image.name
-    let storageRef = strage.ref().child(fullPath);
+    let storageRef = storage.ref().child(fullPath);
     storageRef.put(image)
       .then(res => {
         currentUser.updateProfile({
           photoURL: fullPath
         })
         .then(() => {
-          strage.ref(currentUser.photoURL).getDownloadURL().then(url => {
+          storage.ref(currentUser.photoURL).getDownloadURL().then(url => {
             setPhotoURL(url)
             setMessage('Profile Image was successfully updated')
           })
