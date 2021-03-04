@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { strage } from '../firebase/index'
+import { storage } from '../firebase/index'
 import backArrowIcon from '../assets/icons/back-arrow.svg'
 
 export default function Header({ title }) {
@@ -12,7 +12,7 @@ export default function Header({ title }) {
 
   useEffect(() => {
     if (currentUser && currentUser.photoURL) {
-      strage
+      storage
         .ref(currentUser.photoURL)
         .getDownloadURL()
         .then(url => {
