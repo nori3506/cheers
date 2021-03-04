@@ -29,15 +29,20 @@ export default function CreateReview() {
 
   function reviewRegisterForExistShop(existShop){
     let userRef = db.collection('users').doc(currentUserUid)
+    const randomPhotoId = Math.random().toString(32).substring(2)
+    const fullPath = "reviewPhoto/" + randomPhotoId + image.name
+    let storageRef = storage.ref().child(fullPath);
+    storageRef.put(image)
+    
     db.collection("reviews").doc().set({
       drink_name: drinkName,
       price: price,
       rating: rating,
       comment: comment,
-      // image: comment,
       drink_category: drinkCategory,
       user: userRef,
       shop: existShop,
+      fullPath: fullPath,
     })
       history.push( '/shop/'+existShop.id)
   }
@@ -50,6 +55,11 @@ export default function CreateReview() {
     })
     let shopRef = db.collection('shops').doc(randomID)
     let userRef = db.collection('users').doc(currentUserUid)
+    const randomPhotoId = Math.random().toString(32).substring(2)
+    const fullPath = "reviewPhoto/" + randomPhotoId + image.name
+    let storageRef = storage.ref().child(fullPath);
+    storageRef.put(image)
+
     db.collection("reviews").doc().set({
       drink_name: drinkName,
       price: price,
@@ -58,34 +68,12 @@ export default function CreateReview() {
       drinkcategory: drinkCategory,
       user: userRef,
       shop: shopRef,
+      fullPath: fullPath,
     })
     history.push( '/shop/'+randomID)
   }
 
   function handleSubmit(e) {
-    
-    const randomPhotoId = Math.random().toString(32).substring(2)
-    const image = e.target.files[0];
-    const fullPath = "reviewPhoto/" + randomPhotoId + image.name
-    let storageRef = storage.ref().child(fullPath);
-    storageRef.put(image)
-    //   .then(res => {
-    //     currentUser.updateProfile({
-    //       photoURL: fullPath
-    //     })
-    //     .then(() => {
-    //       storage.ref(currentUser.photoURL).getDownloadURL().then(url => {
-    //         setPhotoURL(url)
-    //         setMessage('Profile Image was successfully updated')
-    //       })
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
-    //   })
-      .catch(error => {
-        console.log(error);
-      })
     e.preventDefault()
     let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]));
     try {

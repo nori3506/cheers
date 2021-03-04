@@ -13,6 +13,7 @@ export default function EditReview() {
   const [rating, setRating] = useState()
   const [comment, setComment] = useState("")
   const [photoURL, setPhotoURL] = useState("");
+  const [fullPath, setFullPath] = useState("");
   const { currentUser, updatePassword, updateEmail } = useAuth()
   let review_id = window.location.pathname.split('/review/edit/', 2)[1]
   const [error, setError] = useState('')
@@ -22,28 +23,19 @@ export default function EditReview() {
   useEffect(() => {
     const reviewRef = db.collection('reviews').doc(review_id)
     reviewRef.get().then(doc => {
+      const imageFulPath = doc.data().fullPath;
+      setFullPath(doc.data().fullPath)
       setReview(doc.data())
       setDrinkName(doc.data().drink_name)
       setDrinkCategory(doc.data().drinkcategory)
       setPrice(doc.data().price)
       setRating(doc.data().rating)
       setComment(doc.data().comment)
-    })
-
-    storage.ref(currentUser.photoURL)?.getDownloadURL().then(url => {
-      setPhotoURL(url)
+      storage.ref(imageFulPath)?.getDownloadURL().then(url => {
+        setPhotoURL(url)
+      })
     })
   }, [])
-
-
-  // const aaa = () => {
-  //   console.log("hoge")
-  // }
-  // const updateReview = () => {
-  //   console.log("hogehoge")
-  // }
-
-
 
   const inputDrinkName = useCallback((event) => {
     setDrinkName(event.target.value)
@@ -65,14 +57,8 @@ export default function EditReview() {
     setComment(event.target.value)
   }, [setComment]);
 
-
-
-
-
   const updateReview = (e) => {
     e.preventDefault()
-
-
     const promises = []
     setLoading(true)
     setError("")
@@ -80,7 +66,6 @@ export default function EditReview() {
 
   //drink name,category price etc,,,
     promises.push(db.collection('reviews').doc(review_id).get().then((doc) => {
-
       if (doc.data().drink_name != drinkName) {
         db.collection('reviews').doc(review_id).update({drink_name: drinkName})
       }
@@ -105,8 +90,6 @@ export default function EditReview() {
     }).finally(() => {
       setLoading(false)
     })
-
-
   }
 
   const handlePhoto = (event) => {
