@@ -1,0 +1,14 @@
+.wrapper {
+  padding-right: 1rem;
+  padding-left: 1rem;
+
+  @media screen and (min-width: $tablet-breakpoint) {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+
+  @media screen and (min-width: $pc-breakpoint) {
+    padding-right: 3rem;
+    padding-left: 3rem;
+  }
+}

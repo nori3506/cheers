@@ -16,30 +16,46 @@ export default function CreateReview() {
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("");
   const [drinkCategory, setDrinkCategory] = useState("");
-  const [shopName, setShopName] = useState("");
   const [geoCode, setGeoCode] = useState([]);
   const [address, setAddress] = useState("");
-  const history = useHistory()
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState("")
+  const [message, setMessage] = useState('');
+  const history = useHistory();
 
   let currentUserUid = firebase.auth().currentUser.uid;
+  let fullPath = "";
 
   function reviewRegisterForExistShop(existShop){
     let userRef = db.collection('users').doc(currentUserUid)
+    const randomPhotoId = Math.random().toString(32).substring(2)
+    if (image !== null) {
+      fullPath = "reviewPhoto/" + randomPhotoId + image.name;
+      let storageRef = storage.ref().child(fullPath);
+      storageRef.put(image)
+    }
+    
     db.collection("reviews").doc().set({
       drink_name: drinkName,
       price: price,
       rating: rating,
       comment: comment,
-      // image: comment,
       drink_category: drinkCategory,
       user: userRef,
       shop: existShop,
+      fullPath: fullPath,
     })
-      history.push( '/shop/'+existShop.id)
+    history.push( '/shop/'+existShop.id)
   }
 
   function reviewRegisterForNewShop(formatGeoCode) {
     let randomID = Math.random().toString(32).substring(2)
+    const randomPhotoId = Math.random().toString(32).substring(2)
+    if (image !== null) {
+      fullPath = "reviewPhoto/" + randomPhotoId + image.name;
+      let storageRef = storage.ref().child(fullPath);
+      storageRef.put(image)
+    }
     db.collection('shops').doc(randomID).set({
       name: address,
       geocode: formatGeoCode
@@ -54,6 +70,7 @@ export default function CreateReview() {
       drinkcategory: drinkCategory,
       user: userRef,
       shop: shopRef,
+      fullPath: fullPath,
     })
     history.push( '/shop/'+randomID)
   }
@@ -92,6 +109,10 @@ export default function CreateReview() {
     setComment(event.target.value)
   }
 
+  const inputImage = (event) => {
+    setImage(event.target.files[0])
+  }
+
   const inputDrinkCategory = (event) =>{
     setDrinkCategory(event.target.value)
   }
@@ -115,6 +136,12 @@ export default function CreateReview() {
       })
       .catch(error => console.error('Error', error));
   };
+
+  const handleImageChange = event => {
+    const { files } = event.target;
+    setImage(event.target.files[0])
+    setPreview(window.URL.createObjectURL(files[0]));
+  }
 
   return (
     <>
@@ -162,7 +189,7 @@ export default function CreateReview() {
             </div>
           )}
         </PlacesAutocomplete>
-        <Imageupload　/>
+        <Imageupload onChange={ handleImageChange } photoURL={preview} />
         <p>Drink category*</p>
         <select  onChange={inputDrinkCategory}>
           <option value="">Select drink category</option>
