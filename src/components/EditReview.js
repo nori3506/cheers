@@ -68,7 +68,7 @@ export default function EditReview() {
         })
         .catch(error => {
           console.log(error);
-        })  
+        })
     }
     const promises = []
     setError("")
@@ -108,45 +108,54 @@ export default function EditReview() {
 
   return (
     <>
-      <Form onSubmit={updateReview}>
+      <Form className='editReview' onSubmit={updateReview}>
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
         <TextInput
-          fullWidth={true} label={"Drink name"} multiline={false} required={true}
+           fullWidth={true} label={"Drink name"} multiline={false} required={true}
           rows={1} value={drinkName} type={"text"} onChange={inputDrinkName}
         />
 
         <br />
 
-        <SelectInput value={drinkCategory} onChange={inputDrinkCategory}>
-          <option value="">Select drink category</option>
-          {drinkCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </SelectInput>
+
+        <div class='drink_name MuiFormControl-root'>
+        <label >Categoty*</label>
+          <SelectInput  required={true} value={drinkCategory} onChange={inputDrinkCategory}>
+            <option value="">Select drink category</option>
+            {drinkCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </SelectInput>
+        </div>
         <br />
 
         <TextInput
           fullWidth={true} label={"Price"} multiline={false} required={true}
           rows={1} value={price} type={"text"} onChange={inputPrice}
         />
-         <p>Rating</p>
-        <input type='number' max="5" value={rating} min='1' name="rating" onChange={inputRating} />
+      <div className='rating MuiFormControl-root'>
+          <label >Rating</label>
+          <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} />
+      </div>
+
 
         <TextInput
           fullWidth={true} label={"Comment"} multiline={true} required={true}
           rows={1} value={comment} type={"text"} onChange={inputComment}
         />
-        <img src={photoURL} className="w-100" />
-        <input
-              type={"file"}
-              onChange={ handleImageChange }
-          />
+        <div className='image_wrapper'>
+          <img src={photoURL} className="w-100" />
+          <input
+                type={"file"}
+                onChange={ handleImageChange }
+            />
+          </div>
 
         <Button
-          className="w-100"
+          className="w-100 submit"
           type="submit"
           variant="primary"
         >Update
