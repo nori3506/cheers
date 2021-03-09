@@ -5,6 +5,10 @@ import Login from '../templates/Login'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
+import searchIcon from '../assets/icons/thick-borders.svg'
+
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
@@ -14,7 +18,7 @@ export default function Home({ title, setTitle }) {
 
   const [drink, setDrink] = useState('')
   const [place, setPlace] = useState('')
-  const [priceMax, setPriceMax] = useState(1000)
+  const [priceMax, setPriceMax] = useState(undefined)
   const [priceMin, setPriceMin] = useState(0)
   const [drinkCategory, setDrinkCategory] = useState('')
   const [placeCategory, setPlaceCategory] = useState('')
@@ -35,13 +39,19 @@ export default function Home({ title, setTitle }) {
     setShops([])
 
     let reviewsQuery
-    if (drinkCategory) {
+    if (drinkCategory && priceMax) {
       reviewsQuery = reviewsRef
         .where('drink_category', '==', drinkCategory)
         .where('price', '<=', priceMax)
         .where('price', '>=', priceMin)
-    } else {
+    } else if (drinkCategory) {
+      reviewsQuery = reviewsRef
+        .where('drink_category', '==', drinkCategory)
+        .where('price', '>=', priceMin)
+    } else if (priceMax) {
       reviewsQuery = reviewsRef.where('price', '<=', priceMax).where('price', '>=', priceMin)
+    } else {
+      reviewsQuery = reviewsRef.where('price', '>=', priceMin)
     }
 
     let shopsQuery
@@ -75,32 +85,31 @@ export default function Home({ title, setTitle }) {
           }
         })
 
-        setReviews(
-          newReviews.filter(newReview => {
-            let match = false
-            for (let i = 0; i < newShops.length; i++) {
-              if (newReview.shop.isEqual(newShops[i].ref)) {
-                match = true
-                break
-              }
+        const reviewsMatchShop = newReviews.filter(newReview => {
+          let match = false
+          for (let i = 0; i < newShops.length; i++) {
+            if (newReview.shop.isEqual(newShops[i].ref)) {
+              match = true
+              break
             }
-            return match
-          })
-        )
+          }
+          return match
+        })
 
-        setShops(
-          newShops.filter(newShop => {
-            let match = false
-            for (let i = 0; i < newReviews.length; i++) {
-              if (newReviews[i].shop.isEqual(newShop.ref)) {
-                match = true
-                break
+        const shopsMatchReview = newShops
+          .map((shop, i) => {
+            let reviewNum = 0
+            reviewsMatchShop.forEach(review => {
+              if (review.shop && review.shop.isEqual(shop.ref)) {
+                reviewNum++
               }
-            }
-            return match
+            })
+            return { ...shop, reviewNum }
           })
-        )
+          .filter(shop => shop.reviewNum !== 0)
 
+        setReviews(reviewsMatchShop)
+        setShops(shopsMatchReview)
         setDisabled(false)
       })
       .catch(error => {
@@ -123,20 +132,34 @@ export default function Home({ title, setTitle }) {
         newShops.push({ ref: doc.ref, ...doc.data() })
       })
 
+      const shopsWithReviewNum = newShops
+        .map((shop, i) => {
+          let reviewNum = 0
+          newReviews.forEach(review => {
+            if (review.shop && review.shop.isEqual(shop.ref)) {
+              reviewNum++
+            }
+          })
+          return { ...shop, reviewNum }
+        })
+        .filter(shop => shop.reviewNum !== 0)
+
       setReviews(newReviews)
-      setShops(newShops)
+      setShops(shopsWithReviewNum)
       setDisabled(false)
     })
-  }, [])
-
-  useEffect(() => {
-    console.log(title)
   }, [])
 
   if (currentUser) {
     return (
       <>
-        <form onSubmit={handleSearch}>
+        <div className="home__search-link">
+          <div className="home__search-icon">
+            <img src={searchIcon} alt="search" />
+          </div>
+          <input type="text" placeholder="search" className="home__search-box" />
+        </div>
+        <form onSubmit={handleSearch} className="home__search-form">
           <label>
             Drink
             <input

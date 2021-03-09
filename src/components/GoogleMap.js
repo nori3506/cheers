@@ -1,10 +1,15 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 import { Link } from 'react-router-dom'
+import barIcon from '../assets/icons/rest-icon.svg'
+import restaurantIcon from '../assets/icons/beer.svg'
+import storeIcon from '../assets/icons/store.svg'
+import markerIcon from '../assets/icons/location.svg'
 
 const containerStyle = {
   width: '100%',
-  height: '400px',
+  height: '240px',
+  borderRadius: '4px',
 }
 
 const options = {
@@ -71,27 +76,24 @@ function Map(props) {
         onBoundsChanged={handleBoundsChange}
       >
         {/* Child components, such as shops, info windows, etc. */}
-        {shopsOnMap.map((shop, i) => {
-          let reviewNum = 0
-          reviews.forEach(review => {
-            if (review.shop && review.shop.isEqual(shop.ref)) {
-              reviewNum++
-            }
-          })
-          if (reviewNum === 0) return null
-
-          return (
-            <Marker
-              key={i}
-              position={{
-                lat: shop.geocode.latitude,
-                lng: shop.geocode.longitude,
-              }}
-              label={reviewNum.toString()}
-              onClick={() => setSelected(shop)}
-            />
-          )
-        })}
+        {shopsOnMap.map(shop => (
+          <Marker
+            key={shop.ref}
+            position={{
+              lat: shop.geocode.latitude,
+              lng: shop.geocode.longitude,
+            }}
+            label={{
+              text: shop.reviewNum.toString(),
+              color: '#000',
+            }}
+            icon={{
+              url: markerIcon,
+              scaledSize: new window.google.maps.Size(50, 50),
+            }}
+            onClick={() => setSelected(shop)}
+          />
+        ))}
         {selected ? (
           <InfoWindow
             position={{
@@ -120,11 +122,33 @@ function Map(props) {
       </GoogleMap>
 
       <div>
-        <ul>
+        <ul className="map__shop-list">
           {shopsOnMap.map(shop => (
-            <li key={shop.ref.id} onClick={() => setSelected(shop)} style={{ cursor: 'pointer' }}>
-              <Link to={'shop/' + shop.ref.id} style={{ color: "black" }}>
-                {shop.name}
+            <li
+              className="map__shop-list__item"
+              key={shop.ref.id}
+              onClick={() => setSelected(shop)}
+              style={{ cursor: 'pointer' }}
+            >
+              <Link to={'shop/' + shop.ref.id}>
+                <div className="map__shop-list__item__wrapper">
+                  <div className="map__shop-list__item__cagegory">
+                    {shop.category === 'Bar' ? (
+                      <img src={barIcon} alt="bar" className="map__shop-list__item__icon" />
+                    ) : shop.category === 'Restaurant' ? (
+                      <img src={restaurantIcon} alt="bar" className="map__shop-list__item__icon" />
+                    ) : shop.category === 'Liquor Store' ? (
+                      <img src={storeIcon} alt="bar" className="map__shop-list__item__icon" />
+                    ) : null}
+                  </div>
+                  <div className="map__shop-list__item__info">
+                    <h2>{shop.name}</h2>
+                    <p>shop address</p>
+                  </div>
+                  <div className="map__shop-list__item__review-number">
+                    <p>{shop.reviewNum}</p>
+                  </div>
+                </div>
               </Link>
             </li>
           ))}

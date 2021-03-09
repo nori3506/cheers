@@ -6,6 +6,15 @@ body {
   font-family: helvetica, arial, sans-serif;
   background-color: $main-color;
   color: white;
+  font-size: $font-xs;
+}
+
+h1 {
+  font-size: $font-md;
+}
+
+h2 {
+  font-size: $font-sm;
 }
 
 ul {

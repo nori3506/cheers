@@ -1,0 +1,32 @@
+.map__shop-list {
+  border: 1px solid $accent-color;
+  border-radius: 4px;
+  padding: 0 1rem;
+  background-color: $bg-light-color;
+  color: black;
+}
+
+.map__shop-list__item:not(:last-child) {
+  border-bottom: 2px solid $accent-color;
+}
+
+.map__shop-list__item__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.map__shop-list__item__icon {
+  width: 24px;
+}
+
+.map__shop-list__item__info {
+  flex-grow: 1;
+}
+
+.map__shop-list__item__review-number {
+  text-align: right;
+  font-size: $font-xl;
+  color: $accent-color;
+}
