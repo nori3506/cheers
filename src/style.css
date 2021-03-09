@@ -394,6 +394,31 @@ a {
   color: inherit;
 }
 
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+}
+
+input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 /* 2 Base =================== */
 /* 2.1. Container =========== */
 .container {
@@ -419,6 +444,26 @@ a {
     padding-right: 3rem;
     padding-left: 3rem;
   }
+}
+
+.home__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* 2.3. Header ============== */
@@ -522,15 +567,31 @@ footer {
 }
 
 /* 2.5. Buttons ============= */
-/* 2.6. Forms =============== */
-form {
-  margin: 1rem 0;
+.btn--primary,
+.btn--secondary {
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 24px;
+  text-transform: capitalize;
 }
 
+.btn--primary {
+  background-color: #de9e48;
+  color: #3d1600;
+}
+
+.btn--secondary {
+  background-color: #3d1600;
+  color: white;
+}
+
+/* 2.6. Forms =============== */
 .home__search-link {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin: 1rem 0;
 }
 
 .home__search-icon {
@@ -557,22 +618,6 @@ form {
   font-size: 24px;
 }
 
-.home__search-box::-webkit-input-placeholder {
-  color: white;
-}
-
-.home__search-box:-ms-input-placeholder {
-  color: white;
-}
-
-.home__search-box::-ms-input-placeholder {
-  color: white;
-}
-
-.home__search-box::placeholder {
-  color: white;
-}
-
 .home__search-form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -581,6 +626,25 @@ form {
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: 16px;
+}
+
+.home__search-form__label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.autocomplete-dropdown-container {
+  color: black;
 }
 
 /* 2.7. Map ================= */

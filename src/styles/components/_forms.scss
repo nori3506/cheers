@@ -1,9 +1,6 @@
-form {
-  margin: 1rem 0;
-}
-
 .home__search-link {
   display: flex;
+  margin: 1rem 0;
 }
 
 .home__search-icon {
@@ -28,11 +25,20 @@ form {
   font-size: $font-lg;
 }
 
-.home__search-box::placeholder {
-  color: white;
-}
-
 .home__search-form {
   display: flex;
   flex-flow: column nowrap;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: $font-sm;
+}
+
+.home__search-form__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.autocomplete-dropdown-container {
+  color: black;
 }

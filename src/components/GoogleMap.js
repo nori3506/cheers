@@ -85,11 +85,13 @@ function Map(props) {
             }}
             label={{
               text: shop.reviewNum.toString(),
-              color: '#000',
+              color: 'black',
+              fontSize: '16px',
             }}
             icon={{
               url: markerIcon,
-              scaledSize: new window.google.maps.Size(50, 50),
+              scaledSize: new window.google.maps.Size(48, 48),
+              labelOrigin: new window.google.maps.Point(24, 16),
             }}
             onClick={() => setSelected(shop)}
           />
@@ -105,12 +107,12 @@ function Map(props) {
             }}
           >
             <div className="info-window">
-              <h5>{selected.name}</h5>
+              <h2>{selected.name}</h2>
               {reviews
                 .filter(review => selected.ref.isEqual(review.shop))
                 .map((review, i) => (
                   <div key={review.ref.id}>
-                    <h2>{review.drink_name}</h2>
+                    <p>{review.drink_name}</p>
                     <p>{review.drink_category}</p>
                     <p>${review.price}</p>
                     <p>{review.comment}</p>
