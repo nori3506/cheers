@@ -1,3 +1,4 @@
+// create review page==============================================
 .review_form * {
     margin: 2rem auto;
     display: block;
@@ -77,5 +78,104 @@
         width: 50%;
     }
 
+
+}
+
+//review update page==============================================
+
+
+  .editReview{
+      label{
+          color: white;
+          left:-15%;
+      }
+
+    .MuiInputBase-root{
+        margin: 2rem auto;
+        display: block;
+        width: 70%;
+        font-size: 1.3rem;
+        background-color: $main-color;
+        border: $accent-color 2px solid;
+        border-radius: 10px;
+        color: white;
+        padding-left: 1rem;
+    }
+    .MuiSelect-root{
+        margin: 2rem auto;
+        display: block;
+        width: 70%;
+        font-size: 1.3rem;
+    }
+
+    .MuiFormControl-root{
+        margin: 2rem auto;
+        display: block;
+        width: 70%;
+        font-size: 1.3rem;
+    }
+
+
+    .rating{
+        margin: auto;
+        text-align: center;
+
+        input{
+            width: 70%;
+            margin: auto;
+            background-color: $main-color;
+            border-radius: 10px;
+            border: $accent-color 2px solid;
+            color: white;
+            padding-left: 1rem;
+        }
+        label{
+            color:white;
+            position: absolute;
+            left: -15%;
+            font-size: .75rem;
+        }
+
+
+    }
+
+    .drink_name{
+        width: 70%;
+        margin: auto;
+        label{
+            color:white;
+            position: absolute;
+            left: -15%;
+            font-size: .75rem;
+        }
+
+        div{
+            width: 70%;
+            margin: auto;
+        }
+        .MuiSelect-root{
+            margin: 0;
+        }
+    }
+
+    button{
+        display: block;
+    }
+
+    .submit{
+        padding: .5rem;
+        border: 2px solid white;
+        background-color: $accent-color;
+        border-radius: 10px;
+        width: 50%;
+        margin: 3rem auto;
+    }
+    .image_wrapper{
+        text-align: center;
+        img{
+            display: block;
+            margin: auto;
+        }
+    }
 
 }
