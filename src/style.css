@@ -11,10 +11,12 @@ Table of Contents
 2.4. Footer
 2.5. Buttons
 2.6. Forms
+2.7. Map
+2.8. Lists
 */
 /* 1 Base =================== */
-/* 1.1. Settings ================ */
-/* 1.2. Normalize ==================== */
+/* 1.1. Settings ============ */
+/* 1.2. Normalize =========== */
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -368,6 +370,15 @@ body {
   font-family: helvetica, arial, sans-serif;
   background-color: #3d1600;
   color: white;
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 16px;
 }
 
 ul {
@@ -383,14 +394,39 @@ a {
   color: inherit;
 }
 
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+}
+
+input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 /* 2 Base =================== */
-/* 2.1. Container ================ */
+/* 2.1. Container =========== */
 .container {
   padding-top: 56px;
   padding-bottom: 84px;
 }
 
-/* 2.2. Wrapper ================ */
+/* 2.2. Wrapper ============= */
 .wrapper {
   padding-right: 1rem;
   padding-left: 1rem;
@@ -410,7 +446,27 @@ a {
   }
 }
 
-/* 2.3. Header ================ */
+.home__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 2.3. Header ============== */
 header {
   position: fixed;
   width: 100%;
@@ -444,7 +500,7 @@ header {
           transform: translate(-50%, -50%);
 }
 
-/* 2.4. Footer ==================== */
+/* 2.4. Footer ============== */
 footer {
   position: fixed;
   bottom: 0;
@@ -510,8 +566,83 @@ footer {
   width: 28px;
 }
 
-/* 2.5. Buttons ==================== */
-/* 2.6. Forms ==================== */
+/* 2.5. Buttons ============= */
+.btn--primary,
+.btn--secondary {
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+.btn--primary {
+  background-color: #de9e48;
+  color: #3d1600;
+}
+
+.btn--secondary {
+  background-color: #3d1600;
+  color: white;
+}
+
+/* 2.6. Forms =============== */
+.home__search-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 1rem 0;
+}
+
+.home__search-icon {
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-radius: 4px 0 0 4px;
+  color: #de9e48;
+}
+
+.home__search-icon img {
+  width: 24px;
+}
+
+.home__search-box {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  background-color: #3d1600;
+  color: white;
+  font-size: 24px;
+}
+
+.home__search-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: 16px;
+}
+
+.home__search-form__label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .review_form * {
   margin: 2rem auto;
   display: block;
@@ -530,7 +661,7 @@ footer {
 }
 
 .review_form .location-search-input {
-  padding: .5rem;
+  padding: 0.5rem;
   width: 100%;
   border: 2px solid #de9e48;
   background-color: #3d1600;
@@ -559,7 +690,7 @@ footer {
 .review_form .price,
 .review_form .rating,
 .review_form .comment {
-  padding: .5rem;
+  padding: 0.5rem;
   border: 2px solid #de9e48;
   background-color: #3d1600;
   border-radius: 10px;
@@ -612,7 +743,7 @@ footer {
 }
 
 .review_form .submit {
-  padding: .5rem;
+  padding: 0.5rem;
   margin-top: 3rem;
   border: 2px solid white;
   background-color: #de9e48;
@@ -670,7 +801,7 @@ footer {
   color: white;
   position: absolute;
   left: -15%;
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 .editReview .drink_name {
@@ -682,7 +813,7 @@ footer {
   color: white;
   position: absolute;
   left: -15%;
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 .editReview .drink_name div {
@@ -699,7 +830,7 @@ footer {
 }
 
 .editReview .submit {
-  padding: .5rem;
+  padding: 0.5rem;
   border: 2px solid white;
   background-color: #de9e48;
   border-radius: 10px;
@@ -716,9 +847,55 @@ footer {
   margin: auto;
 }
 
-/* 2.6. Map ==================== */
+/* 2.7. Map ================= */
 .info-window {
   color: black;
+}
+
+/* 2.8. Lists =============== */
+.review-list {
+  color: black;
+}
+
+.map__shop-list {
+  border: 1px solid #de9e48;
+  border-radius: 4px;
+  padding: 0 1rem;
+  background-color: #fdf9df;
+  color: black;
+}
+
+.map__shop-list__item:not(:last-child) {
+  border-bottom: 2px solid #de9e48;
+}
+
+.map__shop-list__item__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+}
+
+.map__shop-list__item__icon {
+  width: 24px;
+}
+
+.map__shop-list__item__info {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.map__shop-list__item__review-number {
+  text-align: right;
+  font-size: 32px;
+  color: #de9e48;
 }
 
 body {
@@ -775,3 +952,4 @@ code {
 .reviews-area {
   margin: 1rem 0;
 }
+/*# sourceMappingURL=style.css.map */
