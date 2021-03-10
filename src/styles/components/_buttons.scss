@@ -1,5 +1,18 @@
+.btn--primary,
+.btn--secondary {
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: $font-lg;
+  text-transform: capitalize;
+}
+
 .btn--primary {
+  background-color: $accent-color;
+  color: $main-color;
 }
 
 .btn--secondary {
+  background-color: $main-color;
+  color: white;
 }
