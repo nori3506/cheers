@@ -643,10 +643,6 @@ footer {
           align-items: center;
 }
 
-.autocomplete-dropdown-container {
-  color: black;
-}
-
 .review_form * {
   margin: 2rem auto;
   display: block;
