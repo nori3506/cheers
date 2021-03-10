@@ -34,7 +34,7 @@ export default function CreateReview() {
       let storageRef = storage.ref().child(fullPath);
       storageRef.put(image)
     }
-    
+
     db.collection("reviews").doc().set({
       drink_name: drinkName,
       price: price,
@@ -94,11 +94,11 @@ export default function CreateReview() {
         } else {
           reviewRegisterForNewShop(formatGeoCode)
         }
-      })  
+      })
     } catch {
       console.log(e)
     }
-    
+
   }
 
   const inputDrinkName = (event) =>{
@@ -128,7 +128,7 @@ export default function CreateReview() {
   const handleChange = address => {
     setAddress(address);
     geocodeByAddress(address)
-      .then(results => 
+      .then(results =>
         getLatLng(results[0])
       )
       .then((latlng) => {
@@ -145,22 +145,22 @@ export default function CreateReview() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} >
-        <p>Drink name*</p>
-        <input required name="drink_name" onChange={inputDrinkName} />
-        {/* <p>images</p>
-        <input type='file' accept=".png, .jpg, .jpeg" name="images" onChange={image} /> */}
-        <p>Shop*</p>
+      <form className ='review_form' onSubmit={handleSubmit} >
+        {/* <p>Drink name*</p> */}
+        <input required  className= 'drink_name' placeholder='What did you drink?'name="drink_name" onChange={inputDrinkName} />
+
+        {/* <p>Shop*</p> */}
         <PlacesAutocomplete
           value={address}
           onChange={handleChange}
           onSelect={handleChange}
+
         >
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-            <div>
+            <div  className ='shop_name'>
               <input
                 {...getInputProps({
-                  placeholder: 'Search Places ...',
+                  placeholder: 'Where did you drink it?',
                   className: 'location-search-input',
                 })}
               />
@@ -190,22 +190,23 @@ export default function CreateReview() {
           )}
         </PlacesAutocomplete>
         <Imageupload onChange={ handleImageChange } photoURL={preview} />
-        <p>Drink category*</p>
-        <select  onChange={inputDrinkCategory}>
-          <option value="">Select drink category</option>
+        {/* <p>Drink category*</p> */}
+        <select  className= 'drink_category' onChange={inputDrinkCategory}>
+          <option value="">What is the type of the drink?</option>
           {drinkCategories.map(category => (
             <option key={category} value={category}>
               {category}
             </option>
           ))}
         </select>
-        <p>Price</p>
-        <input onChange={inputPrice} />
-        <p>Rating</p>
-        <input type='number' max="5" min='1' name="rating" onChange={inputRating} />
-        <p>Comment</p>
-        <textarea name="comment" rows="4" cols="40" onChange={inputComment} />
+        {/* <p>Price</p> */}
+        <input  className= 'price' onChange={inputPrice}　placeholder='How much did it cost?' />
+        {/* <p>Rating</p> */}
+        <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} />
+        {/* <p>Comment</p> */}
+        <textarea className= 'comment' placeholder='Please write a review' name="comment" rows="4" cols="40" onChange={inputComment} />
         <input
+        className= 'submit'
           type='submit'
           value='Submit'
           style={{ display: "block" }}
