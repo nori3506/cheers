@@ -6,6 +6,15 @@ body {
   font-family: helvetica, arial, sans-serif;
   background-color: $main-color;
   color: white;
+  font-size: $font-xs;
+}
+
+h1 {
+  font-size: $font-md;
+}
+
+h2 {
+  font-size: $font-sm;
 }
 
 ul {
@@ -19,4 +28,17 @@ li {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid $accent-color;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+}
+
+input::placeholder {
+  color: rgba(white, 0.6);
 }

@@ -37,7 +37,11 @@ export default function Header({ title }) {
       pageTitle = 'Profile'
       break
     default:
-      pageTitle = ''
+      if (location.pathname.includes('/shop')) {
+        pageTitle = 'Location'
+      } else {
+        pageTitle = ''
+      }
   }
 
   return (
