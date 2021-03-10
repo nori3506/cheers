@@ -13,6 +13,8 @@
         "styles/components/_buttons.scss",
         "styles/components/_forms.scss",
         "styles/components/_map.scss",
+        "styles/components/_review.scss",
+        "styles/components/_profile.scss",
         "styles/components/_lists.scss",
         "styles/components/_index.scss"
     ],
