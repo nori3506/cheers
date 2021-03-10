@@ -653,6 +653,10 @@ footer {
 }
 
 /* 2.8. Lists =============== */
+.review-list {
+  color: black;
+}
+
 .map__shop-list {
   border: 1px solid #de9e48;
   border-radius: 4px;
