@@ -1,30 +1,44 @@
 //import React from "react";
-import { db } from '../firebase/index';
+import { db, storage } from '../firebase/index';
 import React, {useState, useEffect} from 'react';
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 import { ButtonInput } from './UIkit'
+import firebase from "firebase/app";
+
 
 const DisplayReview = () => {
   const [reviews, setReviews] = useState([]);
-  const [orderedReviews, setOrderedReviews] = useState([]);
+  const [shops, setShops] = useState([]);
   const pathName = window.location.pathname;
   const fbPathName = pathName.replace("/shop", "shops")
   const { currentUser } = useAuth()
   const shopRef = db.doc(fbPathName);
   const userRef = db.collection('users')
+  const storage = firebase.storage();
+
 
   useEffect(() => {
         shopRef.get().then(function(shop) {
           if (shop.exists) {
+            setShops(shop.data().name);
+
           db.collection("reviews").where("shop", "==", shopRef)
           .get()
           .then(function(querySnapshot) {
             querySnapshot.forEach(function(review) {
               userRef.doc(review.data().user.id)
               .get()
-              .then(snapshot => {           
-                setReviews((reviews) => [...reviews, { ...review.data(), shop: shop.data(), user: snapshot, ref: review.ref }])
+              .then(snapshot => { 
+                if(review.data().fullPath) {
+                  var pathReference = storage.ref(review.data().fullPath);
+                  pathReference.getDownloadURL().then(url => {
+                    setReviews((reviews) => [...reviews, { ...review.data(), shop: shop.data(), user: snapshot, ref: review.ref, img: url }])
+                  })   
+                }else {
+                  setReviews((reviews) => [...reviews, { ...review.data(), shop: shop.data(), user: snapshot, ref: review.ref, img: "doesNotExist" }])
+                }
+                
               }).catch(function(error) {
                  console.log("Error getting document:", error);
               });										 
@@ -66,33 +80,72 @@ const DisplayReview = () => {
   }
 
 
+
   const reviewItems = reviews.map((review) => {
     return (
       <div className="reviews-background reviews-area">
-        <h2 className="u-text-small">{review.drink_name}</h2>
-        <li>{review.user.data().name}</li>
-        <li>{review.price} CAD</li>
-        <li>{review.rating}</li>
-        <li>{review.drink_category}</li>
-        <p>"{review.comment}"</p>
+
         {(() => {
-          if (currentUser.uid == review.user.id) {
+          if (review.img != "doesNotExist") {
             return (
-              <>
-                <Link to={'/review/edit/' + review.ref.id} className="blue-color">Edit</Link>
-                <ButtonInput label={"Delete"} onClick={() => handleDelete(review)} />
-              </>
+                <img src={review.img} className="review-img" />
             )
           }
         })()}
+
+        <div>
+          <h2 className="u-text-small">{review.drink_name}</h2>
+          <p class="category">{review.drink_category}</p>
+          <p class="price">{review.price} CAD</p>
+             {(() =>{
+               var rating = review.rating;
+               var star = "";
+               var hollowStars = "";
+               for(var i = 0; i < rating ; i++ ) {
+                  star = star + "★";
+               }
+               var noRating = 5 - rating;
+               for(var i = 0; i < noRating; i++) {
+                  hollowStars = hollowStars + "☆";
+               }
+               return (
+                <p class="rating">{star}{hollowStars}</p>
+              )
+             })()}
+        </div>
+
+        <p class="comment"><span>"</span>{review.comment}<span>"</span></p>
+
+        <div class="bottom-row">
+          <p class="user-name">{review.user.data().name}</p>
+          <div class="delete-edit-wrapper">
+          {(() => {
+            if (currentUser.uid == review.user.id) {
+              return (
+                <>
+                  <Link to={'/review/edit/' + review.ref.id} className="edit-button">Edit</Link>
+                  <ButtonInput label={"Delete"} onClick={() => handleDelete(review)} />
+                </>
+              )
+            }
+          })()}
+          </div>
+        </div>
       </div>
     )
   })
+
+
   if (reviewItems.length) {
     return (
-      <ul>
-        {reviewItems}
-      </ul>
+      <div className="Review">
+        <div class="shop-basic-info">
+            <h2>{shops}</h2>
+        </div>
+        <div className="review-wrapper">
+          {reviewItems}
+        </div>
+      </div>
     )
   } else {
     return(

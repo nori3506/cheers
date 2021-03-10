@@ -160,41 +160,43 @@ export default function Profile() {
     <>
       <Tabs defaultActiveKey="profile" >
         <Tab eventKey="profile" title="Profile">
-          <Form onSubmit={updateUserProfile}>
+          <Form className="edit-profile" onSubmit={updateUserProfile}>
             {message && <Alert variant="success">{message}</Alert>}
             {error && <Alert variant="danger">{error}</Alert>}
             <img src={photoURL} className="w-100" />
-            <input
+            <label for="upload-button" id="upload-img-label">Upload Image</label>
+            <input 
               type={"file"}
               onChange={ handlePhoto }
+              id="upload-button"
             />
             <TextInput
-              fullWidth={true} label={"User Name"} multiline={false} required={true}
+              fullWidth={true} label={"User Name:"} multiline={false} required={true}
               rows={1} value={ displayName } type={"text"} onChange={inputDisplayName}
             />
 
             <TextInput required
-              fullWidth={true} label={"Email"} multiline={false} required={true}
+              fullWidth={true} label={"Email:"} multiline={false} required={true}
               rows={1} value={ email } type={"email"} onChange={inputEmail}
             />
 
             <TextInput
-              fullWidth={true} label={"Password"} multiline={false} autoComplete="new-password"
+              fullWidth={true} label={"Password:"} multiline={false} autoComplete="new-password"
               rows={1} type={"password"} onChange={inputPassword}
             />
 
             <TextInput
-              fullWidth={true} label={"Password Confirm"} multiline={false}
+              fullWidth={true} label={"Password Confirm:"} multiline={false}
               rows={1} type={"password"} onChange={inputPasswordConfirm}
             />
 
             <TextInput
-              fullWidth={true} label={"Favorite Drink"} multiline={false}
+              fullWidth={true} label={"Favorite Drink:"} multiline={false}
               rows={1} value={ favDrink } type={"text"} onChange={inputFavDrink}
             />
 
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Gender</InputLabel>
+              <InputLabel id="demo-simple-select-required-label">Gender:</InputLabel>
               <SelectInput
                 labelId="demo-simple-select-required-label"
                 value={gender}
@@ -205,9 +207,8 @@ export default function Profile() {
                 <MenuItem value={"female"}>Female</MenuItem>
               </SelectInput>
             </FormControl>
-            <br />
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Age</InputLabel>
+              <InputLabel id="demo-simple-select-required-label">Age:</InputLabel>
               <SelectInput
                 labelId="demo-simple-select-required-label"
                 value={age}

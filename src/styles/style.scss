@@ -36,5 +36,9 @@ Table of Contents
 @import 'components/forms';
 /* 2.6. Map ==================== */
 @import 'components/map';
+/* 2.7. Review ================== */
+@import 'components/review';
 
-@import './components/index'; // shall be renamed or combined to another file
+@import 'components/profile';
+
+//@import './components/index'; // shall be renamed or combined to another file
