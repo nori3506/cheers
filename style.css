@@ -61,8 +61,7 @@ h1 {
  * 2. Show the overflow in Edge and IE.
  */
 hr {
-  -webkit-box-sizing: content-box;
-          box-sizing: content-box;
+  box-sizing: content-box;
   /* 1 */
   height: 0;
   /* 1 */
@@ -206,9 +205,9 @@ select {
  * Correct the inability to style clickable types in iOS and Safari.
  */
 button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
+[type=button],
+[type=reset],
+[type=submit] {
   -webkit-appearance: button;
 }
 
@@ -216,9 +215,9 @@ button,
  * Remove the inner border and padding in Firefox.
  */
 button::-moz-focus-inner,
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner {
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
@@ -227,9 +226,9 @@ button::-moz-focus-inner,
  * Restore the focus styles unset by the previous rule.
  */
 button:-moz-focusring,
-[type='button']:-moz-focusring,
-[type='reset']:-moz-focusring,
-[type='submit']:-moz-focusring {
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
@@ -247,8 +246,7 @@ fieldset {
  *    `fieldset` elements in all browsers.
  */
 legend {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   /* 1 */
   color: inherit;
   /* 2 */
@@ -280,10 +278,9 @@ textarea {
  * 1. Add the correct box sizing in IE 10.
  * 2. Remove the padding in IE 10.
  */
-[type='checkbox'],
-[type='radio'] {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box;
   /* 1 */
   padding: 0;
   /* 2 */
@@ -292,8 +289,8 @@ textarea {
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -301,7 +298,7 @@ textarea {
  * 1. Correct the odd appearance in Chrome and Safari.
  * 2. Correct the outline style in Safari.
  */
-[type='search'] {
+[type=search] {
   -webkit-appearance: textfield;
   /* 1 */
   outline-offset: -2px;
@@ -311,7 +308,7 @@ textarea {
 /**
  * Remove the inner padding in Chrome and Safari on macOS.
  */
-[type='search']::-webkit-search-decoration {
+[type=search]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -360,8 +357,7 @@ template {
 
 /* 1.3. Base ================ */
 * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
@@ -395,14 +391,12 @@ a {
   padding-right: 1rem;
   padding-left: 1rem;
 }
-
 @media screen and (min-width: 600px) {
   .wrapper {
     padding-right: 2rem;
     padding-left: 2rem;
   }
 }
-
 @media screen and (min-width: 960px) {
   .wrapper {
     padding-right: 3rem;
@@ -421,18 +415,10 @@ header {
 
 .header__wrapper {
   height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -ms-flex-line-pack: center;
-      align-content: center;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: center;
 }
 
 .header__title {
@@ -440,23 +426,16 @@ header {
   top: 50%;
   left: 50%;
   margin: 0;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 /* 2.4. Footer ==================== */
 footer {
   position: fixed;
   bottom: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-  -ms-flex-line-pack: center;
-      align-content: center;
+  flex-flow: row wrap;
+  align-content: center;
   height: 84px;
   width: 100%;
   background-color: #3d1600;
@@ -464,21 +443,13 @@ footer {
 }
 
 .footer__wrapper {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .footer__list {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer__list-item {
@@ -497,13 +468,11 @@ footer {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .footer__link--home {
-  -webkit-transform: translate(-50%, calc(-50% - 2px));
-          transform: translate(-50%, calc(-50% - 2px));
+  transform: translate(-50%, calc(-50% - 2px));
 }
 
 .footer__icon {
@@ -518,7 +487,244 @@ footer {
 }
 
 /* 2.7. Review ================== */
-.u-text-small {
-  color: black;
+/* shop basic info */
+.shop-basic-info {
+  width: 100%;
+  margin: 1rem auto auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
 }
-/*# sourceMappingURL=style.css.map */
+.shop-basic-info h2 {
+  font-size: 20px;
+  text-align: center;
+}
+
+/* reviews */
+.review-wrapper {
+  background-color: #FDF9DF;
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
+  padding: 0 1rem;
+  margin: 1.5rem 0;
+}
+.review-wrapper .reviews-area {
+  border-bottom: 1px solid black;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 0.7rem;
+  padding: 0.7rem 0 0.3rem 0;
+}
+.review-wrapper .reviews-area p {
+  color: black;
+  margin: 0;
+}
+.review-wrapper .reviews-area .review-img {
+  border-radius: 50%;
+  border: 2px solid #DE9E48 !important;
+  width: 50px;
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  grid-column: 1/span 1;
+  grid-row: 1/span 1;
+}
+.review-wrapper .reviews-area div {
+  line-height: 1;
+  grid-column: 2/-1;
+  grid-row: 1/span 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.2rem;
+  /* only for profile page "at" in h2 */
+}
+.review-wrapper .reviews-area div .rating {
+  color: #DE9E48;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.review-wrapper .reviews-area div h2 {
+  font-size: 16px;
+  margin: 0;
+  grid-column: 1/-1;
+  color: black;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+.review-wrapper .reviews-area div .normal-font-weight {
+  font-weight: 400;
+}
+.review-wrapper .reviews-area .comment {
+  grid-row: 2/span 1;
+  grid-column: 1/-1;
+}
+.review-wrapper .reviews-area .comment span {
+  color: #DE9E48;
+}
+.review-wrapper .reviews-area .bottom-row {
+  grid-row: -1/-2;
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.review-wrapper .reviews-area .bottom-row .user-name {
+  font-weight: 600;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.review-wrapper .reviews-area .bottom-row .delete-edit-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+.review-wrapper .reviews-area .bottom-row .delete-edit-wrapper .MuiButtonBase-root {
+  margin-bottom: 0.08rem !important;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
+  background-color: white !important;
+  border: 2px solid #DE9E48 !important;
+  padding: 0.2rem 0 !important;
+  width: 60px;
+  height: 27px;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+.review-wrapper .reviews-area .bottom-row .delete-edit-wrapper .edit-button {
+  font-size: 0.9rem;
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border-radius: 4px;
+  background-color: white !important;
+  border: 2px solid #DE9E48 !important;
+  padding: 0.2rem 0 !important;
+  color: black !important;
+  width: 60px;
+  height: 27px;
+}
+.review-wrapper .reviews-area:last-of-type,
+.review-wrapper .reviews-area :last-of-type:first-of-type {
+  border: none;
+}
+
+.edit-profile {
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
+  padding: 65px 0.5rem 1rem 0.5rem;
+  position: relative;
+  margin-top: 65px;
+}
+.edit-profile img.w-100 {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 1px solid #DE9E48;
+  position: absolute;
+  bottom: calc(100% - 65px);
+}
+.edit-profile input, .edit-profile label {
+  color: white;
+}
+.edit-profile label {
+  padding-right: 0.5rem;
+}
+.edit-profile .MuiFormControl-fullWidth {
+  width: auto !important;
+}
+.edit-profile .MuiFormLabel-root {
+  font-size: 0.9rem;
+  font-weight: 300 !important;
+}
+.edit-profile .MuiFormControl-root {
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  justify-content: center;
+  height: 19px;
+  align-items: center;
+  margin: 0.3rem;
+}
+.edit-profile .MuiInputBase-fullWidth {
+  min-width: 20px !important;
+  max-width: 100px;
+}
+.edit-profile .MuiInputLabel-formControl {
+  position: relative;
+}
+.edit-profile .MuiInputLabel-shrink {
+  transform: none !important;
+}
+.edit-profile label + .MuiInput-formControl {
+  margin-top: 0;
+}
+.edit-profile .MuiInputBase-input {
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1;
+  height: auto !important;
+  border: none;
+  min-width: 20px;
+  width: auto;
+  max-width: 200px;
+}
+.edit-profile .MuiInputLabel-marginDense {
+  transform: none !important;
+}
+.edit-profile .MuiInputLabel-animated {
+  transition: none !important;
+}
+.edit-profile .MuiInput-underline:before {
+  border: none !important;
+}
+.edit-profile .MuiSelect-select {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.edit-profile .MuiInputBase-root {
+  line-height: 1;
+}
+.edit-profile .MuiFormControl-root.makeStyles-formControl-1 {
+  margin: 0.3rem;
+}
+.edit-profile .MuiInput-underline:after {
+  border-bottom: 1px solid #DE9E48;
+}
+.edit-profile .MuiFormLabel-root.Mui-focused {
+  color: #DE9E48;
+}
+.edit-profile .MuiSelect-icon {
+  color: white;
+}
+.edit-profile button.w-100 {
+  background-color: white;
+  border: 2px solid #DE9E48;
+  border-radius: 5px;
+  width: 150px;
+  padding: 0.4rem 1.3rem;
+}
+.edit-profile #upload-button {
+  display: none;
+}
+.edit-profile #upload-img-label {
+  margin: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
+  padding: 0.3rem 1rem;
+}/*# sourceMappingURL=style.css.map */
