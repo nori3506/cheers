@@ -13,6 +13,8 @@ Table of Contents
 2.6. Forms
 2.7. Map
 2.8. Lists
+2.9. Profile
+2.10. Spinner
 */
 
 /* 1 Base =================== */
@@ -42,7 +44,10 @@ Table of Contents
 @import 'components/review';
 /* 2.8. Lists =============== */
 @import 'components/lists';
-
+/* 2.9. Profile =============== */
 @import 'components/profile';
+/* 2.10. Spinner =============== */
+@import 'components/spinner';
+
 
 //@import './components/index'; // shall be renamed or combined to another file
