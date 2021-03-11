@@ -4,166 +4,141 @@ $button-padding: .2rem 0 !important;
 
 /* shop basic info */
 .shop-basic-info {
-    width: 100%;
-    margin: 1rem auto auto;
-    background-color: rgba(0, 0, 0, .7);
-    border: 1px solid #DE9E48;
-    border-radius: 5px;
+  width: 100%;
+  margin: 1rem auto auto;
+  background-color: rgba(0, 0, 0, .7);
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
 
-    h2 {
-        font-size: 20px;
-        text-align: center;
-    }
+  h2 {
+    font-size: 20px;
+    text-align: center;
+  }
 }
-
-
 
 /* reviews */
 .review-wrapper {
-    background-color: #FDF9DF;
-    border: 1px solid $border-color;
-    border-radius: 5px;
-    padding: 0 1rem;
-    margin: 1.5rem 0;
+  background-color: #FDF9DF;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  padding: 0 1rem;
+  margin: 1.5rem 0;
 
+  .reviews-area {
+    border-bottom: 1px solid black;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    grid-template-rows:  auto 1fr auto;
+    grid-gap: .7rem;
+    padding: .7rem 0 .3rem 0;
 
-    .reviews-area {
-        border-bottom: 1px solid black;
-        font-size: 14px;
-        display: grid;
-        grid-template-columns: 52px 1fr;
-        grid-template-rows:  auto 1fr auto;
-        grid-gap: .7rem;
-        padding: .7rem 0 .3rem 0;
-    
-        p {
-            color: black;
-            margin: 0;
-        }
-    
-        .review-img {
-            border-radius: 50%;
-            border: 2px solid $border-color !important;
-            width: 50px;
-            height: 50px;
-            object-fit: cover; 
-            grid-column: 1 / span 1;
-            grid-row: 1 / span 1;
-        }
-    
-        div {
-            line-height: 1;
-            grid-column: 2 / -1;
-            grid-row: 1 / span 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-gap: .2rem;
+    p {
+      color: black;
+      margin: 0;
+    }
 
-    
-            .rating {
-                color: #DE9E48;
-                font-size: .8rem;
-                display: flex;
-                justify-content: flex-end;
-            }
-    
-            h2 {
-                font-size: 16px;
-                margin: 0;
-                grid-column: 1 / -1;
-                color: black;
-                display: flex;
-                flex-flow: row wrap;
-                align-items: center;
-            }
+    .review-img {
+      border-radius: 50%;
+      border: 2px solid $border-color !important;
+      width: 50px;
+      height: 50px;
+      object-fit: cover; 
+      grid-column: 1 / span 1;
+      grid-row: 1 / span 1;
+    }
 
-            /* only for profile page "at" in h2 */
-            .normal-font-weight {
-                font-weight: 400;
-            }
+    div {
+      line-height: 1;
+      grid-column: 2 / -1;
+      grid-row: 1 / span 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: .2rem;
 
-    
-        }
+      .rating {
+        color: #DE9E48;
+        font-size: .8rem;
+        display: flex;
+        justify-content: flex-end;
+      }
 
-    
-        .comment {
-            grid-row: 2 / span 1;
-            grid-column: 1 / -1;
+      h2 {
+        font-size: 16px;
+        margin: 0;
+        grid-column: 1 / -1;
+        color: black;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+      }
 
-            span {
-                color: #DE9E48;
-            }
-        }
+      /* only for profile page "at" in h2 */
+      .normal-font-weight {
+        font-weight: 400;
+      }
+    }
 
-    
-        .bottom-row {
-            grid-row: -1 / -2;
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: auto auto;
-    
-            .user-name {
-                font-weight: 600;
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-            }
-    
-            .delete-edit-wrapper {
-                display: flex;
-                justify-content: flex-end;
+    .comment {
+      grid-row: 2 / span 1;
+      grid-column: 1 / -1;
+      
+      span {
+        color: #DE9E48;
+      }
+    }
 
-                .MuiButtonBase-root {
-                    margin-bottom: .08rem !important;
-                    font-size: 14px !important;
-                    letter-spacing: 0 !important;
-                    background-color: $button-bgc !important;
-                    border: 2px solid $border-color !important;
-                    padding: $button-padding;
-                    width: 60px;
-                    height: 27px;
-                    font-weight: 400 !important;
-                    text-transform: none !important;
-                }
-                
-                .edit-button {
-                    font-size: .9rem;
-                    display: flex;
-                    font-size: 14px;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 0;
-                    border-radius: 4px;
-                    background-color: $button-bgc !important;
-                    border: 2px solid $border-color !important;
-                    padding: $button-padding;
-                    color: black !important;
-                    width: 60px;
-                    height: 27px;
-                
-                }
-            }
+    .bottom-row {
+      grid-row: -1 / -2;
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto auto;
+
+      .user-name {
+        font-weight: 600;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .delete-edit-wrapper {
+        display: flex;
+        justify-content: flex-end;
+
+        .MuiButtonBase-root {
+          margin-bottom: .08rem !important;
+          font-size: 14px !important;
+          letter-spacing: 0 !important;
+          background-color: $button-bgc !important;
+          border: 2px solid $border-color !important;
+          padding: $button-padding;
+          width: 60px;
+          height: 27px;
+          font-weight: 400 !important;
+          text-transform: none !important;
         }
         
-    
-        &:last-of-type, 
-        :last-of-type:first-of-type {
-            border: none;
+        .edit-button {
+          font-size: .9rem;
+          display: flex;
+          font-size: 14px;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+          border-radius: 4px;
+          background-color: $button-bgc !important;
+          border: 2px solid $border-color !important;
+          padding: $button-padding;
+          color: black !important;
+          width: 60px;
+          height: 27px;
         }
-    
+      }
     }
     
-    
-    
-    
-    
-    
+    &:last-of-type, 
+    :last-of-type:first-of-type {
+      border: none;
+    }
+  }
 }
-
-
-
-
-
-
-
-
