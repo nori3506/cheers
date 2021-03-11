@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 import { ButtonInput } from './UIkit'
 import firebase from "firebase/app";
+import { SpinnerCircular } from 'spinners-react';
 
 
 const DisplayReview = () => {
@@ -152,7 +153,7 @@ const DisplayReview = () => {
       </div>
     )
   } else {
-    return <div className="reviews-background u-text-center">No reviews are found</div>
+    return <div className="reviews-background u-text-center spinner-grid"><SpinnerCircular size={70} thickness={130} speed={117} color={"white"} secondaryColor={"black"} /></div>
   }
 }
 
