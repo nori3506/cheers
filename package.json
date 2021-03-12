@@ -23,6 +23,7 @@
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-spinners": "^0.10.6",
     "spinners-react": "^1.0.4",
     "web-vitals": "^0.2.4"
   },

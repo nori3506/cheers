@@ -5,6 +5,7 @@ import "firebase/firestore";
 import { db, storage } from '../firebase/index'
 import Automap from "./Automap"
 import drinkCategories from '../lib/drinkCategories'
+import placeCategories from '../lib/placeCategories'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Imageupload from './imageUpload'
 
@@ -15,7 +16,8 @@ export default function CreateReview() {
   const [price, setPrice] = useState("");
   const [rating, setRating] = useState(3);
   const [comment, setComment] = useState("");
-  const [drinkCategory, setDrinkCategory] = useState("");
+  const [drinkCategory, setDrinkCategory] = useState("Others");
+  const [shopCategory, setShopCategory] = useState("");
   const [geoCode, setGeoCode] = useState([]);
   const [address, setAddress] = useState("");
   const [image, setImage] = useState(null);
@@ -41,6 +43,7 @@ export default function CreateReview() {
       rating: rating,
       comment: comment,
       drink_category: drinkCategory,
+      shop_category: shopCategory,
       user: userRef,
       shop: existShop,
       fullPath: fullPath,
@@ -67,7 +70,8 @@ export default function CreateReview() {
       price: price,
       rating: rating,
       comment: comment,
-      drinkcategory: drinkCategory,
+      drink_category: drinkCategory,
+      shop_category: shopCategory,
       user: userRef,
       shop: shopRef,
       fullPath: fullPath,
@@ -117,12 +121,16 @@ export default function CreateReview() {
     setDrinkCategory(event.target.value)
   }
 
+  const inputShopCategory = (event) =>{
+    setShopCategory(event.target.value)
+  }
+
   const inputPrice = (event) =>{
-    setPrice(event.target.value)
+    setPrice(parseInt(event.target.value))
   }
 
   const inputRating = (event) =>{
-    setRating(event.target.value)
+    setRating(parseInt(event.target.value))
   }
 
   const handleChange = address => {
@@ -148,6 +156,16 @@ export default function CreateReview() {
       <form className ='review_form' onSubmit={handleSubmit} >
         {/* <p>Drink name*</p> */}
         <input required  className= 'drink_name' placeholder='What did you drink?'name="drink_name" onChange={inputDrinkName} />
+
+        <select  className= 'shop_category' onChange={inputShopCategory}>
+          <option value="">What is the type of the shop?</option>
+          {placeCategories.map(category => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+
 
         {/* <p>Shop*</p> */}
         <PlacesAutocomplete
@@ -200,7 +218,7 @@ export default function CreateReview() {
           ))}
         </select>
         {/* <p>Price</p> */}
-        <input  className= 'price' onChange={inputPrice}　placeholder='How much did it cost?' />
+        <input  className= 'price' maxlength="5" onChange={inputPrice}　placeholder='How much did it cost?' />
         {/* <p>Rating</p> */}
         <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} />
         {/* <p>Comment</p> */}
