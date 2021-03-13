@@ -13,7 +13,7 @@ const shopsRef = db.collection('shops')
 export default function CreateReview() {
   const [drinkName, setDrinkName] = useState("");
   const [price, setPrice] = useState("");
-  const [rating, setRating] = useState();
+  const [rating, setRating] = useState(3);
   const [comment, setComment] = useState("");
   const [drinkCategory, setDrinkCategory] = useState("");
   const [geoCode, setGeoCode] = useState([]);
