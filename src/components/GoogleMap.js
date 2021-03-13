@@ -78,7 +78,7 @@ function Map(props) {
         {/* Child components, such as shops, info windows, etc. */}
         {shopsOnMap.map(shop => (
           <Marker
-            key={shop.ref}
+            key={shop.name}
             position={{
               lat: shop.geocode.latitude,
               lng: shop.geocode.longitude,

@@ -48,6 +48,7 @@ export default function Home({ title, setTitle }) {
       reviewsQuery = reviewsRef
         .where('drink_category', '==', drinkCategory)
         .where('price', '>=', priceMin)
+      console.log(priceMin)
     } else if (priceMax) {
       reviewsQuery = reviewsRef.where('price', '<=', priceMax).where('price', '>=', priceMin)
     } else {
@@ -57,19 +58,19 @@ export default function Home({ title, setTitle }) {
     let shopsQuery
     if (placeCategory) {
       shopsQuery = shopsRef.where('category', '==', placeCategory)
+      console.log(shopsQuery, placeCategory)
     } else {
       shopsQuery = shopsRef
     }
 
     let newReviews = []
     let newShops = []
-
     Promise.all([reviewsQuery.get(), shopsQuery.get()])
       .then(snapshots => {
         snapshots[0].forEach(newReview => {
           if (
-            newReview.data().shop && // this line to be removed once data structure set up
-            newReview.data().drink_name && // this line to be removed once data structure set up
+            // newReview.data().shop && // this line to be removed once data structure set up
+            // newReview.data().drink_name && // this line to be removed once data structure set up
             newReview.data().drink_name.toLowerCase().includes(drink)
           ) {
             newReviews.push({ ref: newReview.ref, ...newReview.data() })
@@ -78,7 +79,7 @@ export default function Home({ title, setTitle }) {
 
         snapshots[1].forEach(newShop => {
           if (
-            newShop.data().name && // this line to be removed once data structure set up
+            // newShop.data().name && // this line to be removed once data structure set up
             newShop.data().name.toLowerCase().includes(place)
           ) {
             newShops.push({ ref: newShop.ref, ...newShop.data() })
@@ -97,7 +98,7 @@ export default function Home({ title, setTitle }) {
         })
 
         const shopsMatchReview = newShops
-          .map((shop, i) => {
+          .map(shop => {
             let reviewNum = 0
             reviewsMatchShop.forEach(review => {
               if (review.shop && review.shop.isEqual(shop.ref)) {
