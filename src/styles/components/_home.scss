@@ -52,6 +52,9 @@
     color: black;
 
     p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       margin: 0.5rem 0;
     }
   }
@@ -80,7 +83,7 @@
       .shop-category {
         display: flex;
         justify-content: center;
-        width: 36px;
+        flex: 0 0 36px;
 
         .shop-category-icon--bar {
           height: 36px;
@@ -99,6 +102,13 @@
 
       .shop-info {
         flex-grow: 1;
+        overflow: hidden;
+
+        p {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
       .shop-review {

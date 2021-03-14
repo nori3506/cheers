@@ -578,6 +578,9 @@ footer .nav-link--home {
 }
 
 .home .info-window p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0.5rem 0;
 }
 
@@ -617,7 +620,9 @@ footer .nav-link--home {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 36px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 36px;
+          flex: 0 0 36px;
 }
 
 .home .shop-list .shop-list-item a .shop-category .shop-category-icon--bar {
@@ -640,6 +645,13 @@ footer .nav-link--home {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  overflow: hidden;
+}
+
+.home .shop-list .shop-list-item a .shop-info p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .home .shop-list .shop-list-item a .shop-review {
