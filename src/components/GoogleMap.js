@@ -123,39 +123,35 @@ function Map(props) {
         ) : null}
       </GoogleMap>
 
-      <div>
-        <ul className="map__shop-list">
-          {shopsOnMap.map(shop => (
-            <li
-              className="map__shop-list__item"
-              key={shop.ref.id}
-              onClick={() => setSelected(shop)}
-              style={{ cursor: 'pointer' }}
-            >
-              <Link to={'shop/' + shop.ref.id}>
-                <div className="map__shop-list__item__wrapper">
-                  <div className="map__shop-list__item__cagegory">
-                    {shop.category === 'Bar' ? (
-                      <img src={barIcon} alt="bar" className="map__shop-list__item__icon" />
-                    ) : shop.category === 'Restaurant' ? (
-                      <img src={restaurantIcon} alt="bar" className="map__shop-list__item__icon" />
-                    ) : shop.category === 'Liquor Store' ? (
-                      <img src={storeIcon} alt="bar" className="map__shop-list__item__icon" />
-                    ) : null}
-                  </div>
-                  <div className="map__shop-list__item__info">
-                    <h2>{shop.name}</h2>
-                    <p>shop address</p>
-                  </div>
-                  <div className="map__shop-list__item__review-number">
-                    <p>{shop.reviewNum}</p>
-                  </div>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul className="shop-list">
+        {shopsOnMap.map(shop => (
+          <li
+            className="shop-list-item"
+            key={shop.ref.id}
+            onClick={() => setSelected(shop)}
+            style={{ cursor: 'pointer' }}
+          >
+            <Link to={'shop/' + shop.ref.id}>
+              <div>
+                {shop.category === 'Bar' ? (
+                  <img src={barIcon} alt="bar" className="shop-category-icon" />
+                ) : shop.category === 'Restaurant' ? (
+                  <img src={restaurantIcon} alt="bar" className="shop-category-icon" />
+                ) : shop.category === 'Liquor Store' ? (
+                  <img src={storeIcon} alt="bar" className="shop-category-icon" />
+                ) : null}
+              </div>
+              <div className="shop-info">
+                <h2>{shop.name}</h2>
+                <p>shop address</p>
+              </div>
+              <div className="shop-review-number">
+                <p>{shop.reviewNum}</p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }

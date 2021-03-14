@@ -1,24 +1,29 @@
 header {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: $header-height;
   background-color: $main-color;
   z-index: 1000;
-}
 
-.header__wrapper {
-  height: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-content: center;
-  // position: relative;
-}
+  .wrapper {
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: center;
+  }
 
-.header__title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: 0;
-  transform: translate(-50%, -50%);
+  .page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  img {
+    width: 28px;
+  }
 }
