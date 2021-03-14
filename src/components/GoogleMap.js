@@ -8,7 +8,7 @@ import markerIcon from '../assets/icons/location.svg'
 
 const containerStyle = {
   width: '100%',
-  height: '240px',
+  height: '250px',
   borderRadius: '4px',
 }
 

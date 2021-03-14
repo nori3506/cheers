@@ -6,7 +6,7 @@ Table of Contents
 2. Components
 2.1. Login
 2.2. Signup
-2.3. 
+2.3. Header
 2.4. Footer
 2.5. Home
 2.6. Create Review
@@ -27,6 +27,7 @@ Table of Contents
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 html {
   line-height: 1.15;
   /* 1 */
@@ -105,7 +106,7 @@ abbr[title] {
   text-decoration: underline;
   /* 2 */
   -webkit-text-decoration: underline dotted;
-  text-decoration: underline dotted;
+          text-decoration: underline dotted;
   /* 2 */
 }
 
@@ -287,12 +288,8 @@ textarea {
  */
 [type='checkbox'],
 [type='radio'] {
-<<<<<<< HEAD
-  box-sizing: border-box;
-=======
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
->>>>>>> main
   /* 1 */
   padding: 0;
   /* 2 */
@@ -374,10 +371,9 @@ template {
 }
 
 body {
-  font-family: helvetica, arial, sans-serif;
+  font-family: 'Roboto', helvetica, arial, sans-serif;
   background-color: #3d1600;
   color: white;
-  font-size: 14px;
 }
 
 ul {
@@ -394,7 +390,7 @@ a {
 }
 
 .wrapper {
-  padding: 0 2%;
+  padding: 0 1.5rem;
 }
 
 .container {
@@ -439,6 +435,7 @@ header .page-title {
   margin: 0;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  font-size: 18px;
 }
 
 header img {
@@ -848,7 +845,6 @@ input::placeholder {
           flex-flow: column nowrap;
   gap: 1rem;
   padding: 1rem;
-  font-size: 16px;
 }
 
 .search-form__label {
@@ -915,16 +911,6 @@ input::placeholder {
   background-color: #3d1600;
   border-radius: 10px;
 }
-<<<<<<< HEAD
-.review_form .drink_name::-moz-placeholder,
-.review_form .location-search-input::-moz-placeholder,
-.review_form .drink_image::-moz-placeholder,
-.review_form .price::-moz-placeholder,
-.review_form .rating::-moz-placeholder,
-.review_form .comment::-moz-placeholder {
-  color: white;
-}
-=======
 
 .review_form .drink_name::-webkit-input-placeholder,
 .review_form .location-search-input::-webkit-input-placeholder,
@@ -935,7 +921,6 @@ input::placeholder {
   color: white;
 }
 
->>>>>>> main
 .review_form .drink_name:-ms-input-placeholder,
 .review_form .location-search-input:-ms-input-placeholder,
 .review_form .drink_image:-ms-input-placeholder,
@@ -1079,13 +1064,6 @@ input::placeholder {
 }
 
 /* Archives (to be removed) */
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -1139,7 +1117,7 @@ code {
   width: 100%;
   margin: 1rem auto auto;
   background-color: rgba(0, 0, 0, 0.7);
-  border: 1px solid #de9e48;
+  border: 1px solid #DE9E48;
   border-radius: 5px;
 }
 
@@ -1150,8 +1128,8 @@ code {
 
 /* reviews */
 .review-wrapper {
-  background-color: #fdf9df;
-  border: 1px solid #de9e48;
+  background-color: #FDF9DF;
+  border: 1px solid #DE9E48;
   border-radius: 5px;
   padding: 0 1rem;
   margin: 1.5rem 0;
@@ -1177,36 +1155,26 @@ code {
 
 .review-wrapper .reviews-area .review-img {
   border-radius: 50%;
-  border: 2px solid #de9e48 !important;
+  border: 2px solid #DE9E48 !important;
   width: 50px;
   height: 50px;
   -o-object-fit: cover;
-<<<<<<< HEAD
-  object-fit: cover;
-  grid-column: 1 / span 1;
-=======
      object-fit: cover;
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1 / span 1;
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
->>>>>>> main
   grid-row: 1 / span 1;
 }
 
 .review-wrapper .reviews-area div {
   line-height: 1;
-<<<<<<< HEAD
-  grid-column: 2/-1;
-  grid-row: 1 / span 1;
-=======
   grid-column: 2 / -1;
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / span 1;
   display: -ms-grid;
->>>>>>> main
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr;
       grid-template-columns: 1fr 1fr 1fr;
@@ -1215,15 +1183,10 @@ code {
 }
 
 .review-wrapper .reviews-area div .rating {
-<<<<<<< HEAD
-  color: #de9e48;
-  font-size: 0.8rem;
-=======
   color: #DE9E48;
   font-size: .8rem;
   display: -webkit-box;
   display: -ms-flexbox;
->>>>>>> main
   display: flex;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
@@ -1252,19 +1215,14 @@ code {
 }
 
 .review-wrapper .reviews-area .comment {
-<<<<<<< HEAD
-  grid-row: 2 / span 1;
-  grid-column: 1/-1;
-=======
   -ms-grid-row: 2;
   -ms-grid-row-span: 1;
   grid-row: 2 / span 1;
   grid-column: 1 / -1;
->>>>>>> main
 }
 
 .review-wrapper .reviews-area .comment span {
-  color: #de9e48;
+  color: #DE9E48;
 }
 
 .review-wrapper .reviews-area .bottom-row {
@@ -1303,7 +1261,7 @@ code {
   font-size: 14px !important;
   letter-spacing: 0 !important;
   background-color: white !important;
-  border: 2px solid #de9e48 !important;
+  border: 2px solid #DE9E48 !important;
   padding: 0.2rem 0 !important;
   width: 60px;
   height: 27px;
@@ -1326,7 +1284,7 @@ code {
   margin: 0;
   border-radius: 4px;
   background-color: white !important;
-  border: 2px solid #de9e48 !important;
+  border: 2px solid #DE9E48 !important;
   padding: 0.2rem 0 !important;
   color: black !important;
   width: 60px;
@@ -1337,170 +1295,4 @@ code {
 .review-wrapper .reviews-area :last-of-type:first-of-type {
   border: none;
 }
-<<<<<<< HEAD
-
-/* 2.8. Lists =============== */
-.review-list {
-  color: black;
-}
-
-.map__shop-list {
-  border: 1px solid #de9e48;
-  border-radius: 4px;
-  padding: 0 1rem;
-  background-color: #fdf9df;
-  color: black;
-}
-
-.map__shop-list__item:not(:last-child) {
-  border-bottom: 2px solid #de9e48;
-}
-
-.map__shop-list__item__wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.map__shop-list__item__icon {
-  width: 24px;
-}
-
-.map__shop-list__item__info {
-  flex-grow: 1;
-}
-
-.map__shop-list__item__review-number {
-  text-align: right;
-  font-size: 32px;
-  color: #de9e48;
-}
-
-/* 2.9. Profile =============== */
-.edit-profile {
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  border: 1px solid #de9e48;
-  border-radius: 5px;
-  padding: 65px 0.5rem 1rem 0.5rem;
-  position: relative;
-  margin-top: 65px;
-}
-.edit-profile img.w-100 {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  border: 1px solid #de9e48;
-  position: absolute;
-  bottom: calc(100% - 65px);
-}
-.edit-profile input,
-.edit-profile label {
-  color: white;
-}
-.edit-profile label {
-  padding-right: 0.5rem;
-}
-.edit-profile .MuiFormControl-fullWidth {
-  width: auto !important;
-}
-.edit-profile .MuiFormLabel-root {
-  font-size: 0.9rem;
-  font-weight: 300 !important;
-}
-.edit-profile .MuiFormControl-root {
-  display: flex !important;
-  flex-flow: row nowrap !important;
-  justify-content: center;
-  height: 19px;
-  align-items: center;
-  margin: 0.3rem;
-}
-.edit-profile .MuiInputBase-fullWidth {
-  min-width: 20px !important;
-  max-width: 100px;
-}
-.edit-profile .MuiInputLabel-formControl {
-  position: relative;
-}
-.edit-profile .MuiInputLabel-shrink {
-  transform: none !important;
-}
-.edit-profile label + .MuiInput-formControl {
-  margin-top: 0;
-}
-.edit-profile .MuiInputBase-input {
-  padding: 0;
-  font-size: 0.9rem;
-  font-weight: 300;
-  line-height: 1;
-  height: auto !important;
-  border: none;
-  min-width: 20px;
-  width: auto;
-  max-width: 200px;
-}
-.edit-profile .MuiInputLabel-marginDense {
-  transform: none !important;
-}
-.edit-profile .MuiInputLabel-animated {
-  transition: none !important;
-}
-.edit-profile .MuiInput-underline:before {
-  border: none !important;
-}
-.edit-profile .MuiSelect-select {
-  color: white;
-  display: flex;
-  align-items: center;
-}
-.edit-profile .MuiInputBase-root {
-  line-height: 1;
-}
-.edit-profile .MuiFormControl-root.makeStyles-formControl-1 {
-  margin: 0.3rem;
-}
-.edit-profile .MuiInput-underline:after {
-  border-bottom: 1px solid #de9e48;
-}
-.edit-profile .MuiFormLabel-root.Mui-focused {
-  color: #de9e48;
-}
-.edit-profile .MuiSelect-icon {
-  color: white;
-}
-.edit-profile button.w-100 {
-  background-color: white;
-  border: 2px solid #de9e48;
-  border-radius: 5px;
-  width: 150px;
-  padding: 0.4rem 1.3rem;
-}
-.edit-profile #upload-button {
-  display: none;
-}
-.edit-profile #upload-img-label {
-  margin: 0.5rem;
-  text-align: center;
-  font-size: 0.8rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  border: 1px solid #de9e48;
-  border-radius: 5px;
-  padding: 0.3rem 1rem;
-}
-
-/* 2.10. Spinner =============== */
-.spinner-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} /*# sourceMappingURL=style.css.map */
-=======
 /*# sourceMappingURL=style.css.map */
->>>>>>> main

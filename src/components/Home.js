@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import Map from './GoogleMap'
+import Header from './Header'
+import Footer from './Footer'
 import Login from '../templates/Login'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
@@ -153,77 +155,87 @@ export default function Home({ title, setTitle }) {
 
   if (currentUser) {
     return (
-      <div className="home">
-        <div className="search-link">
-          <div className="search-icon">
-            <img src={searchIcon} alt="search" />
+      <>
+        <Header />
+        <div className="container wrapper">
+          <div className="home">
+            <div className="search-link">
+              <div className="search-icon">
+                <img src={searchIcon} alt="search" />
+              </div>
+              <input
+                type="text"
+                placeholder="search"
+                onClick={handleModalOpen}
+                className="search-box"
+              />
+            </div>
+
+            {modalOpen ? (
+              <div className="overlay">
+                <form onSubmit={handleSearch} className="search-form">
+                  <input
+                    type="text"
+                    placeholder="Drink Name"
+                    value={drink}
+                    onChange={handleDrinkChange}
+                  />
+                  <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
+                    <option value="">Select Drink Category</option>
+                    {drinkCategories.map(category => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Place Name"
+                    value={place}
+                    onChange={handlePlaceChange}
+                  />
+                  <select value={placeCategory} onChange={handlePlaceCategoryChange}>
+                    <option value="">Select Place Category</option>
+                    {placeCategories.map(category => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  <label className="search-form__label">
+                    Price max
+                    <input
+                      type="number"
+                      placeholder="Max"
+                      value={priceMax}
+                      onChange={handlePriceMaxChange}
+                    />
+                  </label>
+                  <label className="search-form__label">
+                    Price min
+                    <input type="number" value={priceMin} onChange={handlePriceMinChange} />
+                  </label>
+                  <button className="btn--primary" type="submit" disabled={disabled}>
+                    search
+                  </button>
+                  <button className="btn--secondary" onClick={() => setModalOpen(false)}>
+                    Close
+                  </button>
+                </form>
+              </div>
+            ) : null}
+
+            <Map shops={shops} reviews={reviews} className="mapdayo" />
           </div>
-          <input
-            type="text"
-            placeholder="search"
-            onClick={handleModalOpen}
-            className="search-box"
-          />
         </div>
-
-        {modalOpen ? (
-          <div className="overlay">
-            <form onSubmit={handleSearch} className="search-form">
-              <input
-                type="text"
-                placeholder="Drink Name"
-                value={drink}
-                onChange={handleDrinkChange}
-              />
-              <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
-                <option value="">Select Drink Category</option>
-                {drinkCategories.map(category => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="text"
-                placeholder="Place Name"
-                value={place}
-                onChange={handlePlaceChange}
-              />
-              <select value={placeCategory} onChange={handlePlaceCategoryChange}>
-                <option value="">Select Place Category</option>
-                {placeCategories.map(category => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-              <label className="search-form__label">
-                Price max
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={priceMax}
-                  onChange={handlePriceMaxChange}
-                />
-              </label>
-              <label className="search-form__label">
-                Price min
-                <input type="number" value={priceMin} onChange={handlePriceMinChange} />
-              </label>
-              <button className="btn--primary" type="submit" disabled={disabled}>
-                search
-              </button>
-              <button className="btn--secondary" onClick={() => setModalOpen(false)}>
-                Close
-              </button>
-            </form>
-          </div>
-        ) : null}
-
-        <Map shops={shops} reviews={reviews} className="mapdayo" />
-      </div>
+        <Footer />
+      </>
     )
   } else {
-    return <Login />
+    return (
+      <div className="wrapper">
+        <Login />
+      </div>
+    )
   }
 }
