@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import barIcon from '../assets/icons/rest-icon.svg'
 import restaurantIcon from '../assets/icons/beer.svg'
 import storeIcon from '../assets/icons/store.svg'
-import markerIcon from '../assets/icons/location.svg'
+import markerIcon from '../assets/icons/pin.svg'
 
 const containerStyle = {
   width: '100%',
@@ -107,17 +107,10 @@ function Map(props) {
             }}
           >
             <div className="info-window">
-              <h2>{selected.name}</h2>
-              {reviews
-                .filter(review => selected.ref.isEqual(review.shop))
-                .map((review, i) => (
-                  <div key={review.ref.id}>
-                    <p>{review.drink_name}</p>
-                    <p>{review.drink_category}</p>
-                    <p>${review.price}</p>
-                    <p>{review.comment}</p>
-                  </div>
-                ))}
+              <Link to={'shop/' + selected.ref.id}>
+                <p className="shop-name">{selected.name}</p>
+                <p className="shop-address">{selected.address}</p>
+              </Link>
             </div>
           </InfoWindow>
         ) : null}
@@ -125,28 +118,27 @@ function Map(props) {
 
       <ul className="shop-list">
         {shopsOnMap.map(shop => (
-          <li
-            className="shop-list-item"
-            key={shop.ref.id}
-            onClick={() => setSelected(shop)}
-            style={{ cursor: 'pointer' }}
-          >
+          <li className="shop-list-item" key={shop.ref.id} onClick={() => setSelected(shop)}>
             <Link to={'shop/' + shop.ref.id}>
-              <div>
+              <div className="shop-category">
                 {shop.category === 'Bar' ? (
-                  <img src={barIcon} alt="bar" className="shop-category-icon" />
+                  <img src={barIcon} alt="bar" className="shop-category-icon--bar" />
                 ) : shop.category === 'Restaurant' ? (
-                  <img src={restaurantIcon} alt="bar" className="shop-category-icon" />
+                  <img
+                    src={restaurantIcon}
+                    alt="restaurant"
+                    className="shop-category-icon--restaurant"
+                  />
                 ) : shop.category === 'Liquor Store' ? (
-                  <img src={storeIcon} alt="bar" className="shop-category-icon" />
+                  <img src={storeIcon} alt="liquor store" className="shop-category-icon--store" />
                 ) : null}
               </div>
               <div className="shop-info">
-                <h2>{shop.name}</h2>
-                <p>shop address</p>
+                <p className="shop-name">{shop.name}</p>
+                <p className="shop-address">{shop.address}</p>
               </div>
-              <div className="shop-review-number">
-                <p>{shop.reviewNum}</p>
+              <div className="shop-review">
+                <p className="shop-review-number">{shop.reviewNum}</p>
               </div>
             </Link>
           </li>

@@ -564,8 +564,21 @@ footer .nav-link--home {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.home .shop-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.home .shop-address {
+  font-size: 14px;
+}
+
 .home .info-window {
   color: black;
+}
+
+.home .info-window p {
+  margin: 0.5rem 0;
 }
 
 .home .shop-list {
@@ -576,11 +589,11 @@ footer .nav-link--home {
   color: black;
 }
 
-.home .shop-list-item:not(:last-child) {
+.home .shop-list .shop-list-item:not(:last-child) {
   border-bottom: 2px solid #de9e48;
 }
 
-.home .shop-list-item a {
+.home .shop-list .shop-list-item a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -593,19 +606,45 @@ footer .nav-link--home {
   gap: 1rem;
 }
 
-.home .shop-category-icon {
-  width: 24px;
+.home .shop-list .shop-list-item a p {
+  margin: 0.5rem 0;
 }
 
-.home .shop-info {
+.home .shop-list .shop-list-item a .shop-category {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 36px;
+}
+
+.home .shop-list .shop-list-item a .shop-category .shop-category-icon--bar {
+  height: 36px;
+  -webkit-transform: translateX(2px);
+          transform: translateX(2px);
+}
+
+.home .shop-list .shop-list-item a .shop-category .shop-category-icon--restaurant {
+  height: 30px;
+  -webkit-transform: translateX(3px);
+          transform: translateX(3px);
+}
+
+.home .shop-list .shop-list-item a .shop-category .shop-category-icon--store {
+  height: 28px;
+}
+
+.home .shop-list .shop-list-item a .shop-info {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
-.home .shop-review-number {
+.home .shop-list .shop-list-item a .shop-review {
   text-align: right;
-  font-size: 32px;
+  font-size: 22px;
   color: #de9e48;
 }
 
