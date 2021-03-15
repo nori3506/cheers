@@ -28,9 +28,8 @@ function Map(props) {
     libraries,
   })
 
-  const { shops } = props
+  const { shops, loadingData, loadingCurrentLocation, setLoadingCurrentLocation } = props
 
-  const [loading, setLoading] = useState(true)
   const [center, setCenter] = useState()
   const [bounds, setBounds] = useState(null)
   const [shopsOnMap, setShopsOnMap] = useState(shops)
@@ -64,11 +63,11 @@ function Map(props) {
     navigator.geolocation.getCurrentPosition(
       position => {
         setCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
-        setLoading(false)
+        setLoadingCurrentLocation(false)
       },
       () => {
         setCenter({ lat: 49.282729, lng: -123.120738 })
-        setLoading(false)
+        setLoadingCurrentLocation(false)
       }
     )
   }, [])
@@ -76,7 +75,7 @@ function Map(props) {
   if (loadError) return 'Error loading map'
   if (!isLoaded) return 'Loading map'
 
-  if (loading) return <Loading />
+  if (loadingData || loadingCurrentLocation) return <Loading />
 
   return (
     <>

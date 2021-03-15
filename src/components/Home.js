@@ -25,6 +25,8 @@ export default function Home({ title, setTitle }) {
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [disabled, setDisabled] = useState(true)
+  const [loadingData, setLoadingData] = useState(true)
+  const [loadingCurrentLocation, setLoadingCurrentLocation] = useState(true)
 
   const handleModalOpen = () => setModalOpen(true)
   const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
@@ -37,6 +39,7 @@ export default function Home({ title, setTitle }) {
     e.preventDefault()
     setModalOpen(false)
     setDisabled(true)
+    setLoadingData(true)
     setReviews([])
     setShops([])
 
@@ -114,10 +117,12 @@ export default function Home({ title, setTitle }) {
         setReviews(reviewsMatchShop)
         setShops(shopsMatchReview)
         setDisabled(false)
+        setLoadingData(false)
       })
       .catch(error => {
         console.log('Failed to search: ', error)
         setDisabled(false)
+        setLoadingData(false)
       })
   }
 
@@ -150,6 +155,7 @@ export default function Home({ title, setTitle }) {
       setReviews(newReviews)
       setShops(shopsWithReviewNum)
       setDisabled(false)
+      setLoadingData(false)
     })
   }, [])
 
@@ -225,7 +231,12 @@ export default function Home({ title, setTitle }) {
               </div>
             ) : null}
 
-            <Map shops={shops} />
+            <Map
+              shops={shops}
+              loadingData={loadingData}
+              loadingCurrentLocation={loadingCurrentLocation}
+              setLoadingCurrentLocation={setLoadingCurrentLocation}
+            />
           </div>
         </div>
         <Footer />
