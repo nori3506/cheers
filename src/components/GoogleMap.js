@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 import { Link } from 'react-router-dom'
+import Loading from './Loading'
 import barIcon from '../assets/icons/rest-icon.svg'
 import restaurantIcon from '../assets/icons/beer.svg'
 import storeIcon from '../assets/icons/store.svg'
@@ -27,8 +28,9 @@ function Map(props) {
     libraries,
   })
 
-  const { shops, reviews } = props
+  const { shops } = props
 
+  const [loading, setLoading] = useState(true)
   const [center, setCenter] = useState()
   const [bounds, setBounds] = useState(null)
   const [shopsOnMap, setShopsOnMap] = useState(shops)
@@ -60,13 +62,21 @@ function Map(props) {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      position => setCenter({ lat: position.coords.latitude, lng: position.coords.longitude }),
-      () => setCenter({ lat: 49.282729, lng: -123.120738 })
+      position => {
+        setCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
+        setLoading(false)
+      },
+      () => {
+        setCenter({ lat: 49.282729, lng: -123.120738 })
+        setLoading(false)
+      }
     )
   }, [])
 
   if (loadError) return 'Error loading map'
   if (!isLoaded) return 'Loading map'
+
+  if (loading) return <Loading />
 
   return (
     <>
@@ -119,34 +129,40 @@ function Map(props) {
         ) : null}
       </GoogleMap>
 
-      <ul className="shop-list">
-        {shopsOnMap.map(shop => (
-          <li className="shop-list-item" key={shop.ref.id} onClick={() => setSelected(shop)}>
-            <Link to={'shop/' + shop.ref.id}>
-              <div className="shop-category">
-                {shop.category === 'Bar' ? (
-                  <img src={barIcon} alt="bar" className="shop-category-icon--bar" />
-                ) : shop.category === 'Restaurant' ? (
-                  <img
-                    src={restaurantIcon}
-                    alt="restaurant"
-                    className="shop-category-icon--restaurant"
-                  />
-                ) : shop.category === 'Liquor Store' ? (
-                  <img src={storeIcon} alt="liquor store" className="shop-category-icon--store" />
-                ) : null}
-              </div>
-              <div className="shop-info">
-                <p className="shop-name">{shop.name}</p>
-                <p className="shop-address">{shop.address}</p>
-              </div>
-              <div className="shop-review">
-                <p className="shop-review-number">{shop.reviewNum}</p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {shopsOnMap.length === 0 ? (
+        <div>
+          <p>No restaurant, bar, or liquor store found</p>
+        </div>
+      ) : (
+        <ul className="shop-list">
+          {shopsOnMap.map(shop => (
+            <li className="shop-list-item" key={shop.ref.id} onClick={() => setSelected(shop)}>
+              <Link to={'shop/' + shop.ref.id}>
+                <div className="shop-category">
+                  {shop.category === 'Bar' ? (
+                    <img src={barIcon} alt="bar" className="shop-category-icon--bar" />
+                  ) : shop.category === 'Restaurant' ? (
+                    <img
+                      src={restaurantIcon}
+                      alt="restaurant"
+                      className="shop-category-icon--restaurant"
+                    />
+                  ) : shop.category === 'Liquor Store' ? (
+                    <img src={storeIcon} alt="liquor store" className="shop-category-icon--store" />
+                  ) : null}
+                </div>
+                <div className="shop-info">
+                  <p className="shop-name">{shop.name}</p>
+                  <p className="shop-address">{shop.address}</p>
+                </div>
+                <div className="shop-review">
+                  <p className="shop-review-number">{shop.reviewNum}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   )
 }

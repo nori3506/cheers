@@ -225,7 +225,7 @@ export default function Home({ title, setTitle }) {
               </div>
             ) : null}
 
-            <Map shops={shops} reviews={reviews} className="mapdayo" />
+            <Map shops={shops} />
           </div>
         </div>
         <Footer />
