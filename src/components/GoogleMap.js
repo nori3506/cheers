@@ -17,11 +17,6 @@ const options = {
   zoomControl: true,
 }
 
-const center = {
-  lat: 49.282729,
-  lng: -123.120738,
-}
-
 const zoom = 11
 
 const libraries = ['places']
@@ -34,6 +29,7 @@ function Map(props) {
 
   const { shops, reviews } = props
 
+  const [center, setCenter] = useState()
   const [bounds, setBounds] = useState(null)
   const [shopsOnMap, setShopsOnMap] = useState(shops)
   const [selected, setSelected] = useState(null)
@@ -61,6 +57,13 @@ function Map(props) {
       setShopsOnMap(newShopsOnMap)
     }
   }, [shops, bounds])
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => setCenter({ lat: position.coords.latitude, lng: position.coords.longitude }),
+      () => setCenter({ lat: 49.282729, lng: -123.120738 })
+    )
+  }, [])
 
   if (loadError) return 'Error loading map'
   if (!isLoaded) return 'Loading map'
