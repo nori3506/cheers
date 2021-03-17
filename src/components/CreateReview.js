@@ -28,6 +28,7 @@ export default function CreateReview() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("")
   const [error, setError] = useState('');
+  const [isCreating, setIsCreating] = useState(false);
   const history = useHistory();
 
   let currentUserUid = firebase.auth().currentUser.uid;
@@ -85,11 +86,12 @@ export default function CreateReview() {
     history.push( '/shop/'+randomID)
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    setIsCreating(true)
     try {
       let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]));
-      shopsRef.get().then(querySnapshot => {
+      await shopsRef.get().then(querySnapshot => {
         let isExistShop = false
         let existShop
         querySnapshot.forEach(shop => {
@@ -107,8 +109,9 @@ export default function CreateReview() {
       })
     } catch {
       setError('Please set correct Shop Name')
+    } finally {
+      setIsCreating(false)
     }
-
   }
 
   const inputDrinkName = (event) =>{
@@ -251,10 +254,10 @@ export default function CreateReview() {
         <input
         className= 'submit btn-primary'
           type='submit'
-          value='Submit'
+          value={ isCreating ? "Creating..." : 'Submit'}
           style={{ display: "block" }}
+          disabled ={isCreating ? true : false}
         />
-
       </form>
     </>
   )
