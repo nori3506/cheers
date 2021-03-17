@@ -28,13 +28,13 @@ export default function Header({ title }) {
 
   switch (location.pathname) {
     case '/':
-      pageTitle = 'Home'
+      pageTitle = 'Find reviews'
       break
     case '/CreateReview':
-      pageTitle = 'New Review'
+      pageTitle = 'Add a review'
       break
     case '/profile':
-      pageTitle = 'Profile'
+      pageTitle = 'Your profile'
       break
     default:
       if (location.pathname.includes('/shop')) {
