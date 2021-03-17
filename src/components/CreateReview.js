@@ -68,7 +68,8 @@ export default function CreateReview() {
     db.collection('shops').doc(randomID).set({
       name: shopName,
       address: formattedAddress,
-      geocode: formatGeoCode
+      geocode: formatGeoCode,
+      category: shopCategory
     })
     let shopRef = db.collection('shops').doc(randomID)
     let userRef = db.collection('users').doc(currentUserUid)
