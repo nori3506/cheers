@@ -1,25 +1,21 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 import { Link } from 'react-router-dom'
+import Loading from './Loading'
 import barIcon from '../assets/icons/rest-icon.svg'
 import restaurantIcon from '../assets/icons/beer.svg'
 import storeIcon from '../assets/icons/store.svg'
-import markerIcon from '../assets/icons/location.svg'
+import markerIcon from '../assets/icons/pin.svg'
 
 const containerStyle = {
   width: '100%',
-  height: '240px',
+  height: '250px',
   borderRadius: '4px',
 }
 
 const options = {
   disableDefaultUI: true,
   zoomControl: true,
-}
-
-const center = {
-  lat: 49.282729,
-  lng: -123.120738,
 }
 
 const zoom = 11
@@ -32,8 +28,9 @@ function Map(props) {
     libraries,
   })
 
-  const { shops, reviews } = props
+  const { shops, loadingData, loadingCurrentLocation, setLoadingCurrentLocation } = props
 
+  const [center, setCenter] = useState()
   const [bounds, setBounds] = useState(null)
   const [shopsOnMap, setShopsOnMap] = useState(shops)
   const [selected, setSelected] = useState(null)
@@ -62,8 +59,23 @@ function Map(props) {
     }
   }, [shops, bounds])
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        setCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
+        setLoadingCurrentLocation(false)
+      },
+      () => {
+        setCenter({ lat: 49.282729, lng: -123.120738 })
+        setLoadingCurrentLocation(false)
+      }
+    )
+  }, [])
+
   if (loadError) return 'Error loading map'
   if (!isLoaded) return 'Loading map'
+
+  if (loadingData || loadingCurrentLocation) return <Loading />
 
   return (
     <>
@@ -78,7 +90,7 @@ function Map(props) {
         {/* Child components, such as shops, info windows, etc. */}
         {shopsOnMap.map(shop => (
           <Marker
-            key={shop.ref}
+            key={shop.name}
             position={{
               lat: shop.geocode.latitude,
               lng: shop.geocode.longitude,
@@ -107,51 +119,49 @@ function Map(props) {
             }}
           >
             <div className="info-window">
-              <h2>{selected.name}</h2>
-              {reviews
-                .filter(review => selected.ref.isEqual(review.shop))
-                .map((review, i) => (
-                  <div key={review.ref.id}>
-                    <p>{review.drink_name}</p>
-                    <p>{review.drink_category}</p>
-                    <p>${review.price}</p>
-                    <p>{review.comment}</p>
-                  </div>
-                ))}
+              <Link to={'shop/' + selected.ref.id}>
+                <p className="shop-name">{selected.name}</p>
+                <p className="shop-address">{selected.address}</p>
+              </Link>
             </div>
           </InfoWindow>
         ) : null}
       </GoogleMap>
 
-      <ul className="shop-list">
-        {shopsOnMap.map(shop => (
-          <li
-            className="shop-list-item"
-            key={shop.ref.id}
-            onClick={() => setSelected(shop)}
-            style={{ cursor: 'pointer' }}
-          >
-            <Link to={'shop/' + shop.ref.id}>
-              <div>
-                {shop.category === 'Bar' ? (
-                  <img src={barIcon} alt="bar" className="shop-category-icon" />
-                ) : shop.category === 'Restaurant' ? (
-                  <img src={restaurantIcon} alt="bar" className="shop-category-icon" />
-                ) : shop.category === 'Liquor Store' ? (
-                  <img src={storeIcon} alt="bar" className="shop-category-icon" />
-                ) : null}
-              </div>
-              <div className="shop-info">
-                <h2>{shop.name}</h2>
-                <p>shop address</p>
-              </div>
-              <div className="shop-review-number">
-                <p>{shop.reviewNum}</p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {shopsOnMap.length === 0 ? (
+        <div>
+          <p>No restaurant, bar, or liquor store found</p>
+        </div>
+      ) : (
+        <ul className="shop-list">
+          {shopsOnMap.map(shop => (
+            <li className="shop-list-item" key={shop.ref.id} onClick={() => setSelected(shop)}>
+              <Link to={'shop/' + shop.ref.id}>
+                <div className="shop-category">
+                  {shop.category === 'Bar' ? (
+                    <img src={barIcon} alt="bar" className="shop-category-icon--bar" />
+                  ) : shop.category === 'Restaurant' ? (
+                    <img
+                      src={restaurantIcon}
+                      alt="restaurant"
+                      className="shop-category-icon--restaurant"
+                    />
+                  ) : shop.category === 'Liquor Store' ? (
+                    <img src={storeIcon} alt="liquor store" className="shop-category-icon--store" />
+                  ) : null}
+                </div>
+                <div className="shop-info">
+                  <p className="shop-name">{shop.name}</p>
+                  <p className="shop-address">{shop.address}</p>
+                </div>
+                <div className="shop-review">
+                  <p className="shop-review-number">{shop.reviewNum}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   )
 }

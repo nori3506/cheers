@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import Map from './GoogleMap'
+import Header from './Header'
+import Footer from './Footer'
 import Login from '../templates/Login'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
@@ -23,6 +25,8 @@ export default function Home({ title, setTitle }) {
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [disabled, setDisabled] = useState(true)
+  const [loadingData, setLoadingData] = useState(true)
+  const [loadingCurrentLocation, setLoadingCurrentLocation] = useState(true)
 
   const handleModalOpen = () => setModalOpen(true)
   const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
@@ -35,6 +39,7 @@ export default function Home({ title, setTitle }) {
     e.preventDefault()
     setModalOpen(false)
     setDisabled(true)
+    setLoadingData(true)
     setReviews([])
     setShops([])
 
@@ -48,6 +53,7 @@ export default function Home({ title, setTitle }) {
       reviewsQuery = reviewsRef
         .where('drink_category', '==', drinkCategory)
         .where('price', '>=', priceMin)
+      console.log(priceMin)
     } else if (priceMax) {
       reviewsQuery = reviewsRef.where('price', '<=', priceMax).where('price', '>=', priceMin)
     } else {
@@ -57,19 +63,19 @@ export default function Home({ title, setTitle }) {
     let shopsQuery
     if (placeCategory) {
       shopsQuery = shopsRef.where('category', '==', placeCategory)
+      console.log(shopsQuery, placeCategory)
     } else {
       shopsQuery = shopsRef
     }
 
     let newReviews = []
     let newShops = []
-
     Promise.all([reviewsQuery.get(), shopsQuery.get()])
       .then(snapshots => {
         snapshots[0].forEach(newReview => {
           if (
-            newReview.data().shop && // this line to be removed once data structure set up
-            newReview.data().drink_name && // this line to be removed once data structure set up
+            // newReview.data().shop && // this line to be removed once data structure set up
+            // newReview.data().drink_name && // this line to be removed once data structure set up
             newReview.data().drink_name.toLowerCase().includes(drink)
           ) {
             newReviews.push({ ref: newReview.ref, ...newReview.data() })
@@ -78,7 +84,7 @@ export default function Home({ title, setTitle }) {
 
         snapshots[1].forEach(newShop => {
           if (
-            newShop.data().name && // this line to be removed once data structure set up
+            // newShop.data().name && // this line to be removed once data structure set up
             newShop.data().name.toLowerCase().includes(place)
           ) {
             newShops.push({ ref: newShop.ref, ...newShop.data() })
@@ -97,7 +103,7 @@ export default function Home({ title, setTitle }) {
         })
 
         const shopsMatchReview = newShops
-          .map((shop, i) => {
+          .map(shop => {
             let reviewNum = 0
             reviewsMatchShop.forEach(review => {
               if (review.shop && review.shop.isEqual(shop.ref)) {
@@ -111,10 +117,12 @@ export default function Home({ title, setTitle }) {
         setReviews(reviewsMatchShop)
         setShops(shopsMatchReview)
         setDisabled(false)
+        setLoadingData(false)
       })
       .catch(error => {
         console.log('Failed to search: ', error)
         setDisabled(false)
+        setLoadingData(false)
       })
   }
 
@@ -147,82 +155,98 @@ export default function Home({ title, setTitle }) {
       setReviews(newReviews)
       setShops(shopsWithReviewNum)
       setDisabled(false)
+      setLoadingData(false)
     })
   }, [])
 
   if (currentUser) {
     return (
-      <div className="home">
-        <div className="search-link">
-          <div className="search-icon">
-            <img src={searchIcon} alt="search" />
+      <>
+        <Header />
+        <div className="container wrapper">
+          <div className="home">
+            <div className="search-link">
+              <div className="search-icon">
+                <img src={searchIcon} alt="search" />
+              </div>
+              <input
+                type="text"
+                placeholder="search"
+                onClick={handleModalOpen}
+                className="search-box"
+              />
+            </div>
+
+            {modalOpen ? (
+              <div className="overlay">
+                <form onSubmit={handleSearch} className="search-form">
+                  <input
+                    type="text"
+                    placeholder="Drink Name"
+                    value={drink}
+                    onChange={handleDrinkChange}
+                  />
+                  <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
+                    <option value="">Select Drink Category</option>
+                    {drinkCategories.map(category => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Place Name"
+                    value={place}
+                    onChange={handlePlaceChange}
+                  />
+                  <select value={placeCategory} onChange={handlePlaceCategoryChange}>
+                    <option value="">Select Place Category</option>
+                    {placeCategories.map(category => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  <label className="search-form__label">
+                    Price max
+                    <input
+                      type="number"
+                      placeholder="Max"
+                      value={priceMax}
+                      onChange={handlePriceMaxChange}
+                    />
+                  </label>
+                  <label className="search-form__label">
+                    Price min
+                    <input type="number" value={priceMin} onChange={handlePriceMinChange} />
+                  </label>
+                  <button className="btn--primary" type="submit" disabled={disabled}>
+                    search
+                  </button>
+                  <button className="btn--secondary" onClick={() => setModalOpen(false)}>
+                    Close
+                  </button>
+                </form>
+              </div>
+            ) : null}
+
+            <Map
+              shops={shops}
+              loadingData={loadingData}
+              loadingCurrentLocation={loadingCurrentLocation}
+              setLoadingCurrentLocation={setLoadingCurrentLocation}
+            />
           </div>
-          <input
-            type="text"
-            placeholder="search"
-            onClick={handleModalOpen}
-            className="search-box"
-          />
         </div>
-
-        {modalOpen ? (
-          <div className="overlay">
-            <form onSubmit={handleSearch} className="search-form">
-              <input
-                type="text"
-                placeholder="Drink Name"
-                value={drink}
-                onChange={handleDrinkChange}
-              />
-              <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
-                <option value="">Select Drink Category</option>
-                {drinkCategories.map(category => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="text"
-                placeholder="Place Name"
-                value={place}
-                onChange={handlePlaceChange}
-              />
-              <select value={placeCategory} onChange={handlePlaceCategoryChange}>
-                <option value="">Select Place Category</option>
-                {placeCategories.map(category => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-              <label className="search-form__label">
-                Price max
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={priceMax}
-                  onChange={handlePriceMaxChange}
-                />
-              </label>
-              <label className="search-form__label">
-                Price min
-                <input type="number" value={priceMin} onChange={handlePriceMinChange} />
-              </label>
-              <button className="btn--primary" type="submit" disabled={disabled}>
-                search
-              </button>
-              <button className="btn--secondary" onClick={() => setModalOpen(false)}>
-                Close
-              </button>
-            </form>
-          </div>
-        ) : null}
-
-        <Map shops={shops} reviews={reviews} className="mapdayo" />
-      </div>
+        <Footer />
+      </>
     )
   } else {
-    return <Login />
+    return (
+      <div className="wrapper">
+        <Login />
+      </div>
+    )
   }
 }

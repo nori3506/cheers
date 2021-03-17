@@ -1,12 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: helvetica, arial, sans-serif;
+  font-family: 'Roboto', helvetica, arial, sans-serif;
   background-color: $main-color;
   color: white;
-  font-size: $font-xs;
 }
 
 ul {
@@ -23,7 +24,7 @@ a {
 }
 
 .wrapper {
-  padding: 0 2%;
+  padding: 0 1.5rem;
 }
 
 .container {
