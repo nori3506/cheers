@@ -1,24 +1,25 @@
 /*
 Table of Contents
 1. Base
-1.1. Settings
-1.2. Normalize
-1.3. Base
+1.1. Normalize
+1.2. Base
 2. Components
-2.1. Container
-2.2. Wrapper
-2.3. Header
+2.1. Login
+2.2. Signup
+2.3. 
 2.4. Footer
-2.5. Buttons
-2.6. Forms
-2.7. Map
-2.8. Lists
-2.9. Profile
-2.10. Spinner
+2.5. Home
+2.6. Create Review
+2.7. Edit Review
+2.8. Profile
+2.9. Loading
+3. Elements
+3.1. Buttons
+3.2. Inputs
+3.3. Forms
 */
 /* 1 Base =================== */
-/* 1.1. Settings ============ */
-/* 1.2. Normalize =========== */
+/* 1.1. Normalize =========== */
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -359,7 +360,7 @@ template {
   display: none;
 }
 
-/* 1.3. Base ================ */
+/* 1.2. Base ================ */
 * {
   box-sizing: border-box;
 }
@@ -369,14 +370,6 @@ body {
   background-color: #3d1600;
   color: white;
   font-size: 14px;
-}
-
-h1 {
-  font-size: 20px;
-}
-
-h2 {
-  font-size: 16px;
 }
 
 ul {
@@ -392,6 +385,388 @@ a {
   color: inherit;
 }
 
+.wrapper {
+  padding: 0 2%;
+}
+
+.container {
+  padding-top: 56px;
+  padding-bottom: 84px;
+}
+
+/* 2 Components ============= */
+/* 2.1. Login =============== */
+/* 2.2. Signup ============== */
+/* 2.3. Header ============== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 56px;
+  background-color: #3d1600;
+  z-index: 1000;
+}
+header .wrapper {
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: center;
+}
+header .page-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+header img {
+  width: 28px;
+}
+
+/* 2.4. Footer ============== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  height: 84px;
+  background-color: #3d1600;
+  z-index: 1000;
+}
+footer .wrapper {
+  flex-grow: 1;
+}
+footer ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer li {
+  width: 56px;
+  height: 56px;
+  border: 2px solid #de9e48;
+  border-radius: 28px;
+}
+footer a {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+footer img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  transform: translate(-50%, -50%);
+}
+footer .icon-button--create-review {
+  background-color: white;
+}
+footer .nav-link--home {
+  transform: translate(0, -2px);
+}
+
+/* 2.5. Home ================ */
+.home .search-link {
+  display: flex;
+  margin: 1rem 0;
+}
+.home .search-icon {
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-radius: 4px 0 0 4px;
+  color: #de9e48;
+}
+.home .search-icon img {
+  width: 24px;
+}
+.home .search-box {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  background-color: #3d1600;
+  color: white;
+  font-size: 24px;
+}
+.home .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.home .info-window {
+  color: black;
+}
+.home .shop-list {
+  border: 1px solid #de9e48;
+  border-radius: 4px;
+  padding: 0 1rem;
+  background-color: #fdf9df;
+  color: black;
+}
+.home .shop-list-item:not(:last-child) {
+  border-bottom: 2px solid #de9e48;
+}
+.home .shop-list-item a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.home .shop-category-icon {
+  width: 24px;
+}
+.home .shop-info {
+  flex-grow: 1;
+}
+.home .shop-review-number {
+  text-align: right;
+  font-size: 32px;
+  color: #de9e48;
+}
+
+/* 2.6. Create Review ======= */
+.review_form {
+  max-width: 800px;
+  margin: auto;
+}
+
+select:invalid {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.shop_name input {
+  width: 100%;
+}
+
+input.btn-primary {
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 24px;
+  text-transform: capitalize;
+  background-color: #de9e48;
+  color: #3d1600;
+  width: 30%;
+  margin: auto;
+}
+
+.autocomplete-dropdown-container {
+  color: black;
+}
+
+.react-stars {
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+  width: 100%;
+}
+
+.react-stars span:first-child:before {
+  content: "Rating";
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  margin-right: 2rem;
+}
+
+/* 2.7. Edit Review ========= */
+.editReview input,
+.editReview select,
+.editReview .MuiSelect-root {
+  padding: 0.5rem;
+  border: 1px solid #de9e48;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+}
+
+.editReview .image_wrapper input {
+  width: 100%;
+}
+
+.editReview {
+  max-width: 800px;
+  margin: auto;
+}
+
+select:invalid {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-primary {
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 24px;
+  text-transform: capitalize;
+  background-color: #de9e48;
+  color: #3d1600;
+  width: 30%;
+  margin: auto;
+}
+
+/* 2.8. Profile ============= */
+.edit-profile {
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
+  padding: 65px 0.5rem 1rem 0.5rem;
+  position: relative;
+  margin-top: 65px;
+}
+.edit-profile img.w-100 {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 1px solid #DE9E48;
+  position: absolute;
+  bottom: calc(100% - 65px);
+}
+.edit-profile input, .edit-profile label {
+  color: white;
+}
+.edit-profile label {
+  padding-right: 0.5rem;
+}
+.edit-profile .MuiFormControl-fullWidth {
+  width: auto !important;
+}
+.edit-profile .MuiFormLabel-root {
+  font-size: 0.9rem;
+  font-weight: 300 !important;
+}
+.edit-profile .MuiFormControl-root {
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  justify-content: center;
+  height: 19px;
+  align-items: center;
+  margin: 0.3rem;
+}
+.edit-profile .MuiInputBase-fullWidth {
+  min-width: 20px !important;
+  max-width: 100px;
+}
+.edit-profile .MuiInputLabel-formControl {
+  position: relative;
+}
+.edit-profile .MuiInputLabel-shrink {
+  transform: none !important;
+}
+.edit-profile label + .MuiInput-formControl {
+  margin-top: 0;
+}
+.edit-profile .MuiInputBase-input {
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1;
+  height: auto !important;
+  border: none;
+  min-width: 20px;
+  width: auto;
+  max-width: 200px;
+}
+.edit-profile .MuiInputLabel-marginDense {
+  transform: none !important;
+}
+.edit-profile .MuiInputLabel-animated {
+  transition: none !important;
+}
+.edit-profile .MuiInput-underline:before {
+  border: none !important;
+}
+.edit-profile .MuiSelect-select {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.edit-profile .MuiInputBase-root {
+  line-height: 1;
+}
+.edit-profile .MuiFormControl-root.makeStyles-formControl-1 {
+  margin: 0.3rem;
+}
+.edit-profile .MuiInput-underline:after {
+  border-bottom: 1px solid #DE9E48;
+}
+.edit-profile .MuiFormLabel-root.Mui-focused {
+  color: #DE9E48;
+}
+.edit-profile .MuiSelect-icon {
+  color: white;
+}
+.edit-profile button.w-100 {
+  background-color: white;
+  border: 2px solid #DE9E48;
+  border-radius: 5px;
+  width: 150px;
+  padding: 0.4rem 1.3rem;
+}
+.edit-profile #upload-button {
+  display: none;
+}
+.edit-profile #upload-img-label {
+  margin: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
+  padding: 0.3rem 1rem;
+}
+
+/* 2.9. Loading ============= */
+.spinner-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 3 Elements ============= */
+/* 3.1. Login =============== */
+.btn--primary,
+.btn--secondary {
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+.btn--primary {
+  background-color: #de9e48;
+  color: #3d1600;
+}
+
+.btn--secondary {
+  background-color: #3d1600;
+  color: white;
+}
+
+/* 3.2. Signup ============== */
 input,
 select {
   padding: 0.5rem;
@@ -413,168 +788,8 @@ input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* 2 Base =================== */
-/* 2.1. Container =========== */
-.container {
-  padding-top: 56px;
-  padding-bottom: 84px;
-}
-
-/* 2.2. Wrapper ============= */
-.wrapper {
-  padding-right: 1rem;
-  padding-left: 1rem;
-}
-@media screen and (min-width: 600px) {
-  .wrapper {
-    padding-right: 2rem;
-    padding-left: 2rem;
-  }
-}
-@media screen and (min-width: 960px) {
-  .wrapper {
-    padding-right: 3rem;
-    padding-left: 3rem;
-  }
-}
-
-.home__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 2000;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* 2.3. Header ============== */
-header {
-  position: fixed;
-  width: 100%;
-  height: 56px;
-  background-color: #3d1600;
-  z-index: 1000;
-}
-
-.header__wrapper {
-  height: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-content: center;
-}
-
-.header__title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: 0;
-  transform: translate(-50%, -50%);
-}
-
-/* 2.4. Footer ============== */
-footer {
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  flex-flow: row wrap;
-  align-content: center;
-  height: 84px;
-  width: 100%;
-  background-color: #3d1600;
-  z-index: 1000;
-}
-
-.footer__wrapper {
-  flex-grow: 1;
-}
-
-.footer__list {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer__list-item {
-  width: 56px;
-  height: 56px;
-  border: 2px solid #de9e48;
-  border-radius: 28px;
-  position: relative;
-}
-
-.footer__list-item--create-review {
-  background-color: white;
-}
-
-.footer__link {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.footer__link--home {
-  transform: translate(-50%, calc(-50% - 2px));
-}
-
-.footer__icon {
-  width: 28px;
-}
-
-/* 2.5. Buttons ============= */
-.btn--primary,
-.btn--secondary {
-  padding: 0.5rem;
-  border: 2px solid white;
-  border-radius: 4px;
-  font-size: 24px;
-  text-transform: capitalize;
-}
-
-.btn--primary {
-  background-color: #de9e48;
-  color: #3d1600;
-}
-
-.btn--secondary {
-  background-color: #3d1600;
-  color: white;
-}
-
-/* 2.6. Forms =============== */
-.home__search-link {
-  display: flex;
-  margin: 1rem 0;
-}
-
-.home__search-icon {
-  padding: 0.5rem;
-  border: 1px solid #de9e48;
-  border-radius: 4px 0 0 4px;
-  color: #de9e48;
-}
-
-.home__search-icon img {
-  width: 24px;
-}
-
-.home__search-box {
-  flex-grow: 1;
-  padding: 0.5rem;
-  border: 1px solid #de9e48;
-  border-left: none;
-  border-radius: 0 4px 4px 0;
-  background-color: #3d1600;
-  color: white;
-  font-size: 24px;
-}
-
-.home__search-form {
+/* 3.3. Header ============== */
+.search-form {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
@@ -582,178 +797,68 @@ footer {
   font-size: 16px;
 }
 
-.home__search-form__label {
+.search-form__label {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.review_form * {
-  margin: 2rem auto;
-  display: block;
-  width: 70%;
-  font-size: 1.3rem;
-}
-@media screen and (min-width: 960px) {
-  .review_form * {
-    width: 50%;
-  }
+/* Archives (to be removed) */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.review_form {
-  padding-top: 1.5rem;
-}
-.review_form .location-search-input {
-  padding: 0.5rem;
-  width: 100%;
-  border: 2px solid #de9e48;
-  background-color: #3d1600;
-  border-radius: 10px;
-}
-.review_form .autocomplete-dropdown-container {
-  color: black;
-  width: 100%;
-}
-.review_form .autocomplete-dropdown-container div {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-.review_form .autocomplete-dropdown-container div span {
-  margin: 0;
-  padding: 0;
-}
-.review_form .drink_name,
-.review_form .drink_category,
-.review_form .drink_image,
-.review_form .price,
-.review_form .rating,
-.review_form .comment {
-  padding: 0.5rem;
-  border: 2px solid #de9e48;
-  background-color: #3d1600;
-  border-radius: 10px;
-}
-.review_form .drink_name::-moz-placeholder, .review_form .location-search-input::-moz-placeholder, .review_form .drink_image::-moz-placeholder, .review_form .price::-moz-placeholder, .review_form .rating::-moz-placeholder, .review_form .comment::-moz-placeholder {
-  color: white;
-}
-.review_form .drink_name:-ms-input-placeholder, .review_form .location-search-input:-ms-input-placeholder, .review_form .drink_image:-ms-input-placeholder, .review_form .price:-ms-input-placeholder, .review_form .rating:-ms-input-placeholder, .review_form .comment:-ms-input-placeholder {
-  color: white;
-}
-.review_form .drink_name::placeholder,
-.review_form .location-search-input::placeholder,
-.review_form .drink_image::placeholder,
-.review_form .price::placeholder,
-.review_form .rating::placeholder,
-.review_form .comment::placeholder {
-  color: white;
-}
-.review_form .drink_category,
-.review_form .drink_name,
-.review_form .location-search-input,
-.review_form .drink_image,
-.review_form .price,
-.review_form .rating,
-.review_form .comment {
-  color: white;
-}
-.review_form .submit {
-  padding: 0.5rem;
-  margin-top: 3rem;
-  border: 2px solid white;
-  background-color: #de9e48;
-  border-radius: 10px;
-  width: 50%;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.editReview label {
-  color: white;
-  left: -15%;
+.black-color {
+  color: black !important;
 }
-.editReview .MuiInputBase-root {
-  margin: 2rem auto;
-  display: block;
-  width: 70%;
-  font-size: 1.3rem;
-  background-color: #3d1600;
-  border: #de9e48 2px solid;
-  border-radius: 10px;
-  color: white;
-  padding-left: 1rem;
+
+.white-color {
+  color: white !important;
 }
-.editReview .MuiSelect-root {
-  margin: 2rem auto;
-  display: block;
-  width: 70%;
-  font-size: 1.3rem;
+
+.blue-color {
+  color: blue !important;
 }
-.editReview .MuiFormControl-root {
-  margin: 2rem auto;
-  display: block;
-  width: 70%;
-  font-size: 1.3rem;
+
+.u-text-small {
+  font-size: 0.9rem;
 }
-.editReview .rating {
-  margin: auto;
+
+.u-text__link-none {
+  text-decoration: none;
+}
+
+.u-text-left {
+  text-align: left;
+}
+
+.u-text-right {
+  text-align: right;
+}
+
+.u-text-center {
   text-align: center;
 }
-.editReview .rating input {
-  width: 70%;
-  margin: auto;
-  background-color: #3d1600;
-  border-radius: 10px;
-  border: #de9e48 2px solid;
-  color: white;
-  padding-left: 1rem;
-}
-.editReview .rating label {
-  color: white;
-  position: absolute;
-  left: -15%;
-  font-size: 0.75rem;
-}
-.editReview .drink_name {
-  width: 70%;
-  margin: auto;
-}
-.editReview .drink_name label {
-  color: white;
-  position: absolute;
-  left: -15%;
-  font-size: 0.75rem;
-}
-.editReview .drink_name div {
-  width: 70%;
-  margin: auto;
-}
-.editReview .drink_name .MuiSelect-root {
-  margin: 0;
-}
-.editReview button {
-  display: block;
-}
-.editReview .submit {
-  padding: 0.5rem;
-  border: 2px solid white;
-  background-color: #de9e48;
-  border-radius: 10px;
-  width: 50%;
-  margin: 3rem auto;
-}
-.editReview .image_wrapper {
-  text-align: center;
-}
-.editReview .image_wrapper img {
-  display: block;
-  margin: auto;
+
+.normal-font-weight {
+  font-weight: 300;
 }
 
-/* 2.7. Map ================= */
-.info-window {
-  color: black;
+.reviews-background {
+  background: #fdf9df;
 }
 
-/* 2.7. Review ================== */
+.reviews-area {
+  margin: 1rem 0;
+}
+
 /* shop basic info */
 .shop-basic-info {
   width: 100%;
@@ -878,166 +983,4 @@ footer {
 .review-wrapper .reviews-area:last-of-type,
 .review-wrapper .reviews-area :last-of-type:first-of-type {
   border: none;
-}
-
-/* 2.8. Lists =============== */
-.review-list {
-  color: black;
-}
-
-.map__shop-list {
-  border: 1px solid #de9e48;
-  border-radius: 4px;
-  padding: 0 1rem;
-  background-color: #fdf9df;
-  color: black;
-}
-
-.map__shop-list__item:not(:last-child) {
-  border-bottom: 2px solid #de9e48;
-}
-
-.map__shop-list__item__wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.map__shop-list__item__icon {
-  width: 24px;
-}
-
-.map__shop-list__item__info {
-  flex-grow: 1;
-}
-
-.map__shop-list__item__review-number {
-  text-align: right;
-  font-size: 32px;
-  color: #de9e48;
-}
-
-/* 2.9. Profile =============== */
-.edit-profile {
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  border: 1px solid #DE9E48;
-  border-radius: 5px;
-  padding: 65px 0.5rem 1rem 0.5rem;
-  position: relative;
-  margin-top: 65px;
-}
-.edit-profile img.w-100 {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border: 1px solid #DE9E48;
-  position: absolute;
-  bottom: calc(100% - 65px);
-}
-.edit-profile input, .edit-profile label {
-  color: white;
-}
-.edit-profile label {
-  padding-right: 0.5rem;
-}
-.edit-profile .MuiFormControl-fullWidth {
-  width: auto !important;
-}
-.edit-profile .MuiFormLabel-root {
-  font-size: 0.9rem;
-  font-weight: 300 !important;
-}
-.edit-profile .MuiFormControl-root {
-  display: flex !important;
-  flex-flow: row nowrap !important;
-  justify-content: center;
-  height: 19px;
-  align-items: center;
-  margin: 0.3rem;
-}
-.edit-profile .MuiInputBase-fullWidth {
-  min-width: 20px !important;
-  max-width: 100px;
-}
-.edit-profile .MuiInputLabel-formControl {
-  position: relative;
-}
-.edit-profile .MuiInputLabel-shrink {
-  transform: none !important;
-}
-.edit-profile label + .MuiInput-formControl {
-  margin-top: 0;
-}
-.edit-profile .MuiInputBase-input {
-  padding: 0;
-  font-size: 0.9rem;
-  font-weight: 300;
-  line-height: 1;
-  height: auto !important;
-  border: none;
-  min-width: 20px;
-  width: auto;
-  max-width: 200px;
-}
-.edit-profile .MuiInputLabel-marginDense {
-  transform: none !important;
-}
-.edit-profile .MuiInputLabel-animated {
-  transition: none !important;
-}
-.edit-profile .MuiInput-underline:before {
-  border: none !important;
-}
-.edit-profile .MuiSelect-select {
-  color: white;
-  display: flex;
-  align-items: center;
-}
-.edit-profile .MuiInputBase-root {
-  line-height: 1;
-}
-.edit-profile .MuiFormControl-root.makeStyles-formControl-1 {
-  margin: 0.3rem;
-}
-.edit-profile .MuiInput-underline:after {
-  border-bottom: 1px solid #DE9E48;
-}
-.edit-profile .MuiFormLabel-root.Mui-focused {
-  color: #DE9E48;
-}
-.edit-profile .MuiSelect-icon {
-  color: white;
-}
-.edit-profile button.w-100 {
-  background-color: white;
-  border: 2px solid #DE9E48;
-  border-radius: 5px;
-  width: 150px;
-  padding: 0.4rem 1.3rem;
-}
-.edit-profile #upload-button {
-  display: none;
-}
-.edit-profile #upload-img-label {
-  margin: 0.5rem;
-  text-align: center;
-  font-size: 0.8rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  border: 1px solid #DE9E48;
-  border-radius: 5px;
-  padding: 0.3rem 1rem;
-}
-
-/* 2.10. Spinner =============== */
-.spinner-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }/*# sourceMappingURL=style.css.map */

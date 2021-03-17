@@ -7,25 +7,23 @@ import addReviewLogo from '../assets/icons/add-review.svg'
 export default function Footer() {
   return (
     <footer>
-      <div className="wrapper footer__wrapper">
+      <div className="wrapper">
         <nav>
-          <ul className="footer__list">
-            <li className="footer__list-item">
-              <Link to="/" className="footer__link footer__link--home">
-                <img src={homeLogo} alt="Link to Home" className="footer__icon" />
+          <ul>
+            <li>
+              <Link to="/" className="nav-link--home">
+                <img src={homeLogo} alt="Link to Home" className="icon" />
               </Link>
             </li>
-            <li className="footer__list-item footer__list-item--create-review">
-              <Link to="/CreateReview" className="footer__link">
-                <img src={addReviewLogo} alt="Link to Add Review" className="footer__icon" />
+            <li className="icon-button--create-review">
+              <Link to="/CreateReview">
+                <img src={addReviewLogo} alt="Link to Add Review" className="icon" />
               </Link>
             </li>
-            <li className="footer__list-item">
-              <Link to="/profile" className="footer__link">
-                Profile
-              </Link>
+            <li>
+              <Link to="/profile">Profile</Link>
             </li>
-            <li className="footer__list-item">
+            <li>
               <Logout />
             </li>
           </ul>

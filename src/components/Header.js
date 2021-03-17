@@ -47,17 +47,12 @@ export default function Header({ title }) {
   return (
     currentUser && (
       <header>
-        <div className="wrapper header__wrapper">
-          <Link to="/" className="header__back-arrow">
-            <img
-              src={backArrowIcon}
-              alt="Link to Add Review"
-              className="footer__icon"
-              onClick={() => history.goBack()}
-            />
+        <div className="wrapper">
+          <Link to="/" className="back-arrow">
+            <img src={backArrowIcon} alt="Link to Add Review" onClick={() => history.goBack()} />
           </Link>
-          <h1 className="header__title">{pageTitle}</h1>
         </div>
+        <h1 className="page-title">{pageTitle}</h1>
       </header>
     )
   )

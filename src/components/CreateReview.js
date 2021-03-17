@@ -8,6 +8,8 @@ import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Imageupload from './imageUpload'
+import ReactStars from "react-rating-stars-component";
+
 
 const shopsRef = db.collection('shops')
 
@@ -17,7 +19,7 @@ export default function CreateReview() {
   const [rating, setRating] = useState(3);
   const [comment, setComment] = useState("");
   const [drinkCategory, setDrinkCategory] = useState("Others");
-  const [shopCategory, setShopCategory] = useState("");
+  const [shopCategory, setShopCategory] = useState("Restaurant");
   const [geoCode, setGeoCode] = useState([]);
   const [address, setAddress] = useState("");
   const [image, setImage] = useState(null);
@@ -129,9 +131,14 @@ export default function CreateReview() {
     setPrice(parseInt(event.target.value))
   }
 
+  // const inputRating = (event) =>{
+  //   setRating(parseInt(event.target.value))
+  // }
+
   const inputRating = (event) =>{
-    setRating(parseInt(event.target.value))
+    setRating(parseInt(event))
   }
+
 
   const handleChange = address => {
     setAddress(address);
@@ -153,19 +160,9 @@ export default function CreateReview() {
 
   return (
     <>
-      <form className ='review_form' onSubmit={handleSubmit} >
+      <form className ='review_form search-form' onSubmit={handleSubmit} >
         {/* <p>Drink name*</p> */}
         <input required  className= 'drink_name' placeholder='What did you drink?'name="drink_name" onChange={inputDrinkName} />
-
-        <select  className= 'shop_category' onChange={inputShopCategory}>
-          <option value="">What is the type of the shop?</option>
-          {placeCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-
 
         {/* <p>Shop*</p> */}
         <PlacesAutocomplete
@@ -199,7 +196,7 @@ export default function CreateReview() {
                         style,
                       })}
                     >
-                      <span>{suggestion.description}</span>
+                      <span>{suggestion.formattedSuggestion.mainText}</span>
                     </div>
                   );
                 })}
@@ -207,9 +204,19 @@ export default function CreateReview() {
             </div>
           )}
         </PlacesAutocomplete>
+
+        <select  required className= 'shop_category' onChange={inputShopCategory}>
+          <option value="">What is the type of the shop?</option>
+          {placeCategories.map(category => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+
         <Imageupload onChange={ handleImageChange } photoURL={preview} />
         {/* <p>Drink category*</p> */}
-        <select  className= 'drink_category' onChange={inputDrinkCategory}>
+        <select  required className= 'drink_category' onChange={inputDrinkCategory}>
           <option value="">What is the type of the drink?</option>
           {drinkCategories.map(category => (
             <option key={category} value={category}>
@@ -217,19 +224,31 @@ export default function CreateReview() {
             </option>
           ))}
         </select>
-        {/* <p>Price</p> */}
-        <input  className= 'price' maxlength="5" onChange={inputPrice}　placeholder='How much did it cost?' />
+
+        <input  className= 'price'  max="99999"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
         {/* <p>Rating</p> */}
-        <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} />
+        {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
         {/* <p>Comment</p> */}
+
+        {/* <label>Rating</label> */}
+        <ReactStars
+         count={5}
+         value={rating}
+         onChange={inputRating}
+         size={24}
+         activeColor="#ffd700" />
+
         <textarea className= 'comment' placeholder='Please write a review' name="comment" rows="4" cols="40" onChange={inputComment} />
         <input
-        className= 'submit'
+        className= 'submit btn-primary'
           type='submit'
           value='Submit'
           style={{ display: "block" }}
         />
+
       </form>
     </>
   )
 }
+
+

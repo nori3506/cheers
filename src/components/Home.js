@@ -152,22 +152,22 @@ export default function Home({ title, setTitle }) {
 
   if (currentUser) {
     return (
-      <>
-        <div className="home__search-link">
-          <div className="home__search-icon">
+      <div className="home">
+        <div className="search-link">
+          <div className="search-icon">
             <img src={searchIcon} alt="search" />
           </div>
           <input
             type="text"
             placeholder="search"
             onClick={handleModalOpen}
-            className="home__search-box"
+            className="search-box"
           />
         </div>
 
         {modalOpen ? (
-          <div className="home__overlay">
-            <form onSubmit={handleSearch} className="home__search-form">
+          <div className="overlay">
+            <form onSubmit={handleSearch} className="search-form">
               <input
                 type="text"
                 placeholder="Drink Name"
@@ -196,7 +196,7 @@ export default function Home({ title, setTitle }) {
                   </option>
                 ))}
               </select>
-              <label className="home__search-form__label">
+              <label className="search-form__label">
                 Price max
                 <input
                   type="number"
@@ -205,7 +205,7 @@ export default function Home({ title, setTitle }) {
                   onChange={handlePriceMaxChange}
                 />
               </label>
-              <label className="home__search-form__label">
+              <label className="search-form__label">
                 Price min
                 <input type="number" value={priceMin} onChange={handlePriceMinChange} />
               </label>
@@ -219,8 +219,8 @@ export default function Home({ title, setTitle }) {
           </div>
         ) : null}
 
-        <Map shops={shops} reviews={reviews} />
-      </>
+        <Map shops={shops} reviews={reviews} className="mapdayo" />
+      </div>
     )
   } else {
     return <Login />

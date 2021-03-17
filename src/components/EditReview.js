@@ -3,6 +3,7 @@ import { db, storage } from '../firebase/index'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { SelectInput, TextInput } from './UIkit';
 import drinkCategories from '../lib/drinkCategories'
+import ReactStars from "react-rating-stars-component";
 
 export default function EditReview() {
   const [review, setReview] = useState("")
@@ -45,9 +46,14 @@ export default function EditReview() {
     setPrice(event.target.value)
   }, [setPrice]);
 
+  // const inputRating = useCallback((event) => {
+  //   setRating(event.target.value)
+  // }, [setRating]);
+
   const inputRating = useCallback((event) => {
-    setRating(event.target.value)
+    setRating(parseInt(event))
   }, [setRating]);
+
 
   const inputComment = useCallback((event) => {
     setComment(event.target.value)
@@ -108,44 +114,72 @@ export default function EditReview() {
 
   return (
     <>
-      <Form className='editReview' onSubmit={updateReview}>
+      <Form className='editReview search-form' onSubmit={updateReview}>
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
-        <TextInput
+        {/* <TextInput
            fullWidth={true} label={"Drink name"} multiline={false} required={true}
           rows={1} value={drinkName} type={"text"} onChange={inputDrinkName}
+        /> */}
+        <input
+           fullWidth={true} label={"Drink name"} multiline={false} required={true}
+          rows={1} value={drinkName} type={"text"} onChange={inputDrinkName} placeholder='Drink name'
         />
 
-        <br />
+        {/* <br /> */}
 
 
-        <div class='drink_name MuiFormControl-root'>
-        <label >Categoty*</label>
-          <SelectInput  required={true} value={drinkCategory} onChange={inputDrinkCategory}>
+        {/* <div class='drink_name MuiFormControl-root'> */}
+        {/* <label >Categoty*</label> */}
+          {/* <SelectInput  required={true} value={drinkCategory} onChange={inputDrinkCategory} >
             <option value="">Select drink category</option>
             {drinkCategories.map(category => (
               <option key={category} value={category}>
                 {category}
               </option>
             ))}
-          </SelectInput>
-        </div>
-        <br />
+          </SelectInput> */}
+          <select  required={true} value={drinkCategory} onChange={inputDrinkCategory} >
+            <option value="">Select drink category</option>
+            {drinkCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        {/* </div> */}
+        {/* <br /> */}
 
-        <TextInput
+        {/* <TextInput
           fullWidth={true} label={"Price"} multiline={false} required={true}
           rows={1} value={price} type={"text"} onChange={inputPrice}
+        /> */}
+          <input
+          fullWidth={true} label={"Price"} max="99999" multiline={false} required={true} rows={1} value={price} type={"number"} onChange={inputPrice} placeholder='Price'
         />
-      <div className='rating MuiFormControl-root'>
-          <label >Rating</label>
-          <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} />
-      </div>
+      {/* <div className='rating MuiFormControl-root'> */}
+          {/* <label >Rating</label> */}
+          {/* <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} /> */}
+          <ReactStars
+         count={5}
+         value={rating}
+         onChange={inputRating}
+         size={24}
+         activeColor="#ffd700" />
+      {/* </div> */}
 
 
-        <TextInput
+        {/* <TextInput
           fullWidth={true} label={"Comment"} multiline={true} required={true}
           rows={1} value={comment} type={"text"} onChange={inputComment}
-        />
+        /> */}
+        {/* <input
+          fullWidth={true} label={"Comment"} multiline={true} required={true}
+          rows={1} value={comment} type={"text"} onChange={inputComment}
+        /> */}
+
+        <textarea className= 'comment' required={true} value={comment} placeholder='Please write a review' name="comment" rows="4" cols="40" onChange={inputComment} />
+
         <div className='image_wrapper'>
           <img src={photoURL} className="w-100" />
           <input
@@ -155,7 +189,7 @@ export default function EditReview() {
           </div>
 
         <Button
-          className="w-100 submit"
+          className="w-100 submit btn--primary"
           type="submit"
           variant="primary"
         >Update

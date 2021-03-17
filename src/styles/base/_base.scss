@@ -9,14 +9,6 @@ body {
   font-size: $font-xs;
 }
 
-h1 {
-  font-size: $font-md;
-}
-
-h2 {
-  font-size: $font-sm;
-}
-
 ul {
   padding-left: 0;
 }
@@ -30,15 +22,11 @@ a {
   color: inherit;
 }
 
-input,
-select {
-  padding: 0.5rem;
-  border: 1px solid $accent-color;
-  border-radius: 4px;
-  background-color: transparent;
-  color: white;
+.wrapper {
+  padding: 0 2%;
 }
 
-input::placeholder {
-  color: rgba(white, 0.6);
+.container {
+  padding-top: $header-height;
+  padding-bottom: $footer-height;
 }
