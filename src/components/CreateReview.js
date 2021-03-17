@@ -9,6 +9,7 @@ import placeCategories from '../lib/placeCategories'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Imageupload from './imageUpload'
 import ReactStars from "react-rating-stars-component";
+import { Alert } from 'react-bootstrap'
 
 
 const shopsRef = db.collection('shops')
@@ -26,7 +27,7 @@ export default function CreateReview() {
   const [formattedAddress, setFormattedAddress] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("")
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const history = useHistory();
 
   let currentUserUid = firebase.auth().currentUser.uid;
@@ -86,8 +87,8 @@ export default function CreateReview() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]));
     try {
+      let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]));
       shopsRef.get().then(querySnapshot => {
         let isExistShop = false
         let existShop
@@ -105,7 +106,7 @@ export default function CreateReview() {
         }
       })
     } catch {
-      console.log(e)
+      setError('Please set correct Shop Name')
     }
 
   }
@@ -152,6 +153,7 @@ export default function CreateReview() {
         return getLatLng(results[0]);
       })
       .then((latlng) => {
+        console.log(latlng);
         setGeoCode([latlng.lat, latlng.lng])
       })
       .catch(error => console.error('Error', error));
@@ -165,7 +167,8 @@ export default function CreateReview() {
 
   return (
     <>
-      <form className ='review_form search-form' onSubmit={handleSubmit} >
+      {error && <Alert variant="danger">{error}</Alert>}
+      <form className='review_form search-form' onSubmit={handleSubmit} >
         {/* <p>Drink name*</p> */}
         <input required  className= 'drink_name' placeholder='What did you drink?'name="drink_name" onChange={inputDrinkName} />
 
@@ -182,7 +185,7 @@ export default function CreateReview() {
                 {...getInputProps({
                   placeholder: 'Where did you drink it?',
                   className: 'location-search-input',
-                })}
+                })} required
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
