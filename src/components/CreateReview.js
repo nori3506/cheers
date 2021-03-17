@@ -20,8 +20,10 @@ export default function CreateReview() {
   const [comment, setComment] = useState("");
   const [drinkCategory, setDrinkCategory] = useState("Others");
   const [shopCategory, setShopCategory] = useState("Restaurant");
+  const [shopName, setShopName] = useState("");
   const [geoCode, setGeoCode] = useState([]);
   const [address, setAddress] = useState("");
+  const [formattedAddress, setFormattedAddress] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("")
   const [message, setMessage] = useState('');
@@ -62,7 +64,8 @@ export default function CreateReview() {
       storageRef.put(image)
     }
     db.collection('shops').doc(randomID).set({
-      name: address,
+      name: shopName,
+      address: formattedAddress,
       geocode: formatGeoCode
     })
     let shopRef = db.collection('shops').doc(randomID)
@@ -141,11 +144,13 @@ export default function CreateReview() {
 
 
   const handleChange = address => {
+    setShopName(address.split(',', 1)[0]);
     setAddress(address);
     geocodeByAddress(address)
-      .then(results =>
-        getLatLng(results[0])
-      )
+      .then(results => {
+        setFormattedAddress(results[0].formatted_address);
+        return getLatLng(results[0]);
+      })
       .then((latlng) => {
         setGeoCode([latlng.lat, latlng.lng])
       })
@@ -196,7 +201,8 @@ export default function CreateReview() {
                         style,
                       })}
                     >
-                      <span>{suggestion.formattedSuggestion.mainText}</span>
+                      <strong>{suggestion.formattedSuggestion.mainText}</strong>{' '}
+                      <small>{ suggestion.formattedSuggestion.secondaryText }</small>
                     </div>
                   );
                 })}
