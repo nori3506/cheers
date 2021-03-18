@@ -241,7 +241,7 @@ export default function CreateReview() {
         <input  className= 'price'  max="99999"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
         {/* <p>Rating</p> */}
         {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
-        {/* <p>Comment</p> */}
+
 
 
         <ReactStars
