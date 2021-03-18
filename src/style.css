@@ -372,7 +372,8 @@ template {
 
 body {
   font-family: 'Roboto', helvetica, arial, sans-serif;
-  background-color: #3d1600;
+  background-image: url("./assets/images/cheers-bg-8.png");
+  background-size: contain;
   color: white;
 }
 
@@ -408,7 +409,6 @@ header {
   left: 0;
   width: 100%;
   height: 56px;
-  background-color: #3d1600;
   z-index: 1000;
 }
 
@@ -458,7 +458,6 @@ footer {
   -ms-flex-line-pack: center;
       align-content: center;
   height: 84px;
-  background-color: #3d1600;
   z-index: 1000;
 }
 
@@ -507,7 +506,13 @@ footer .icon-button--create-review {
   background-color: white;
 }
 
-footer .nav-link--home {
+footer .icon-button--logout {
+  position: relative;
+  cursor: pointer;
+}
+
+footer .nav-link--home,
+footer .nav-link--profile {
   -webkit-transform: translate(0, -2px);
           transform: translate(0, -2px);
 }
@@ -539,7 +544,7 @@ footer .nav-link--home {
   border: 1px solid #de9e48;
   border-left: none;
   border-radius: 0 4px 4px 0;
-  background-color: #3d1600;
+  background-color: #372c2e;
   color: white;
   font-size: 24px;
 }
@@ -562,6 +567,11 @@ footer .nav-link--home {
       -ms-flex-pack: center;
           justify-content: center;
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.home .current-location-loading-message {
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 .home .shop-name {
@@ -838,6 +848,16 @@ footer .nav-link--home {
           align-items: center;
 }
 
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  background-color: #372c2e;
+}
+
 /* 3 Elements ============= */
 /* 3.1. Login =============== */
 .btn--primary,
@@ -851,11 +871,11 @@ footer .nav-link--home {
 
 .btn--primary {
   background-color: #de9e48;
-  color: #3d1600;
+  color: #372c2e;
 }
 
 .btn--secondary {
-  background-color: #3d1600;
+  background-color: #372c2e;
   color: white;
 }
 
@@ -931,7 +951,7 @@ input::placeholder {
   padding: 0.5rem;
   width: 100%;
   border: 2px solid #de9e48;
-  background-color: #3d1600;
+  background-color: #372c2e;
   border-radius: 10px;
 }
 
@@ -959,7 +979,7 @@ input::placeholder {
 .review_form .comment {
   padding: 0.5rem;
   border: 2px solid #de9e48;
-  background-color: #3d1600;
+  background-color: #372c2e;
   border-radius: 10px;
 }
 
@@ -1028,7 +1048,7 @@ input::placeholder {
   display: block;
   width: 70%;
   font-size: 1.3rem;
-  background-color: #3d1600;
+  background-color: #372c2e;
   border: #de9e48 2px solid;
   border-radius: 10px;
   color: white;
@@ -1057,7 +1077,7 @@ input::placeholder {
 .editReview .rating input {
   width: 70%;
   margin: auto;
-  background-color: #3d1600;
+  background-color: #372c2e;
   border-radius: 10px;
   border: #de9e48 2px solid;
   color: white;

@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext'
 import Map from './GoogleMap'
 import Header from './Header'
 import Footer from './Footer'
+import Loading from './Loading'
 import Login from '../templates/Login'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
@@ -12,7 +13,7 @@ import searchIcon from '../assets/icons/thick-borders.svg'
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
 
-export default function Home({ title, setTitle }) {
+export default function Home() {
   const { currentUser } = useAuth()
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -25,8 +26,7 @@ export default function Home({ title, setTitle }) {
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [disabled, setDisabled] = useState(true)
-  const [loadingData, setLoadingData] = useState(true)
-  const [loadingCurrentLocation, setLoadingCurrentLocation] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   const handleModalOpen = () => setModalOpen(true)
   const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
@@ -39,7 +39,7 @@ export default function Home({ title, setTitle }) {
     e.preventDefault()
     setModalOpen(false)
     setDisabled(true)
-    setLoadingData(true)
+    setLoading(true)
     setReviews([])
     setShops([])
 
@@ -117,12 +117,12 @@ export default function Home({ title, setTitle }) {
         setReviews(reviewsMatchShop)
         setShops(shopsMatchReview)
         setDisabled(false)
-        setLoadingData(false)
+        setLoading(false)
       })
       .catch(error => {
         console.log('Failed to search: ', error)
         setDisabled(false)
-        setLoadingData(false)
+        setLoading(false)
       })
   }
 
@@ -155,11 +155,11 @@ export default function Home({ title, setTitle }) {
       setReviews(newReviews)
       setShops(shopsWithReviewNum)
       setDisabled(false)
-      setLoadingData(false)
+      setLoading(false)
     })
   }, [])
 
-  if (currentUser) {
+  if (currentUser && !loading) {
     return (
       <>
         <Header />
@@ -231,17 +231,14 @@ export default function Home({ title, setTitle }) {
               </div>
             ) : null}
 
-            <Map
-              shops={shops}
-              loadingData={loadingData}
-              loadingCurrentLocation={loadingCurrentLocation}
-              setLoadingCurrentLocation={setLoadingCurrentLocation}
-            />
+            <Map shops={shops} />
           </div>
         </div>
         <Footer />
       </>
     )
+  } else if (currentUser) {
+    return <Loading />
   } else {
     return (
       <div className="wrapper">

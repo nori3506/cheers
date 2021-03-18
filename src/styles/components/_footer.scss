@@ -7,7 +7,6 @@ footer {
   flex-flow: row wrap;
   align-content: center;
   height: $footer-height;
-  background-color: $main-color;
   z-index: 1000;
 
   .wrapper {
@@ -46,7 +45,13 @@ footer {
     background-color: white;
   }
 
-  .nav-link--home {
+  .icon-button--logout {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .nav-link--home,
+  .nav-link--profile {
     transform: translate(0, -2px);
   }
 }

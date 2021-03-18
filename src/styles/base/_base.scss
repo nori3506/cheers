@@ -6,7 +6,8 @@
 
 body {
   font-family: 'Roboto', helvetica, arial, sans-serif;
-  background-color: $main-color;
+  background-image: url('./assets/images/cheers-bg-8.png');
+  background-size: contain;
   color: white;
 }
 
