@@ -1,0 +1,45 @@
+.review_form{
+    max-width: 800px;
+    margin: auto;
+}
+
+select:invalid {
+    color: rgba(white, 0.6)
+  }
+
+.shop_name input{
+      width: 100%;
+  }
+
+input.btn-primary{
+    padding: 0.5rem;
+    border: 2px solid white;
+    border-radius: 4px;
+    font-size: $font-lg;
+    text-transform: capitalize;
+    background-color: $accent-color;
+    color: $main-color;
+    width: 30%;
+    margin: auto;
+  }
+
+.autocomplete-dropdown-container{
+  color: black;
+}
+
+.react-stars{
+  padding: 0.5rem;
+  border: 1px solid $accent-color;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+  width: 100%;
+}
+.react-stars span:first-child:before{
+content:'Rating';
+color: rgba(white, 0.6);
+font-size: $font-sm;
+margin-right: 2rem;
+}
+
+

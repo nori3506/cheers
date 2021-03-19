@@ -21,8 +21,11 @@
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
     "react-places-autocomplete": "^7.3.0",
+    "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-spinners": "^0.10.6",
+    "react-star-ratings": "^2.3.0",
     "spinners-react": "^1.0.4",
     "web-vitals": "^0.2.4"
   },
