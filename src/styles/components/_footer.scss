@@ -8,12 +8,13 @@ footer {
   align-content: center;
   height: $footer-height;
   z-index: 1000;
+  background-color: $main-color;
 
   .wrapper {
     flex-grow: 1;
   }
 
-  ul {
+  .main-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,6 +46,10 @@ footer {
     background-color: white;
   }
 
+  .icon-button--portrait {
+    position: relative;
+  }
+
   .icon-button--logout {
     position: relative;
     cursor: pointer;
@@ -53,5 +58,28 @@ footer {
   .nav-link--home,
   .nav-link--profile {
     transform: translate(0, -2px);
+  }
+
+  .icon--portrait {
+    width: 100%;
+    border-radius: 50%;
+  }
+
+  .profile-menu {
+    position: absolute;
+    bottom: calc(56px + 1.5rem - 2px);
+    // bottom: -2px;
+    left: -2px;
+    display: flex;
+    flex-flow: column-reverse nowrap;
+    gap: 1.5rem;
+    z-index: 0;
+
+    transition: bottom 1s;
+
+    li {
+      background-color: $main-color;
+      // position: absolute;
+    }
   }
 }

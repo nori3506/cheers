@@ -5,6 +5,7 @@ header {
   width: 100%;
   height: $header-height;
   z-index: 1000;
+  background-color: $main-color;
 
   .wrapper {
     height: 100%;

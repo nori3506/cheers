@@ -410,6 +410,7 @@ header {
   width: 100%;
   height: 56px;
   z-index: 1000;
+  background-color: #372c2e;
 }
 
 header .wrapper {
@@ -459,6 +460,7 @@ footer {
       align-content: center;
   height: 84px;
   z-index: 1000;
+  background-color: #372c2e;
 }
 
 footer .wrapper {
@@ -467,7 +469,7 @@ footer .wrapper {
           flex-grow: 1;
 }
 
-footer ul {
+footer .main-menu {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -506,6 +508,10 @@ footer .icon-button--create-review {
   background-color: white;
 }
 
+footer .icon-button--portrait {
+  position: relative;
+}
+
 footer .icon-button--logout {
   position: relative;
   cursor: pointer;
@@ -515,6 +521,32 @@ footer .nav-link--home,
 footer .nav-link--profile {
   -webkit-transform: translate(0, -2px);
           transform: translate(0, -2px);
+}
+
+footer .icon--portrait {
+  width: 100%;
+  border-radius: 50%;
+}
+
+footer .profile-menu {
+  position: absolute;
+  bottom: calc(56px + 1.5rem - 2px);
+  left: -2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-flow: column-reverse nowrap;
+          flex-flow: column-reverse nowrap;
+  gap: 1.5rem;
+  z-index: 0;
+  -webkit-transition: bottom 1s;
+  transition: bottom 1s;
+}
+
+footer .profile-menu li {
+  background-color: #372c2e;
 }
 
 /* 2.5. Home ================ */
