@@ -4,7 +4,7 @@ import Map from './GoogleMap'
 import Header from './Header'
 import Footer from './Footer'
 import Loading from './Loading'
-import Login from '../templates/Login'
+import Login from './Login'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
@@ -241,7 +241,7 @@ export default function Home() {
     return <Loading />
   } else {
     return (
-      <div className="wrapper">
+      <div className="wrapper--narrow">
         <Login />
       </div>
     )

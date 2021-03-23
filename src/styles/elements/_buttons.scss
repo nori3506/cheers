@@ -1,18 +1,21 @@
 .btn--primary,
 .btn--secondary {
+  width: 100%;
+  margin: 1rem 0;
   padding: 0.5rem;
-  border: 2px solid white;
-  border-radius: 4px;
-  font-size: 24px;
+  border-radius: 5px;
+  font-size: 20px;
   text-transform: capitalize;
 }
 
 .btn--primary {
+  border: 2px solid $bg-light-color;
   background-color: $accent-color;
   color: $main-color;
 }
 
 .btn--secondary {
-  background-color: $main-color;
-  color: white;
+  border: 2px solid $accent-color;
+  background-color: $bg-light-color;
+  color: $main-color;
 }

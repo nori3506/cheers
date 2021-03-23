@@ -6,7 +6,7 @@ export default function GuestRoute({ component: Component, ...rest }) {
   const { currentUser } = useAuth()
 
   return (
-    <div className="wrapper">
+    <div className="wrapper--narrow">
       <Route
         {...rest}
         render={props => {

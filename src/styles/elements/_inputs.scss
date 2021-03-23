@@ -1,8 +1,9 @@
 input,
 select {
+  width: 100%;
   padding: 0.5rem;
   border: 1px solid $accent-color;
-  border-radius: 4px;
+  border-radius: 5px;
   background-color: transparent;
   color: white;
 }

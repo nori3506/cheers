@@ -394,6 +394,10 @@ a {
   padding: 0 1.5rem;
 }
 
+.wrapper--narrow {
+  padding: 0 3rem;
+}
+
 .container {
   padding-top: 56px;
   padding-bottom: 84px;
@@ -974,29 +978,33 @@ select:invalid {
 /* 3.1. Login =============== */
 .btn--primary,
 .btn--secondary {
+  width: 100%;
+  margin: 1rem 0;
   padding: 0.5rem;
-  border: 2px solid white;
-  border-radius: 4px;
-  font-size: 24px;
+  border-radius: 5px;
+  font-size: 20px;
   text-transform: capitalize;
 }
 
 .btn--primary {
+  border: 2px solid #fdf9df;
   background-color: #de9e48;
   color: #372c2e;
 }
 
 .btn--secondary {
-  background-color: #372c2e;
-  color: white;
+  border: 2px solid #de9e48;
+  background-color: #fdf9df;
+  color: #372c2e;
 }
 
 /* 3.2. Signup ============== */
 input,
 select {
+  width: 100%;
   padding: 0.5rem;
   border: 1px solid #de9e48;
-  border-radius: 4px;
+  border-radius: 5px;
   background-color: transparent;
   color: white;
 }
