@@ -1,170 +1,170 @@
 .edit-profile {
-    background-color:rgba( 0, 0, 0, .7);
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
+  background-color: rgba(0, 0, 0, .7);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  border: 1px solid #DE9E48;
+  border-radius: 5px;
+  padding: 65px .5rem 1rem .5rem;
+  position: relative;
+  margin-top: 65px;
+
+  .profile-img {
+    background-color: $accent_color;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
     border: 1px solid #DE9E48;
-    border-radius: 5px;
-    padding: 65px .5rem 1rem .5rem;
-    position: relative;
-    margin-top: 65px;
+    position: absolute;
+    bottom: calc(100% - 65px);
+  }
 
-    .profile-img {
-        background-color: $accent_color;
-        width: 130px;
-        height: 130px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 1px solid #DE9E48;
-        position: absolute;
-        bottom: calc(100% - 65px);
-    }
-
-    /*img.w-100[src=""] {
+  /*img.w-100[src=""] {
         background-color: red;
     }*/
 
-    input, label {
-        color: white;
-    }
+  input,
+  label {
+    color: white;
+  }
 
-    label {
-        padding-right: .5rem;
-    }
+  label {
+    padding-right: .5rem;
+  }
 
-    .MuiFormControl-fullWidth {
-        width: auto !important;
-    }
+  .MuiFormControl-fullWidth {
+    width: auto !important;
+  }
 
-    .MuiFormLabel-root {
-        font-size: .9rem;
-        font-weight: 300 !important;
-    }
-    
-    .MuiFormControl-root {
-        display: flex !important;
-        flex-flow: row nowrap !important;
-        justify-content: center;
-        height: 19px;
-        align-items: center;
-        margin: .3rem;
-    }
+  .MuiFormLabel-root {
+    font-size: .9rem;
+    font-weight: 300 !important;
+  }
 
-    // div for input
-    .MuiInputBase-fullWidth {
-        min-width: 20px !important;
-        max-width: 100px;
-    }
-    
-    // label modify default
-    .MuiInputLabel-formControl {
-        position: relative;
-        transform: none;
-    }
+  .MuiFormControl-root {
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    justify-content: center;
+    height: 19px;
+    align-items: center;
+    margin: .3rem;
+  }
 
-    // label modify default
-    .MuiInputLabel-shrink {
-        transform: none !important;
-    }
+  // div for input
+  .MuiInputBase-fullWidth {
+    min-width: 20px !important;
+    max-width: 100px;
+  }
 
-    // input margin
-    label + .MuiInput-formControl {
-        margin-top: 0;
-    }
+  // label modify default
+  .MuiInputLabel-formControl {
+    position: relative;
+    transform: none;
+  }
 
-    // input padding
-    .MuiInputBase-input {
-        padding: 0;
-        font-size: .9rem;
-        font-weight: 300;
-        line-height: 1;
-        height: auto !important;
-        border: none;
-        min-width: 20px;
-        width: auto;
-        max-width: 200px;
-    }
+  // label modify default
+  .MuiInputLabel-shrink {
+    transform: none !important;
+  }
 
-    // deactivate trasform for label
-    .MuiInputLabel-marginDense {
-        transform: none !important;
-    }
+  // input margin
+  label+.MuiInput-formControl {
+    margin-top: 0;
+  }
 
-    .MuiInputLabel-animated {
-        transition: none !important;
-    }
+  // input padding
+  .MuiInputBase-input {
+    padding: 0;
+    font-size: .9rem;
+    font-weight: 300;
+    line-height: 1;
+    height: auto !important;
+    border: none;
+    min-width: 20px;
+    width: auto;
+    max-width: 200px;
+  }
 
-    // input div
-    .MuiInput-underline:after {
-        border-bottom: 1px solid #DE9E48;
-    }
+  // deactivate trasform for label
+  .MuiInputLabel-marginDense {
+    transform: none !important;
+  }
 
-    // Gender Age Input
-    .MuiSelect-select {
-        color: white;
-        display: flex;
-        align-items: center;
-        padding-right: 0 !important;
-    }
+  .MuiInputLabel-animated {
+    transition: none !important;
+  }
 
-    .makeStyles-formControl-1 .MuiInput-underline:after {
-        border-bottom: none !important;
-    }
+  // input div
+  .MuiInput-underline:after {
+    border-bottom: 1px solid #DE9E48;
+  }
 
-    // input div
-    .MuiInputBase-root {
-        line-height: 1;
-    }
+  // Gender Age Input
+  .MuiSelect-select {
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-right: 0 !important;
+  }
 
-    // gender age div margin
-    .MuiFormControl-root.makeStyles-formControl-1 {
-        margin: .3rem;
-    }
+  .makeStyles-formControl-1 .MuiInput-underline:after {
+    border-bottom: none !important;
+  }
 
-    #selectInput .MuiInput-underline:after{
-        border-bottom: none;
-    }
+  // input div
+  .MuiInputBase-root {
+    line-height: 1;
+  }
 
-    // input focused underline
-    .MuiInput-underline:after {
-        border-bottom: 1px solid #DE9E48;
-    }
+  // gender age div margin
+  .MuiFormControl-root.makeStyles-formControl-1 {
+    margin: .3rem;
+  }
 
-    // label color focused
-    .MuiFormLabel-root.Mui-focused {
-        color: #DE9E48;
-    }
+  #selectInput .MuiInput-underline:after {
+    border-bottom: none;
+  }
 
-    // svg icon
-    .MuiSelect-icon {
-        color: white;
-        position: relative
-    }
+  // input focused underline
+  .MuiInput-underline:after {
+    border-bottom: 1px solid #DE9E48;
+  }
 
-    // Update button
-    button.w-100 {
-        background-color: white;
-        border: 2px solid #DE9E48;
-        border-radius: 5px;
-        width: 150px;
-        padding: .4rem 1.3rem;
-    }
+  // label color focused
+  .MuiFormLabel-root.Mui-focused {
+    color: #DE9E48;
+  }
+
+  // svg icon
+  .MuiSelect-icon {
+    color: white;
+    position: relative
+  }
+
+  // Update button
+  button.w-100 {
+    background-color: white;
+    border: 2px solid #DE9E48;
+    border-radius: 5px;
+    width: 150px;
+    padding: .4rem 1.3rem;
+  }
 
 
-    #upload-button {
-        display: none;
-    }
+  #upload-button {
+    display: none;
+  }
 
-    #upload-img-label {
-        margin: .5rem;
-        text-align: center;
-        font-size: .8rem;
-        color: white;
-        background-color: rgba(0, 0, 0, .7);
-        border: 1px solid #DE9E48;
-        border-radius: 5px;
-        padding: .3rem 1rem;
-    }    
+  #upload-img-label {
+    margin: .5rem;
+    text-align: center;
+    font-size: .8rem;
+    color: white;
+    background-color: rgba(0, 0, 0, .7);
+    border: 1px solid #DE9E48;
+    border-radius: 5px;
+    padding: .3rem 1rem;
+  }
 
 }
-

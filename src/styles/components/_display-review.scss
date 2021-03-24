@@ -1,5 +1,3 @@
-
-
 /* shop basic info */
 .shop-basic-info {
   width: 100%;
@@ -27,7 +25,7 @@
     font-size: 14px;
     display: grid;
     grid-template-columns: 52px 1fr;
-    grid-template-rows:  auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
     grid-gap: .7rem;
     padding: .7rem 0 .3rem 0;
 
@@ -41,7 +39,7 @@
       border: 2px solid $accent-color !important;
       width: 50px;
       height: 50px;
-      object-fit: cover; 
+      object-fit: cover;
       grid-column: 1 / span 1;
       grid-row: 1 / span 1;
     }
@@ -80,7 +78,7 @@
     .comment {
       grid-row: 2 / span 1;
       grid-column: 1 / -1;
-      
+
       span {
         color: $accent-color;
       }
@@ -102,15 +100,12 @@
       .delete-edit-wrapper {
         display: flex;
         justify-content: flex-end;
-
-        
       }
     }
-    
-    &:last-of-type, 
+
+    &:last-of-type,
     :last-of-type:first-of-type {
       border: none;
     }
   }
 }
-

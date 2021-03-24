@@ -1,108 +1,108 @@
 .login-wrapper,
 .signup-wrapper {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 
 }
 
 // Logo + inputs 
-#signup, #login {
+#signup,
+#login {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  row-gap: 2.5rem;
+
+  // h2 accessibility
+  .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  img {
+    width: 50vw;
+    height: auto;
+  }
+
+  form {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    row-gap: 2.5rem;
+    row-gap: 1rem;
 
-    // h2 accessibility
-    .visually-hidden {
-        clip: rect(0 0 0 0);
-        clip-path: inset(50%);
-        height: 1px;
-        overflow: hidden;
-        position: absolute;
-        white-space: nowrap;
-        width: 1px;
+    // label visually hidden to keep accessibility
+    .form-label {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
     }
 
-    img {
-        width: 50vw;
-        height: auto;
+    input {
+      background-color: rgba(0, 0, 0, .35);
+      font-size: 1rem;
+      width: 75vw;
+      height: 6.5vh;
+      padding-left: 1rem;
     }
 
-    form {
-        display: flex;
-        flex-flow: column nowrap;
-        row-gap: 1rem;
-
-        // label visually hidden to keep accessibility
-        .form-label {
-            clip: rect(0 0 0 0);
-            clip-path: inset(50%);
-            height: 1px;
-            overflow: hidden;
-            position: absolute;
-            white-space: nowrap;
-            width: 1px;
-        }
-
-        input {
-            background-color: rgba(0,0,0,.35);
-            font-size: 1rem;
-            width: 75vw;
-            height: 6.5vh;
-            padding-left: 1rem;
-        }
-
-        input:focus {
-            border: 2px solid $accent-color;
-            outline: none;      
-        }
-
-        .btn--primary {
-            margin-top: 2rem;
-            color: #372C2E;
-            height: 6.5vh;
-            border: 2px solid $bg-light-color;
-            font-size: 1rem;
-        }   
-        
+    input:focus {
+      border: 2px solid $accent-color;
+      outline: none;
     }
+
+    .btn--primary {
+      margin-top: 2rem;
+      color: #372C2E;
+      height: 6.5vh;
+      border: 2px solid $bg-light-color;
+      font-size: 1rem;
+    }
+
+  }
 
 
 }
 
 // Link to log-in/signup page 
 .w-100.text-center.mt-2 {
-    margin-top: .7rem;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
+  margin-top: .7rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 
-    p {
-        font-size: .8rem;
+  p {
+    font-size: .8rem;
+  }
+
+  p:first-of-type {
+    margin: 0;
+  }
+
+  p:nth-of-type(2) {
+    margin: .4rem 0;
+
+    a {
+      color: white;
+      text-decoration: underline;
+      text-decoration-color: $accent-color;
     }
-
-    p:first-of-type {
-       margin: 0;
-    }
-
-    p:nth-of-type(2) {
-        margin: .4rem 0;
-
-        a {
-            color: white;
-            text-decoration: underline;
-            text-decoration-color: $accent-color;
-        }
-    }
+  }
 }
 
 .login-button {
-    background-color:  $bg-light-color !important;
-    border: 2px solid $accent-color !important;
+  background-color: $bg-light-color !important;
+  border: 2px solid $accent-color !important;
 }
-
