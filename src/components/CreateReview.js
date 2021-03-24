@@ -136,7 +136,7 @@ export default function CreateReview() {
   }
 
   const inputPrice = (event) =>{
-    setPrice(parseInt(event.target.value))
+    setPrice(parseFloat(event.target.value))
   }
 
   // const inputRating = (event) =>{
@@ -172,7 +172,7 @@ export default function CreateReview() {
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
-      <form className='review_form search-form' onSubmit={handleSubmit} >
+      <form className='review_form search-form'  onSubmit={handleSubmit} >
         {/* <p>Drink name*</p> */}
         <input required  className= 'drink_name' placeholder='What did you drink?'name="drink_name" onChange={inputDrinkName} />
 
@@ -238,7 +238,7 @@ export default function CreateReview() {
           ))}
         </select>
 
-        <input  className= 'price'  max="99999"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
+        <input  className= 'price'  max="99999"　step="0.5"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
         {/* <p>Rating</p> */}
         {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
 
@@ -249,7 +249,7 @@ export default function CreateReview() {
          value={rating}
          onChange={inputRating}
          size={24}
-         activeColor="#ffd700" />
+         activeColor="#de9e48" />
 
         <textarea className= 'comment' placeholder='Please write a review' name="comment" rows="4" cols="40" onChange={inputComment} />
         <input

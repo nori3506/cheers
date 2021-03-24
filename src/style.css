@@ -6,7 +6,7 @@ Table of Contents
 2. Components
 2.1. Login
 2.2. Signup
-2.3.
+2.3. Header
 2.4. Footer
 2.5. Home
 2.6. Create Review
@@ -27,6 +27,7 @@ Table of Contents
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 html {
   line-height: 1.15;
   /* 1 */
@@ -366,10 +367,9 @@ template {
 }
 
 body {
-  font-family: helvetica, arial, sans-serif;
+  font-family: "Roboto", helvetica, arial, sans-serif;
   background-color: #3d1600;
   color: white;
-  font-size: 14px;
 }
 
 ul {
@@ -386,7 +386,7 @@ a {
 }
 
 .wrapper {
-  padding: 0 2%;
+  padding: 0 1.5rem;
 }
 
 .container {
@@ -420,6 +420,7 @@ header .page-title {
   left: 50%;
   margin: 0;
   transform: translate(-50%, -50%);
+  font-size: 18px;
 }
 header img {
   width: 28px;
@@ -508,8 +509,21 @@ footer .nav-link--home {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.8);
 }
+.home .shop-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+.home .shop-address {
+  font-size: 14px;
+}
 .home .info-window {
   color: black;
+}
+.home .info-window p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0.5rem 0;
 }
 .home .shop-list {
   border: 1px solid #de9e48;
@@ -518,24 +532,46 @@ footer .nav-link--home {
   background-color: #fdf9df;
   color: black;
 }
-.home .shop-list-item:not(:last-child) {
+.home .shop-list .shop-list-item:not(:last-child) {
   border-bottom: 2px solid #de9e48;
 }
-.home .shop-list-item a {
+.home .shop-list .shop-list-item a {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
 }
-.home .shop-category-icon {
-  width: 24px;
+.home .shop-list .shop-list-item a p {
+  margin: 0.5rem 0;
 }
-.home .shop-info {
+.home .shop-list .shop-list-item a .shop-category {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 36px;
+}
+.home .shop-list .shop-list-item a .shop-category .shop-category-icon--bar {
+  height: 36px;
+  transform: translateX(2px);
+}
+.home .shop-list .shop-list-item a .shop-category .shop-category-icon--restaurant {
+  height: 30px;
+  transform: translateX(3px);
+}
+.home .shop-list .shop-list-item a .shop-category .shop-category-icon--store {
+  height: 28px;
+}
+.home .shop-list .shop-list-item a .shop-info {
   flex-grow: 1;
+  overflow: hidden;
 }
-.home .shop-review-number {
+.home .shop-list .shop-list-item a .shop-info p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.home .shop-list .shop-list-item a .shop-review {
   text-align: right;
-  font-size: 32px;
+  font-size: 22px;
   color: #de9e48;
 }
 
@@ -557,7 +593,7 @@ input.btn-primary {
   padding: 0.5rem;
   border: 2px solid white;
   border-radius: 4px;
-  font-size: 24px;
+  font-size: 1rem;
   text-transform: capitalize;
   background-color: #de9e48;
   color: #3d1600;
@@ -581,7 +617,7 @@ input.btn-primary {
 .react-stars span:first-child:before {
   content: "Rating";
   color: rgba(255, 255, 255, 0.6);
-  font-size: 16px;
+  font-size: 1rem;
   margin-right: 2rem;
 }
 
@@ -613,10 +649,22 @@ select:invalid {
   padding: 0.5rem;
   border: 2px solid white;
   border-radius: 4px;
-  font-size: 24px;
+  font-size: 1rem;
   text-transform: capitalize;
   background-color: #de9e48;
   color: #3d1600;
+  width: 30%;
+  margin: auto;
+}
+
+.btn-secondary {
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-transform: capitalize;
+  background-color: #3d1600;
+  color: white;
   width: 30%;
   margin: auto;
 }
@@ -794,7 +842,6 @@ input::placeholder {
   flex-flow: column nowrap;
   gap: 1rem;
   padding: 1rem;
-  font-size: 16px;
 }
 
 .search-form__label {
@@ -804,13 +851,6 @@ input::placeholder {
 }
 
 /* Archives (to be removed) */
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

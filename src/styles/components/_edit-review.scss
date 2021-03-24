@@ -25,10 +25,21 @@ select:invalid {
   padding: 0.5rem;
   border: 2px solid white;
   border-radius: 4px;
-  font-size: $font-lg;
+  font-size: 1rem;
   text-transform: capitalize;
   background-color: $accent-color;
   color: $main-color;
+  width: 30%;
+  margin: auto;
+}
+.btn-secondary{
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-transform: capitalize;
+  background-color: $main-color;
+  color: white;
   width: 30%;
   margin: auto;
 }

@@ -29,19 +29,19 @@ const DisplayReview = () => {
             querySnapshot.forEach(function(review) {
               userRef.doc(review.data().user.id)
               .get()
-              .then(snapshot => { 
+              .then(snapshot => {
                 if(review.data().fullPath) {
                   var pathReference = storage.ref(review.data().fullPath);
                   pathReference.getDownloadURL().then(url => {
                     setReviews((reviews) => [...reviews, { ...review.data(), shop: shop.data(), user: snapshot, ref: review.ref, img: url }])
-                  })   
+                  })
                 }else {
                   setReviews((reviews) => [...reviews, { ...review.data(), shop: shop.data(), user: snapshot, ref: review.ref, img: "doesNotExist" }])
                 }
-                
+
               }).catch(function(error) {
                  console.log("Error getting document:", error);
-              });										 
+              });
             });
           })
         } else {
