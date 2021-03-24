@@ -139,9 +139,7 @@ export default function CreateReview() {
     setPrice(parseFloat(event.target.value))
   }
 
-  // const inputRating = (event) =>{
-  //   setRating(parseInt(event.target.value))
-  // }
+
 
   const inputRating = (event) =>{
     setRating(parseInt(event))
