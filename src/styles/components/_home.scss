@@ -7,23 +7,19 @@
   .search-icon {
     padding: 0.5rem;
     border: 1px solid $accent-color;
-    border-radius: 4px 0 0 4px;
+    border-radius: 5px 0 0 5px;
     color: $accent-color;
 
     img {
       width: 24px;
+      transform: translateY(2px);
     }
   }
 
   .search-box {
-    flex-grow: 1;
-    padding: 0.5rem;
-    border: 1px solid $accent-color;
     border-left: none;
-    border-radius: 0 4px 4px 0;
-    background-color: $main-color;
-    color: white;
-    font-size: 24px;
+    border-radius: 0 5px 5px 0;
+    font-size: 20px;
   }
 
   .overlay {
@@ -33,10 +29,16 @@
     width: 100%;
     height: 100vh;
     z-index: 2000;
+    padding: 0 1rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     background-color: rgba(black, 0.8);
+  }
+
+  .current-location-loading-message {
+    text-align: center;
+    font-size: 1.5rem;
   }
 
   .shop-name {

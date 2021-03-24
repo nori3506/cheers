@@ -3,7 +3,7 @@ import { SpinnerCircular } from 'spinners-react'
 
 export default function Loading() {
   return (
-    <div className="spinner-grid">
+    <div className="loading spinner-grid">
       <SpinnerCircular
         size={70}
         thickness={130}
