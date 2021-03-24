@@ -413,6 +413,141 @@ img {
 
 /* 2 Components ============= */
 /* 2.1. Login =============== */
+.login-wrapper,
+.signup-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+#signup, #login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  row-gap: 2.5rem;
+}
+
+#signup .visually-hidden, #login .visually-hidden {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+#signup img, #login img {
+  width: 50vw;
+  height: auto;
+}
+
+#signup form, #login form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  row-gap: 1rem;
+}
+
+#signup form .form-label, #login form .form-label {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+#signup form input, #login form input {
+  background-color: rgba(0, 0, 0, 0.35);
+  font-size: 1rem;
+  width: 75vw;
+  height: 6.5vh;
+  padding-left: 1rem;
+}
+
+#signup form input:focus, #login form input:focus {
+  border: 2px solid #de9e48;
+  outline: none;
+}
+
+#signup form .btn--primary, #login form .btn--primary {
+  margin-top: 2rem;
+  color: #372C2E;
+  height: 6.5vh;
+  border: 2px solid #fdf9df;
+  font-size: 1rem;
+}
+
+.w-100.text-center.mt-2 {
+  margin-top: .7rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.w-100.text-center.mt-2 p {
+  font-size: .8rem;
+}
+
+.w-100.text-center.mt-2 p:first-of-type {
+  margin: 0;
+}
+
+.w-100.text-center.mt-2 p:nth-of-type(2) {
+  margin: .4rem 0;
+}
+
+.w-100.text-center.mt-2 p:nth-of-type(2) a {
+  color: white;
+  text-decoration: underline;
+  -webkit-text-decoration-color: #de9e48;
+          text-decoration-color: #de9e48;
+}
+
+.login-button {
+  background-color: #fdf9df !important;
+  border: 2px solid #de9e48 !important;
+}
+
 /* 2.2. Signup ============== */
 /* 2.3. Header ============== */
 header {
@@ -749,7 +884,7 @@ footer .profile-menu li {
 
 /* reviews */
 .review-wrapper {
-  background-color: #fdf9df;
+  background-color: #FDF9DF;
   border: 1px solid #de9e48;
   border-radius: 5px;
   padding: 0 1rem;
@@ -765,8 +900,8 @@ footer .profile-menu li {
       grid-template-columns: 52px 1fr;
   -ms-grid-rows: auto 1fr auto;
       grid-template-rows: auto 1fr auto;
-  grid-gap: 0.7rem;
-  padding: 0.7rem 0 0.3rem 0;
+  grid-gap: .7rem;
+  padding: .7rem 0 .3rem 0;
 }
 
 .review-wrapper .reviews-area p {
@@ -799,13 +934,13 @@ footer .profile-menu li {
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr;
       grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 0.2rem;
+  grid-gap: .2rem;
   /* only for profile page "at" in h2 */
 }
 
 .review-wrapper .reviews-area div .rating {
   color: #de9e48;
-  font-size: 0.8rem;
+  font-size: .8rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -900,9 +1035,13 @@ footer .profile-menu li {
   padding: 65px .5rem 1rem .5rem;
   position: relative;
   margin-top: 65px;
+  /*img.w-100[src=""] {
+        background-color: red;
+    }*/
 }
 
-.edit-profile img.w-100 {
+.edit-profile .profile-img {
+  background-color: #de9e48;
   width: 130px;
   height: 130px;
   border-radius: 50%;
@@ -955,6 +1094,8 @@ footer .profile-menu li {
 
 .edit-profile .MuiInputLabel-formControl {
   position: relative;
+  -webkit-transform: none;
+          transform: none;
 }
 
 .edit-profile .MuiInputLabel-shrink {
@@ -988,8 +1129,8 @@ footer .profile-menu li {
   transition: none !important;
 }
 
-.edit-profile .MuiInput-underline:before {
-  border: none !important;
+.edit-profile .MuiInput-underline:after {
+  border-bottom: 1px solid #DE9E48;
 }
 
 .edit-profile .MuiSelect-select {
@@ -1000,6 +1141,11 @@ footer .profile-menu li {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding-right: 0 !important;
+}
+
+.edit-profile .makeStyles-formControl-1 .MuiInput-underline:after {
+  border-bottom: none !important;
 }
 
 .edit-profile .MuiInputBase-root {
@@ -1008,6 +1154,10 @@ footer .profile-menu li {
 
 .edit-profile .MuiFormControl-root.makeStyles-formControl-1 {
   margin: .3rem;
+}
+
+.edit-profile #selectInput .MuiInput-underline:after {
+  border-bottom: none;
 }
 
 .edit-profile .MuiInput-underline:after {
@@ -1020,6 +1170,7 @@ footer .profile-menu li {
 
 .edit-profile .MuiSelect-icon {
   color: white;
+  position: relative;
 }
 
 .edit-profile button.w-100 {
