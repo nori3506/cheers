@@ -205,7 +205,20 @@ export default function Profile() {
           <Form className="edit-profile" onSubmit={updateUserProfile}>
             {message && <Alert variant="success">{message}</Alert>}
             {error && <Alert variant="danger">{error}</Alert>}
-            <img src={photoURL} className="w-100" />
+            
+            {(() =>{
+               if(photoURL !== "") {
+                return (                
+                  <img src={photoURL} className="profile-img" />
+                )
+               }else {
+                 // if there is no img, orange background
+                 return (
+                 <div class="profile-img"></div>
+                 )
+               }
+             })()}
+             
             <label for="upload-button" id="upload-img-label">
               Upload Image
             </label>
