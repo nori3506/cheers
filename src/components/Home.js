@@ -179,13 +179,14 @@ export default function Home() {
 
             {modalOpen ? (
               <div className="overlay">
-                <form onSubmit={handleSearch} className="search-form">
+                <form onSubmit={handleSearch} className="form">
                   <input
                     type="text"
                     placeholder="Drink Name"
                     value={drink}
                     onChange={handleDrinkChange}
                   />
+
                   <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
                     <option value="">Select Drink Category</option>
                     {drinkCategories.map(category => (
@@ -194,12 +195,14 @@ export default function Home() {
                       </option>
                     ))}
                   </select>
+
                   <input
                     type="text"
                     placeholder="Place Name"
                     value={place}
                     onChange={handlePlaceChange}
                   />
+
                   <select value={placeCategory} onChange={handlePlaceCategoryChange}>
                     <option value="">Select Place Category</option>
                     {placeCategories.map(category => (
@@ -208,25 +211,30 @@ export default function Home() {
                       </option>
                     ))}
                   </select>
-                  <label className="search-form__label">
-                    Price max
-                    <input
-                      type="number"
-                      placeholder="Max"
-                      value={priceMax}
-                      onChange={handlePriceMaxChange}
-                    />
-                  </label>
-                  <label className="search-form__label">
-                    Price min
-                    <input type="number" value={priceMin} onChange={handlePriceMinChange} />
-                  </label>
-                  <button className="btn--primary" type="submit" disabled={disabled}>
-                    search
-                  </button>
-                  <button className="btn--secondary" onClick={() => setModalOpen(false)}>
-                    Close
-                  </button>
+
+                  <input
+                    type="number"
+                    placeholder="Price max"
+                    value={priceMax}
+                    onChange={handlePriceMaxChange}
+                  />
+
+                  <input
+                    type="number"
+                    placeholder="Price min"
+                    value={priceMin}
+                    onChange={handlePriceMinChange}
+                  />
+
+                  <div className="btn-area--half">
+                    <button className="btn--primary btn--half" type="submit" disabled={disabled}>
+                      search
+                    </button>
+
+                    <button className="btn--tertiary btn--half" onClick={() => setModalOpen(false)}>
+                      Cancel
+                    </button>
+                  </div>
                 </form>
               </div>
             ) : null}

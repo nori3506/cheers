@@ -3,9 +3,9 @@ import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 import { ButtonInput } from './UIkit'
 import { db } from '../firebase/index'
-import firebase from "firebase/app";
+import firebase from 'firebase/app'
 const reviewsRef = db.collection('reviews')
-const storage = firebase.storage();
+const storage = firebase.storage()
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([])
@@ -15,20 +15,27 @@ const Reviews = () => {
     reviewsRef.get().then(snapshot => {
       snapshot.forEach(review => {
         if (review?.data()?.user?.id == currentUser.uid) {
-          db.collection('shops').doc(review.data().shop.id).get().then(
-            snapshot => {
-              if(review.data().fullPath) {
-                var pathReference = storage.ref(review.data().fullPath);
+          db.collection('shops')
+            .doc(review.data().shop.id)
+            .get()
+            .then(snapshot => {
+              if (review.data().fullPath) {
+                var pathReference = storage.ref(review.data().fullPath)
                 pathReference.getDownloadURL().then(url => {
                   const shop = snapshot.data()
-              setReviews((reviews) => [...reviews, { ref: review.ref, ...review.data(), shop: shop, img: url }])
+                  setReviews(reviews => [
+                    ...reviews,
+                    { ref: review.ref, ...review.data(), shop: shop, img: url },
+                  ])
                 })
-              }else {
+              } else {
                 const shop = snapshot.data()
-                setReviews((reviews) => [...reviews, { ref: review.ref, ...review.data(), shop: shop, img: "doesNotExist" }])
+                setReviews(reviews => [
+                  ...reviews,
+                  { ref: review.ref, ...review.data(), shop: shop, img: 'doesNotExist' },
+                ])
               }
-            }
-          )
+            })
         }
       })
     })
@@ -68,54 +75,60 @@ const Reviews = () => {
   const reviewItems = reviews.map((review, i) => {
     return (
       <div className="reviews-background reviews-area">
-
         {(() => {
-          if (review.img != "doesNotExist") {
-            return (
-                <img src={review.img} className="review-img" />
-            )
+          if (review.img != 'doesNotExist') {
+            return <img src={review.img} className="review-img" />
           }
         })()}
 
         <div>
-          <h2 className="u-text-small">{review.drink_name}&#160;<span className="normal-font-weight">at</span> {review.shop.name}</h2>
+          <h2 className="u-text-small">
+            {review.drink_name}&#160;<span className="normal-font-weight">at</span>{' '}
+            {review.shop.name}
+          </h2>
           <p class="category">{review.drink_category}</p>
           <p class="price">{review.price} CAD</p>
-            {(() =>{
-               var rating = review.rating;
-               var star = "";
-               var hollowStars = "";
-               for(var i = 0; i < rating ; i++ ) {
-                  star = star + "★";
-               }
-               var noRating = 5 - rating;
-               for(var i = 0; i < noRating; i++) {
-                  hollowStars = hollowStars + "☆";
-               }
-               return (
-                <p class="rating">{star}{hollowStars}</p>
-              )
-             })()}
+          {(() => {
+            var rating = review.rating
+            var star = ''
+            var hollowStars = ''
+            for (var i = 0; i < rating; i++) {
+              star = star + '★'
+            }
+            var noRating = 5 - rating
+            for (var i = 0; i < noRating; i++) {
+              hollowStars = hollowStars + '☆'
+            }
+            return (
+              <p class="rating">
+                {star}
+                {hollowStars}
+              </p>
+            )
+          })()}
         </div>
 
-        <p class="comment"><span>"</span>{review.comment}<span>"</span></p>
+        <p class="comment">
+          <span>"</span>
+          {review.comment}
+          <span>"</span>
+        </p>
 
         <div class="bottom-row">
           <div class="delete-edit-wrapper">
-            <Link to={'/review/edit/' + review.ref.id} className="edit-button">Edit</Link>
-            <ButtonInput label={"Delete"} onClick={() =>handleDelete(review)}/>
+            <button className="btn--secondary btn--xs btn--link">
+              <Link to={'/review/edit/' + review.ref.id}>Edit</Link>
+            </button>
+            <button onClick={() => handleDelete(review)} className="btn--secondary btn--xs">
+              Delete
+            </button>
           </div>
         </div>
-
       </div>
     )
   })
   if (reviewItems.length) {
-    return (
-      <div className="review-wrapper">
-        {reviewItems}
-      </div>
-    )
+    return <div className="review-wrapper">{reviewItems}</div>
   } else {
     return <div className="reviews-background u-text-center">Your Reviews were not found</div>
   }

@@ -39,19 +39,24 @@ export default function Signup() {
           <Form onSubmit={hanleSubmit}>
             <Form.Group id="name">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" ref={nameRef} required />
+              <Form.Control type="text" ref={nameRef} required className="input--lg" />
             </Form.Group>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Control type="email" ref={emailRef} required className="input--lg" />
             </Form.Group>
             <Form.Group id="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Control type="password" ref={passwordRef} required className="input--lg" />
             </Form.Group>
             <Form.Group id="password-Confirmation">
               <Form.Label>passwordConfirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
+              <Form.Control
+                type="password"
+                ref={passwordConfirmRef}
+                required
+                className="input--lg"
+              />
             </Form.Group>
             <button disabled={loading} className="btn--primary" type="submit">
               Sign Up

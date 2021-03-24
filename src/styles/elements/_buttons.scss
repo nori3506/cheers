@@ -1,21 +1,53 @@
-.btn--primary,
-.btn--secondary {
+button {
   width: 100%;
-  margin: 1rem 0;
-  padding: 0.5rem;
+  height: 50px;
   border-radius: 5px;
   font-size: 20px;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .btn--primary {
   border: 2px solid $bg-light-color;
   background-color: $accent-color;
-  color: $main-color;
+  color: black;
 }
 
 .btn--secondary {
   border: 2px solid $accent-color;
-  background-color: $bg-light-color;
+  background-color: white;
   color: $main-color;
+}
+
+// Applied to cancel button on search form
+.btn--tertiary {
+  border: 2px solid $bg-light-color;
+  background-color: $main-color;
+  color: $bg-light-color;
+}
+
+.btn--sm {
+  width: 140px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.btn--xs {
+  width: 60px;
+  height: 27px;
+  font-size: 14px;
+}
+
+.btn-area--half {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.btn--half {
+  font-size: 16px;
+}
+
+.btn--link a {
+  display: block;
 }

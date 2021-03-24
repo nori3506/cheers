@@ -1,49 +1,48 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import firebase from "firebase/app";
-import "firebase/firestore";
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import { db, storage } from '../firebase/index'
-import Automap from "./Automap"
+import Automap from './Automap'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import Imageupload from './imageUpload'
-import ReactStars from "react-rating-stars-component";
+import ReactStars from 'react-rating-stars-component'
 import { Alert } from 'react-bootstrap'
-
 
 const shopsRef = db.collection('shops')
 
 export default function CreateReview() {
-  const [drinkName, setDrinkName] = useState("");
-  const [price, setPrice] = useState("");
-  const [rating, setRating] = useState(3);
-  const [comment, setComment] = useState("");
-  const [drinkCategory, setDrinkCategory] = useState("Others");
-  const [shopCategory, setShopCategory] = useState("Restaurant");
-  const [shopName, setShopName] = useState("");
-  const [geoCode, setGeoCode] = useState([]);
-  const [address, setAddress] = useState("");
-  const [formattedAddress, setFormattedAddress] = useState("");
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState("")
-  const [error, setError] = useState('');
-  const [isCreating, setIsCreating] = useState(false);
-  const history = useHistory();
+  const [drinkName, setDrinkName] = useState('')
+  const [price, setPrice] = useState('')
+  const [rating, setRating] = useState(3)
+  const [comment, setComment] = useState('')
+  const [drinkCategory, setDrinkCategory] = useState('Others')
+  const [shopCategory, setShopCategory] = useState('Restaurant')
+  const [shopName, setShopName] = useState('')
+  const [geoCode, setGeoCode] = useState([])
+  const [address, setAddress] = useState('')
+  const [formattedAddress, setFormattedAddress] = useState('')
+  const [image, setImage] = useState(null)
+  const [preview, setPreview] = useState('')
+  const [error, setError] = useState('')
+  const [isCreating, setIsCreating] = useState(false)
+  const history = useHistory()
 
-  let currentUserUid = firebase.auth().currentUser.uid;
-  let fullPath = "";
+  let currentUserUid = firebase.auth().currentUser.uid
+  let fullPath = ''
 
-  function reviewRegisterForExistShop(existShop){
+  function reviewRegisterForExistShop(existShop) {
     let userRef = db.collection('users').doc(currentUserUid)
     const randomPhotoId = Math.random().toString(32).substring(2)
     if (image !== null) {
-      fullPath = "reviewPhoto/" + randomPhotoId + image.name;
-      let storageRef = storage.ref().child(fullPath);
+      fullPath = 'reviewPhoto/' + randomPhotoId + image.name
+      let storageRef = storage.ref().child(fullPath)
       storageRef.put(image)
     }
 
-    db.collection("reviews").doc().set({
+    db.collection('reviews').doc().set({
       drink_name: drinkName,
       price: price,
       rating: rating,
@@ -54,26 +53,26 @@ export default function CreateReview() {
       shop: existShop,
       fullPath: fullPath,
     })
-    history.push( '/shop/'+existShop.id)
+    history.push('/shop/' + existShop.id)
   }
 
   function reviewRegisterForNewShop(formatGeoCode) {
     let randomID = Math.random().toString(32).substring(2)
     const randomPhotoId = Math.random().toString(32).substring(2)
     if (image !== null) {
-      fullPath = "reviewPhoto/" + randomPhotoId + image.name;
-      let storageRef = storage.ref().child(fullPath);
+      fullPath = 'reviewPhoto/' + randomPhotoId + image.name
+      let storageRef = storage.ref().child(fullPath)
       storageRef.put(image)
     }
     db.collection('shops').doc(randomID).set({
       name: shopName,
       address: formattedAddress,
       geocode: formatGeoCode,
-      category: shopCategory
+      category: shopCategory,
     })
     let shopRef = db.collection('shops').doc(randomID)
     let userRef = db.collection('users').doc(currentUserUid)
-    db.collection("reviews").doc().set({
+    db.collection('reviews').doc().set({
       drink_name: drinkName,
       price: price,
       rating: rating,
@@ -84,20 +83,22 @@ export default function CreateReview() {
       shop: shopRef,
       fullPath: fullPath,
     })
-    history.push( '/shop/'+randomID)
+    history.push('/shop/' + randomID)
   }
 
   async function handleSubmit(e) {
     e.preventDefault()
     setIsCreating(true)
     try {
-      let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]));
+      let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]))
       await shopsRef.get().then(querySnapshot => {
         let isExistShop = false
         let existShop
         querySnapshot.forEach(shop => {
-          if (formatGeoCode.latitude === shop.data().geocode.latitude &&
-            formatGeoCode.longitude === shop.data().geocode.longitude) {
+          if (
+            formatGeoCode.latitude === shop.data().geocode.latitude &&
+            formatGeoCode.longitude === shop.data().geocode.longitude
+          ) {
             isExistShop = true
             existShop = shop.ref
           }
@@ -115,27 +116,27 @@ export default function CreateReview() {
     }
   }
 
-  const inputDrinkName = (event) =>{
+  const inputDrinkName = event => {
     setDrinkName(event.target.value)
   }
 
-  const inputComment = (event) =>{
+  const inputComment = event => {
     setComment(event.target.value)
   }
 
-  const inputImage = (event) => {
+  const inputImage = event => {
     setImage(event.target.files[0])
   }
 
-  const inputDrinkCategory = (event) =>{
+  const inputDrinkCategory = event => {
     setDrinkCategory(event.target.value)
   }
 
-  const inputShopCategory = (event) =>{
+  const inputShopCategory = event => {
     setShopCategory(event.target.value)
   }
 
-  const inputPrice = (event) =>{
+  const inputPrice = event => {
     setPrice(parseInt(event.target.value))
   }
 
@@ -143,64 +144,65 @@ export default function CreateReview() {
   //   setRating(parseInt(event.target.value))
   // }
 
-  const inputRating = (event) =>{
+  const inputRating = event => {
     setRating(parseInt(event))
   }
 
-
   const handleChange = address => {
-    setShopName(address.split(',', 1)[0]);
-    setAddress(address);
+    setShopName(address.split(',', 1)[0])
+    setAddress(address)
     geocodeByAddress(address)
       .then(results => {
-        setFormattedAddress(results[0].formatted_address);
-        return getLatLng(results[0]);
+        setFormattedAddress(results[0].formatted_address)
+        return getLatLng(results[0])
       })
-      .then((latlng) => {
-        console.log(latlng);
+      .then(latlng => {
+        console.log(latlng)
         setGeoCode([latlng.lat, latlng.lng])
       })
-      .catch(error => console.error('Error', error));
-  };
+      .catch(error => console.error('Error', error))
+  }
 
   const handleImageChange = event => {
-    const { files } = event.target;
+    const { files } = event.target
     setImage(event.target.files[0])
-    setPreview(window.URL.createObjectURL(files[0]));
+    setPreview(window.URL.createObjectURL(files[0]))
   }
 
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
-      <form className='review_form search-form' onSubmit={handleSubmit} >
+      <form className="form" onSubmit={handleSubmit}>
         {/* <p>Drink name*</p> */}
-        <input required  className= 'drink_name' placeholder='What did you drink?'name="drink_name" onChange={inputDrinkName} />
+        <input
+          required
+          className="drink_name"
+          placeholder="What did you drink?"
+          name="drink_name"
+          onChange={inputDrinkName}
+        />
 
         {/* <p>Shop*</p> */}
-        <PlacesAutocomplete
-          value={address}
-          onChange={handleChange}
-          onSelect={handleChange}
-
-        >
+        <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleChange}>
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-            <div  className ='shop_name'>
+            <div className="shop_name">
               <input
                 {...getInputProps({
                   placeholder: 'Where did you drink it?',
                   className: 'location-search-input',
-                })} required
+                })}
+                required
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
                     ? 'suggestion-item--active'
-                    : 'suggestion-item';
+                    : 'suggestion-item'
                   // inline style for demonstration purpose
                   const style = suggestion.active
                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                    : { backgroundColor: '#ffffff', cursor: 'pointer' }
                   return (
                     <div
                       {...getSuggestionItemProps(suggestion, {
@@ -209,16 +211,16 @@ export default function CreateReview() {
                       })}
                     >
                       <strong>{suggestion.formattedSuggestion.mainText}</strong>{' '}
-                      <small>{ suggestion.formattedSuggestion.secondaryText }</small>
+                      <small>{suggestion.formattedSuggestion.secondaryText}</small>
                     </div>
-                  );
+                  )
                 })}
               </div>
             </div>
           )}
         </PlacesAutocomplete>
 
-        <select  required className= 'shop_category' onChange={inputShopCategory}>
+        <select required className="shop_category" onChange={inputShopCategory}>
           <option value="">What is the type of the shop?</option>
           {placeCategories.map(category => (
             <option key={category} value={category}>
@@ -227,9 +229,9 @@ export default function CreateReview() {
           ))}
         </select>
 
-        <Imageupload onChange={ handleImageChange } photoURL={preview} />
+        <Imageupload onChange={handleImageChange} photoURL={preview} />
         {/* <p>Drink category*</p> */}
-        <select  required className= 'drink_category' onChange={inputDrinkCategory}>
+        <select required className="drink_category" onChange={inputDrinkCategory}>
           <option value="">What is the type of the drink?</option>
           {drinkCategories.map(category => (
             <option key={category} value={category}>
@@ -238,30 +240,38 @@ export default function CreateReview() {
           ))}
         </select>
 
-        <input  className= 'price'  max="99999"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
+        <input
+          className="price"
+          max="99999"
+          type="number"
+          onChange={inputPrice}
+          placeholder="How much did it cost?"
+        />
         {/* <p>Rating</p> */}
         {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
 
-
-
         <ReactStars
-         count={5}
-         value={rating}
-         onChange={inputRating}
-         size={24}
-         activeColor="#ffd700" />
-
-        <textarea className= 'comment' placeholder='Please write a review' name="comment" rows="4" cols="40" onChange={inputComment} />
-        <input
-        className= 'submit btn-primary'
-          type='submit'
-          value={ isCreating ? "Creating..." : 'Submit'}
-          style={{ display: "block" }}
-          disabled ={isCreating ? true : false}
+          count={5}
+          value={rating}
+          onChange={inputRating}
+          size={24}
+          activeColor="#ffd700"
+          classNames="input"
         />
+
+        <textarea
+          className="comment"
+          placeholder="Please write a review"
+          name="comment"
+          rows="4"
+          cols="40"
+          onChange={inputComment}
+        />
+
+        <button className="btn--primary" type="submit" disabled={isCreating ? true : false}>
+          {isCreating ? 'Creating...' : 'Submit'}
+        </button>
       </form>
     </>
   )
 }
-
-

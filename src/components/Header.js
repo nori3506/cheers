@@ -39,6 +39,8 @@ export default function Header({ title }) {
     default:
       if (location.pathname.includes('/shop')) {
         pageTitle = 'Location'
+      } else if (location.pathname.includes('/review')) {
+        pageTitle = 'Edit a review'
       } else {
         pageTitle = ''
       }
