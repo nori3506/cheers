@@ -9,7 +9,8 @@
     position: relative;
     margin-top: 65px;
 
-    img.w-100 {
+    .profile-img {
+        background-color: $accent_color;
         width: 130px;
         height: 130px;
         border-radius: 50%;
@@ -18,6 +19,10 @@
         position: absolute;
         bottom: calc(100% - 65px);
     }
+
+    /*img.w-100[src=""] {
+        background-color: red;
+    }*/
 
     input, label {
         color: white;
@@ -54,6 +59,7 @@
     // label modify default
     .MuiInputLabel-formControl {
         position: relative;
+        transform: none;
     }
 
     // label modify default
@@ -89,8 +95,8 @@
     }
 
     // input div
-    .MuiInput-underline:before {
-        border: none !important;
+    .MuiInput-underline:after {
+        border-bottom: 1px solid #DE9E48;
     }
 
     // Gender Age Input
@@ -98,6 +104,11 @@
         color: white;
         display: flex;
         align-items: center;
+        padding-right: 0 !important;
+    }
+
+    .makeStyles-formControl-1 .MuiInput-underline:after {
+        border-bottom: none !important;
     }
 
     // input div
@@ -108,6 +119,10 @@
     // gender age div margin
     .MuiFormControl-root.makeStyles-formControl-1 {
         margin: .3rem;
+    }
+
+    #selectInput .MuiInput-underline:after{
+        border-bottom: none;
     }
 
     // input focused underline
@@ -123,6 +138,7 @@
     // svg icon
     .MuiSelect-icon {
         color: white;
+        position: relative
     }
 
     // Update button
@@ -149,9 +165,6 @@
         border-radius: 5px;
         padding: .3rem 1rem;
     }    
-    
-    
-
 
 }
 
