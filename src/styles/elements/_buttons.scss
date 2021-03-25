@@ -51,3 +51,23 @@ button {
 .btn--link a {
   display: block;
 }
+
+.icon-btn--square {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border: 1px solid $accent-color;
+  background-color: rgba(0, 0, 0, 0.35);
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.icon--close {
+  transform: translate(-50%, -50%) rotate(45deg) !important;
+}

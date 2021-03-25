@@ -45,11 +45,15 @@ export default function Footer() {
             <li className="icon-button--profile-menu">
               <ul className={menuOpen ? 'profile-menu profile-menu-open' : 'profile-menu'}>
                 <li onClick={handleClick} className="icon-button--portrait">
-                  <img
-                    src={photoURL}
-                    alt="user portrait"
-                    className={photoURL === profileDefaultIcon ? null : 'icon--portrait'}
-                  />
+                  {menuOpen ? (
+                    <img src={addReviewIcon} alt="close sub menu" className="icon--close" />
+                  ) : (
+                    <img
+                      src={photoURL}
+                      alt="user portrait"
+                      className={photoURL === profileDefaultIcon ? null : 'icon--portrait'}
+                    />
+                  )}
                 </li>
 
                 <li className="icon-button--profile">
