@@ -242,12 +242,14 @@ export default function CreateReview() {
         {/* <p>Rating</p> */}
         {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
 
-        <ReactStars
-         count={5}
-         value={rating}
-         onChange={inputRating}
-         size={24}
-         activeColor="#de9e48" />
+
+          <ReactStars
+           count={5}
+           value={rating}
+           onChange={inputRating}
+           size={24}
+           activeColor="#de9e48" />
+
 
         <textarea
           className="comment"

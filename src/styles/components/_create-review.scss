@@ -1,7 +1,9 @@
 .review_form{
-    max-width: 800px;
-    margin: auto;
-}
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
 
 select:invalid {
     color: rgba(white, 0.6)
@@ -50,3 +52,4 @@ margin-right: 2rem;
   font-size: $font-sm;
   margin-right: 2rem;
 }
+
