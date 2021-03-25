@@ -6,8 +6,8 @@
 
 body {
   font-family: 'Roboto', helvetica, arial, sans-serif;
-  background-image: url('./assets/images/cheers-bg-8.png');
-  background-size: contain;
+  background: url('./assets/images/cheers-bg-8.png') center center no-repeat;
+  background-color: $main-color;
   color: white;
 }
 
@@ -42,4 +42,14 @@ img {
   margin: 0 auto;
   padding-top: $header-height;
   padding-bottom: $footer-height;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

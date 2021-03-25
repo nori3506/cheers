@@ -373,8 +373,8 @@ template {
 
 body {
   font-family: 'Roboto', helvetica, arial, sans-serif;
-  background-image: url("./assets/images/cheers-bg-8.png");
-  background-size: contain;
+  background: url("./assets/images/cheers-bg-8.png") center center no-repeat;
+  background-color: #372c2e;
   color: white;
 }
 
@@ -411,6 +411,17 @@ img {
   padding-bottom: 84px;
 }
 
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 /* 2 Components ============= */
 /* 2.1. Login =============== */
 .login-wrapper,
@@ -425,13 +436,12 @@ img {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   height: 100vh;
 }
 
-#signup, #login {
+#signup,
+#login {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -442,40 +452,22 @@ img {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   row-gap: 2.5rem;
 }
 
-#signup .visually-hidden, #login .visually-hidden {
-  clip: rect(0 0 0 0);
-  -webkit-clip-path: inset(50%);
-          clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+#signup .logo-wrapper,
+#login .logo-wrapper {
+  text-align: center;
 }
 
-#signup img, #login img {
+#signup img,
+#login img {
   width: 50vw;
   height: auto;
 }
 
-#signup form, #login form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  row-gap: 1rem;
-}
-
-#signup form .form-label, #login form .form-label {
+#signup form .form-label,
+#login form .form-label {
   clip: rect(0 0 0 0);
   -webkit-clip-path: inset(50%);
           clip-path: inset(50%);
@@ -486,29 +478,13 @@ img {
   width: 1px;
 }
 
-#signup form input, #login form input {
-  background-color: rgba(0, 0, 0, 0.35);
-  font-size: 1rem;
-  width: 75vw;
-  height: 6.5vh;
-  padding-left: 1rem;
-}
-
-#signup form input:focus, #login form input:focus {
-  border: 2px solid #de9e48;
-  outline: none;
-}
-
-#signup form .btn--primary, #login form .btn--primary {
+#signup form .btn--primary,
+#login form .btn--primary {
   margin-top: 2rem;
-  color: #372C2E;
-  height: 6.5vh;
-  border: 2px solid #fdf9df;
-  font-size: 1rem;
 }
 
 .w-100.text-center.mt-2 {
-  margin-top: .7rem;
+  margin-top: 0.7rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -525,7 +501,7 @@ img {
 }
 
 .w-100.text-center.mt-2 p {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .w-100.text-center.mt-2 p:first-of-type {
@@ -533,7 +509,7 @@ img {
 }
 
 .w-100.text-center.mt-2 p:nth-of-type(2) {
-  margin: .4rem 0;
+  margin: 0.4rem 0;
 }
 
 .w-100.text-center.mt-2 p:nth-of-type(2) a {
@@ -541,11 +517,6 @@ img {
   text-decoration: underline;
   -webkit-text-decoration-color: #de9e48;
           text-decoration-color: #de9e48;
-}
-
-.login-button {
-  background-color: #fdf9df !important;
-  border: 2px solid #de9e48 !important;
 }
 
 /* 2.2. Signup ============== */
@@ -633,6 +604,8 @@ footer li {
   height: 56px;
   border: 2px solid #de9e48;
   border-radius: 28px;
+  background-color: #372c2e;
+  cursor: pointer;
 }
 
 footer a {
@@ -655,45 +628,51 @@ footer .icon-button--create-review {
   background-color: white;
 }
 
-footer .icon-button--portrait {
-  position: relative;
-}
-
-footer .icon-button--logout {
-  position: relative;
-  cursor: pointer;
-}
-
 footer .nav-link--home,
 footer .nav-link--profile {
   -webkit-transform: translate(0, -2px);
           transform: translate(0, -2px);
 }
 
-footer .icon--portrait {
+footer .icon-button--profile-menu {
+  position: relative;
+}
+
+footer .icon-button--profile-menu .profile-menu li {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+footer .icon-button--profile-menu .profile-menu .icon-button--portrait {
+  z-index: 1003;
+}
+
+footer .icon-button--profile-menu .profile-menu .icon-button--portrait .icon--portrait {
   width: 100%;
   border-radius: 50%;
 }
 
-footer .profile-menu {
-  position: absolute;
-  bottom: calc(56px + 1.5rem - 2px);
-  left: -2px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: reverse;
-      -ms-flex-flow: column-reverse nowrap;
-          flex-flow: column-reverse nowrap;
-  gap: 1.5rem;
-  z-index: 0;
-  -webkit-transition: bottom 1s;
-  transition: bottom 1s;
+footer .icon-button--profile-menu .profile-menu .icon-button--profile {
+  z-index: 1002;
 }
 
-footer .profile-menu li {
-  background-color: #372c2e;
+footer .icon-button--profile-menu .profile-menu .icon-button--logout {
+  z-index: 1001;
+}
+
+footer .icon-button--profile-menu .profile-menu-open .icon-button--profile {
+  -webkit-transform: translateY(calc(-56px - 1.5rem));
+          transform: translateY(calc(-56px - 1.5rem));
+}
+
+footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
+  -webkit-transform: translateY(calc(-112px - 3rem));
+          transform: translateY(calc(-112px - 3rem));
 }
 
 /* 2.5. Home ================ */
@@ -708,13 +687,14 @@ footer .profile-menu li {
   padding: 0.5rem;
   border: 1px solid #de9e48;
   border-radius: 5px 0 0 5px;
+  background-color: rgba(0, 0, 0, 0.35);
   color: #de9e48;
 }
 
 .home .search-icon img {
   width: 24px;
-  -webkit-transform: translateY(2px);
-          transform: translateY(2px);
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
 }
 
 .home .search-box {
@@ -1052,7 +1032,8 @@ footer .profile-menu li {
   bottom: calc(100% - 65px);
 }
 
-.edit-profile input, .edit-profile label {
+.edit-profile input,
+.edit-profile label {
   color: white;
 }
 
@@ -1227,13 +1208,12 @@ button {
   border-radius: 5px;
   font-size: 20px;
   text-transform: capitalize;
-  text-align: center;
 }
 
 .btn--primary {
   border: 2px solid #fdf9df;
   background-color: #de9e48;
-  color: black;
+  color: #372c2e;
 }
 
 .btn--secondary {
@@ -1280,53 +1260,51 @@ button {
 /* 3.2. Signup ============== */
 input,
 .input,
-select {
-  width: 100%;
-  height: 50px;
-  padding: 0.5rem 1rem;
-  border: 1px solid #de9e48;
-  border-radius: 5px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: transparent;
-  color: white;
-}
-
-input::-webkit-input-placeholder,
-select:invalid,
-textarea::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-input:-ms-input-placeholder,
-select:invalid,
-textarea:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-input::-ms-input-placeholder,
-select:invalid,
-textarea::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-input::placeholder,
-select:invalid,
-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.8);
-}
-
+select,
 textarea {
   width: 100%;
   padding: 0.5rem 1rem;
   border: 1px solid #de9e48;
   border-radius: 5px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.35);
   color: white;
+}
+
+input,
+.input,
+select {
+  height: 50px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border: 2px solid #de9e48;
+  outline: none;
+}
+
+input::-webkit-input-placeholder,
+select:invalid,
+textarea::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input:-ms-input-placeholder,
+select:invalid,
+textarea:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input::-ms-input-placeholder,
+select:invalid,
+textarea::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input::placeholder,
+select:invalid,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .input--lg {
@@ -1334,7 +1312,7 @@ textarea {
 }
 
 /* 3.3. Header ============== */
-.form {
+form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
