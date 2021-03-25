@@ -63,31 +63,6 @@ export default function Footer() {
                 </li>
               </ul>
             </li>
-            {/* <li
-              className={
-                menuOpen ? 'icon-button--portrait profile-menu-open' : 'icon-button--portrait '
-              }
-              onClick={handleClick}
-            >
-              <img
-                src={photoURL}
-                alt="user portrait"
-                className={
-                  photoURL === profileDefaultIcon ? 'icon--portrait--default' : 'icon--portrait'
-                }
-              />
-
-              <ul className="profile-menu">
-                <li>
-                  <Link to="/profile" className="nav-link--profile">
-                    <img src={profileIcon} alt="Link to Profile" />
-                  </Link>
-                </li>
-                <li className="icon-button--logout">
-                  <Logout />
-                </li>
-              </ul>
-            </li> */}
           </ul>
         </nav>
       </div>
