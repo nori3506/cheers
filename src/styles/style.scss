@@ -11,8 +11,9 @@ Table of Contents
 2.5. Home
 2.6. Create Review
 2.7. Edit Review
-2.8. Profile
-2.9. Loading
+2.8. Display Review
+2.9. Profile
+2.10. Loading
 3. Elements
 3.1. Buttons
 3.2. Inputs
@@ -42,9 +43,11 @@ Table of Contents
 @import 'components/create-review';
 /* 2.7. Edit Review ========= */
 @import 'components/edit-review';
-/* 2.8. Profile ============= */
+/* 2.8. Display Review ====== */
+@import 'components/display-review';
+/* 2.9. Profile ============= */
 @import 'components/profile';
-/* 2.9. Loading ============= */
+/* 2.10. Loading ============= */
 @import 'components/loading';
 
 /* 3 Elements ============= */
@@ -57,6 +60,5 @@ Table of Contents
 
 /* Archives (to be removed) */
 @import 'archives/index';
-@import 'archives/review';
 
 //@import './components/index'; // shall be renamed or combined to another file

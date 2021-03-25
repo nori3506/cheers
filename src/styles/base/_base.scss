@@ -6,7 +6,8 @@
 
 body {
   font-family: 'Roboto', helvetica, arial, sans-serif;
-  background-color: $main-color;
+  background-image: url('./assets/images/cheers-bg-8.png');
+  background-size: contain;
   color: white;
 }
 
@@ -23,11 +24,22 @@ a {
   color: inherit;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .wrapper {
   padding: 0 1.5rem;
 }
 
+.wrapper--narrow {
+  padding: 0 3rem;
+}
+
 .container {
+  max-width: 800px;
+  margin: 0 auto;
   padding-top: $header-height;
   padding-bottom: $footer-height;
 }

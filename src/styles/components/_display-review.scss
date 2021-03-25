@@ -1,13 +1,9 @@
-$button-bgc: white;
-$border-color: #DE9E48;
-$button-padding: .2rem 0 !important; 
-
 /* shop basic info */
 .shop-basic-info {
   width: 100%;
   margin: 1rem auto auto;
   background-color: rgba(0, 0, 0, .7);
-  border: 1px solid #DE9E48;
+  border: 1px solid $accent-color;
   border-radius: 5px;
 
   h2 {
@@ -19,7 +15,7 @@ $button-padding: .2rem 0 !important;
 /* reviews */
 .review-wrapper {
   background-color: #FDF9DF;
-  border: 1px solid $border-color;
+  border: 1px solid $accent-color;
   border-radius: 5px;
   padding: 0 1rem;
   margin: 1.5rem 0;
@@ -29,7 +25,7 @@ $button-padding: .2rem 0 !important;
     font-size: 14px;
     display: grid;
     grid-template-columns: 52px 1fr;
-    grid-template-rows:  auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
     grid-gap: .7rem;
     padding: .7rem 0 .3rem 0;
 
@@ -40,10 +36,10 @@ $button-padding: .2rem 0 !important;
 
     .review-img {
       border-radius: 50%;
-      border: 2px solid $border-color !important;
+      border: 2px solid $accent-color !important;
       width: 50px;
       height: 50px;
-      object-fit: cover; 
+      object-fit: cover;
       grid-column: 1 / span 1;
       grid-row: 1 / span 1;
     }
@@ -57,7 +53,7 @@ $button-padding: .2rem 0 !important;
       grid-gap: .2rem;
 
       .rating {
-        color: #DE9E48;
+        color: $accent-color;
         font-size: .8rem;
         display: flex;
         justify-content: flex-end;
@@ -82,9 +78,9 @@ $button-padding: .2rem 0 !important;
     .comment {
       grid-row: 2 / span 1;
       grid-column: 1 / -1;
-      
+
       span {
-        color: #DE9E48;
+        color: $accent-color;
       }
     }
 
@@ -104,39 +100,10 @@ $button-padding: .2rem 0 !important;
       .delete-edit-wrapper {
         display: flex;
         justify-content: flex-end;
-
-        .MuiButtonBase-root {
-          margin-bottom: .08rem !important;
-          font-size: 14px !important;
-          letter-spacing: 0 !important;
-          background-color: $button-bgc !important;
-          border: 2px solid $border-color !important;
-          padding: $button-padding;
-          width: 60px;
-          height: 27px;
-          font-weight: 400 !important;
-          text-transform: none !important;
-        }
-        
-        .edit-button {
-          font-size: .9rem;
-          display: flex;
-          font-size: 14px;
-          justify-content: center;
-          align-items: center;
-          margin: 0;
-          border-radius: 4px;
-          background-color: $button-bgc !important;
-          border: 2px solid $border-color !important;
-          padding: $button-padding;
-          color: black !important;
-          width: 60px;
-          height: 27px;
-        }
       }
     }
-    
-    &:last-of-type, 
+
+    &:last-of-type,
     :last-of-type:first-of-type {
       border: none;
     }

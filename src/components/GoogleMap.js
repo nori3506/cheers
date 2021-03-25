@@ -2,8 +2,8 @@ import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 import { Link } from 'react-router-dom'
 import Loading from './Loading'
-import barIcon from '../assets/icons/rest-icon.svg'
-import restaurantIcon from '../assets/icons/beer.svg'
+import barIcon from '../assets/icons/beer.svg'
+import restaurantIcon from '../assets/icons/restaurant.svg'
 import storeIcon from '../assets/icons/store.svg'
 import markerIcon from '../assets/icons/pin.svg'
 
@@ -28,9 +28,12 @@ function Map(props) {
     libraries,
   })
 
-  const { shops, loadingData, loadingCurrentLocation, setLoadingCurrentLocation } = props
+  const { shops } = props
 
-  const [center, setCenter] = useState()
+  const vancouverLatLng = { lat: 49.282729, lng: -123.120738 }
+
+  const [loading, setLoading] = useState(true)
+  const [center, setCenter] = useState(vancouverLatLng)
   const [bounds, setBounds] = useState(null)
   const [shopsOnMap, setShopsOnMap] = useState(shops)
   const [selected, setSelected] = useState(null)
@@ -42,9 +45,7 @@ function Map(props) {
   }, [])
 
   const handleBoundsChange = () => {
-    if (mapRef.current) {
-      setBounds(mapRef.current.getBounds())
-    }
+    if (mapRef.current) setBounds(mapRef.current.getBounds())
   }
 
   useEffect(() => {
@@ -60,22 +61,23 @@ function Map(props) {
   }, [shops, bounds])
 
   useEffect(() => {
+    console.log('getting current location')
     navigator.geolocation.getCurrentPosition(
       position => {
         setCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
-        setLoadingCurrentLocation(false)
+        setLoading(false)
       },
       () => {
-        setCenter({ lat: 49.282729, lng: -123.120738 })
-        setLoadingCurrentLocation(false)
-      }
+        setCenter(vancouverLatLng)
+        setLoading(false)
+        console.log('failed to get current location')
+      },
+      { timeout: 5000 }
     )
   }, [])
 
   if (loadError) return 'Error loading map'
-  if (!isLoaded) return 'Loading map'
-
-  if (loadingData || loadingCurrentLocation) return <Loading />
+  if (!isLoaded || loading) return <Loading />
 
   return (
     <>

@@ -1,12 +1,33 @@
 input,
+.input,
 select {
-  padding: 0.5rem;
+  width: 100%;
+  height: $height_input;
+  padding: 0.5rem 1rem;
   border: 1px solid $accent-color;
-  border-radius: 4px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
   background-color: transparent;
   color: white;
 }
 
-input::placeholder {
-  color: rgba(white, 0.6);
+input::placeholder,
+select:invalid,
+textarea::placeholder {
+  color: rgba(white, 0.8);
+}
+
+textarea {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid $accent-color;
+  border-radius: 5px;
+  background-color: transparent;
+  color: white;
+}
+
+// Input field on login and signup page
+.input--lg {
+  font-size: 20px;
 }

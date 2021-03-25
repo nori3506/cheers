@@ -3,7 +3,8 @@ import { useAuth } from '../contexts/AuthContext'
 import Map from './GoogleMap'
 import Header from './Header'
 import Footer from './Footer'
-import Login from '../templates/Login'
+import Loading from './Loading'
+import Login from './Login'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
@@ -12,7 +13,7 @@ import searchIcon from '../assets/icons/thick-borders.svg'
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
 
-export default function Home({ title, setTitle }) {
+export default function Home() {
   const { currentUser } = useAuth()
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -25,8 +26,7 @@ export default function Home({ title, setTitle }) {
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [disabled, setDisabled] = useState(true)
-  const [loadingData, setLoadingData] = useState(true)
-  const [loadingCurrentLocation, setLoadingCurrentLocation] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   const handleModalOpen = () => setModalOpen(true)
   const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
@@ -39,7 +39,7 @@ export default function Home({ title, setTitle }) {
     e.preventDefault()
     setModalOpen(false)
     setDisabled(true)
-    setLoadingData(true)
+    setLoading(true)
     setReviews([])
     setShops([])
 
@@ -117,12 +117,12 @@ export default function Home({ title, setTitle }) {
         setReviews(reviewsMatchShop)
         setShops(shopsMatchReview)
         setDisabled(false)
-        setLoadingData(false)
+        setLoading(false)
       })
       .catch(error => {
         console.log('Failed to search: ', error)
         setDisabled(false)
-        setLoadingData(false)
+        setLoading(false)
       })
   }
 
@@ -155,11 +155,11 @@ export default function Home({ title, setTitle }) {
       setReviews(newReviews)
       setShops(shopsWithReviewNum)
       setDisabled(false)
-      setLoadingData(false)
+      setLoading(false)
     })
   }, [])
 
-  if (currentUser) {
+  if (currentUser && !loading) {
     return (
       <>
         <Header />
@@ -179,13 +179,14 @@ export default function Home({ title, setTitle }) {
 
             {modalOpen ? (
               <div className="overlay">
-                <form onSubmit={handleSearch} className="search-form">
+                <form onSubmit={handleSearch} className="form">
                   <input
                     type="text"
                     placeholder="Drink Name"
                     value={drink}
                     onChange={handleDrinkChange}
                   />
+
                   <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
                     <option value="">Select Drink Category</option>
                     {drinkCategories.map(category => (
@@ -194,12 +195,14 @@ export default function Home({ title, setTitle }) {
                       </option>
                     ))}
                   </select>
+
                   <input
                     type="text"
                     placeholder="Place Name"
                     value={place}
                     onChange={handlePlaceChange}
                   />
+
                   <select value={placeCategory} onChange={handlePlaceCategoryChange}>
                     <option value="">Select Place Category</option>
                     {placeCategories.map(category => (
@@ -208,43 +211,45 @@ export default function Home({ title, setTitle }) {
                       </option>
                     ))}
                   </select>
-                  <label className="search-form__label">
-                    Price max
-                    <input
-                      type="number"
-                      placeholder="Max"
-                      value={priceMax}
-                      onChange={handlePriceMaxChange}
-                    />
-                  </label>
-                  <label className="search-form__label">
-                    Price min
-                    <input type="number" value={priceMin} onChange={handlePriceMinChange} />
-                  </label>
-                  <button className="btn--primary" type="submit" disabled={disabled}>
-                    search
-                  </button>
-                  <button className="btn--secondary" onClick={() => setModalOpen(false)}>
-                    Close
-                  </button>
+
+                  <input
+                    type="number"
+                    placeholder="Price max"
+                    value={priceMax}
+                    onChange={handlePriceMaxChange}
+                  />
+
+                  <input
+                    type="number"
+                    placeholder="Price min"
+                    value={priceMin}
+                    onChange={handlePriceMinChange}
+                  />
+
+                  <div className="btn-area--half">
+                    <button className="btn--primary btn--half" type="submit" disabled={disabled}>
+                      search
+                    </button>
+
+                    <button className="btn--tertiary btn--half" onClick={() => setModalOpen(false)}>
+                      Cancel
+                    </button>
+                  </div>
                 </form>
               </div>
             ) : null}
 
-            <Map
-              shops={shops}
-              loadingData={loadingData}
-              loadingCurrentLocation={loadingCurrentLocation}
-              setLoadingCurrentLocation={setLoadingCurrentLocation}
-            />
+            <Map shops={shops} />
           </div>
         </div>
         <Footer />
       </>
     )
+  } else if (currentUser) {
+    return <Loading />
   } else {
     return (
-      <div className="wrapper">
+      <div className="wrapper--narrow">
         <Login />
       </div>
     )

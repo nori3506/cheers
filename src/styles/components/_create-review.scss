@@ -44,4 +44,9 @@ font-size: 1rem;
 margin-right: 2rem;
 }
 
-
+.react-stars span:first-child:before {
+  content: 'Rating';
+  color: rgba(white, 0.8);
+  font-size: $font-sm;
+  margin-right: 2rem;
+}
