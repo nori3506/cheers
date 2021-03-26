@@ -77,10 +77,11 @@ function Map(props) {
   }, [])
 
   if (loadError) return 'Error loading map'
-  if (!isLoaded || loading) return <Loading />
+  if (!isLoaded) return <Loading />
 
   return (
     <>
+      {loading ? <Loading /> : null}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

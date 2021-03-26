@@ -159,11 +159,12 @@ export default function Home() {
       setDisabled(false)
       setLoading(false)
     })
-  }, [])
+  }, [currentUser])
 
-  if (currentUser && !loading) {
+  if (currentUser) {
     return (
       <>
+        {loading ? <Loading /> : null}
         <Header />
         <div className="container wrapper">
           <div className="home">
@@ -237,7 +238,7 @@ export default function Home() {
 
                   <div className="btn-area--half">
                     <button className="btn--primary btn--half" type="submit" disabled={disabled}>
-                      search
+                      Search
                     </button>
 
                     <button className="btn--tertiary btn--half" onClick={handleClose}>
@@ -254,8 +255,6 @@ export default function Home() {
         <Footer />
       </>
     )
-  } else if (currentUser) {
-    return <Loading />
   } else {
     return (
       <div className="wrapper--narrow">

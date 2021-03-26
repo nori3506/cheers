@@ -411,6 +411,27 @@ img {
   padding-bottom: 84px;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+  padding: 0 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .visually-hidden {
   clip: rect(0 0 0 0);
   -webkit-clip-path: inset(50%);
@@ -684,6 +705,9 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 }
 
 .home .search-icon {
+  position: relative;
+  -ms-flex-preferred-size: 50px;
+      flex-basis: 50px;
   padding: 0.5rem;
   border: 1px solid #de9e48;
   border-radius: 5px 0 0 5px;
@@ -692,36 +716,22 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 }
 
 .home .search-icon img {
-  width: 24px;
-  -webkit-transform: translateY(4px);
-          transform: translateY(4px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .home .search-box {
+  width: initial;
   border-left: none;
   border-radius: 0 5px 5px 0;
   font-size: 20px;
-}
-
-.home .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 2000;
-  padding: 0 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8);
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .home .close-btn-area {
@@ -1192,16 +1202,6 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 2000;
-  background-color: #372c2e;
 }
 
 /* 3 Elements ============= */
