@@ -115,8 +115,8 @@ const DisplayReview = () => {
 
         <div>
           <h2 className="u-text-small">{review.drink_name}</h2>
-          <p class="category">{review.drink_category}</p>
-          <p class="price">{review.price} CAD</p>
+          <p className="category">{review.drink_category}</p>
+          <p className="price">{review.price} CAD</p>
           {(() => {
             var rating = review.rating
             var star = ''
@@ -129,7 +129,7 @@ const DisplayReview = () => {
               hollowStars = hollowStars + '☆'
             }
             return (
-              <p class="rating">
+              <p className="rating">
                 {star}
                 {hollowStars}
               </p>
@@ -137,15 +137,15 @@ const DisplayReview = () => {
           })()}
         </div>
 
-        <p class="comment">
+        <p className="comment">
           <span>"</span>
           {review.comment}
           <span>"</span>
         </p>
 
-        <div class="bottom-row">
-          <p class="user-name">{review.user.data().name}</p>
-          <div class="delete-edit-wrapper">
+        <div className="bottom-row">
+          <p className="user-name">{review.user.data().name}</p>
+          <div className="delete-edit-wrapper">
             {(() => {
               if (currentUser.uid == review.user.id) {
                 return (
@@ -169,7 +169,7 @@ const DisplayReview = () => {
   if (reviewItems.length) {
     return (
       <div className="Review">
-        <div class="shop-basic-info">
+        <div className="shop-basic-info">
           <h2>{shops}</h2>
         </div>
         <div className="review-wrapper">{reviewItems}</div>

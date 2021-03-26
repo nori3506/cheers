@@ -9,6 +9,7 @@ import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
 import searchIcon from '../assets/icons/thick-borders.svg'
+import closeIcon from '../assets/icons/add-review.svg'
 
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
@@ -29,6 +30,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
 
   const handleModalOpen = () => setModalOpen(true)
+  const handleClose = () => setModalOpen(false)
   const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
   const handleDrinkCategoryChange = e => setDrinkCategory(e.target.value)
   const handlePlaceChange = e => setPlace(e.target.value.toLowerCase())
@@ -157,11 +159,12 @@ export default function Home() {
       setDisabled(false)
       setLoading(false)
     })
-  }, [])
+  }, [currentUser])
 
-  if (currentUser && !loading) {
+  if (currentUser) {
     return (
       <>
+        {loading ? <Loading /> : null}
         <Header />
         <div className="container wrapper">
           <div className="home">
@@ -179,6 +182,13 @@ export default function Home() {
 
             {modalOpen ? (
               <div className="overlay">
+                <div className="close-btn-area">
+                  <button onClick={handleClose} className="icon-btn--square">
+                    <span className="visually-hidden">Close</span>
+                    <img src={closeIcon} alt="" className="icon--close" />
+                  </button>
+                </div>
+
                 <form onSubmit={handleSearch} className="form">
                   <input
                     type="text"
@@ -228,10 +238,10 @@ export default function Home() {
 
                   <div className="btn-area--half">
                     <button className="btn--primary btn--half" type="submit" disabled={disabled}>
-                      search
+                      Search
                     </button>
 
-                    <button className="btn--tertiary btn--half" onClick={() => setModalOpen(false)}>
+                    <button className="btn--tertiary btn--half" onClick={handleClose}>
                       Cancel
                     </button>
                   </div>
@@ -245,8 +255,6 @@ export default function Home() {
         <Footer />
       </>
     )
-  } else if (currentUser) {
-    return <Loading />
   } else {
     return (
       <div className="wrapper--narrow">
