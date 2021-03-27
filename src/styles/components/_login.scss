@@ -42,7 +42,17 @@
   }
 }
 
-// Link to log-in/signup page
+#login {
+    form {
+        .btn--primary {
+            background-color: $bg-light-color;
+            color: #372C2E;
+            border-color: $accent-color;
+        }
+    }
+}
+
+// Link to log-in/signup page 
 .w-100.text-center.mt-2 {
   margin-top: 0.7rem;
   display: flex;

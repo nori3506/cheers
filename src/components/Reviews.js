@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ButtonInput } from './UIkit'
 import { db } from '../firebase/index'
 import firebase from 'firebase/app'
+import defDrink from '../assets/icons/def-drink.svg'
 const reviewsRef = db.collection('reviews')
 const storage = firebase.storage()
 
@@ -74,14 +75,18 @@ const Reviews = () => {
 
   const reviewItems = reviews.map((review, i) => {
     return (
-      <div className="reviews-background reviews-area">
+      <div className="reviews-background reviews-area profile-review">
         {(() => {
           if (review.img != 'doesNotExist') {
             return <img src={review.img} className="review-img" />
+          }else {
+            return <div className="review-img">
+              <img src={defDrink} />
+            </div>
           }
         })()}
 
-        <div>
+        <div class="layout-grid">
           <h2 className="u-text-small">
             {review.drink_name}&#160;<span className="normal-font-weight">at</span>{' '}
             {review.shop.name}
@@ -130,7 +135,7 @@ const Reviews = () => {
   if (reviewItems.length) {
     return <div className="review-wrapper">{reviewItems}</div>
   } else {
-    return <div className="reviews-background u-text-center">Your Reviews were not found</div>
+    return <div className="reviews-background no-reviews-container">Your Reviews are not found</div>
   }
 }
 

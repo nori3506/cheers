@@ -1,14 +1,22 @@
 /* shop basic info */
 .shop-basic-info {
   width: 100%;
-  margin: 1rem auto auto;
-  background-color: rgba(0, 0, 0, .7);
+  margin: 1rem auto;
+  padding: 1rem; 
+  background-color: rgba(0, 0, 0, .3);
   border: 1px solid $accent-color;
   border-radius: 5px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 
   h2 {
     font-size: 20px;
-    text-align: center;
+  }
+
+  h2, p {
+    margin: .25rem auto;
   }
 }
 
@@ -21,6 +29,7 @@
   margin: 1.5rem 0;
 
   .reviews-area {
+    margin: .5rem 0;
     border-bottom: 1px solid black;
     font-size: 14px;
     display: grid;
@@ -42,9 +51,16 @@
       object-fit: cover;
       grid-column: 1 / span 1;
       grid-row: 1 / span 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+        img {
+          width: 32px;
+          height: 32px;
+        }
     }
 
-    div {
+    .layout-grid {
       line-height: 1;
       grid-column: 2 / -1;
       grid-row: 1 / span 1;
@@ -100,6 +116,8 @@
       .delete-edit-wrapper {
         display: flex;
         justify-content: flex-end;
+        gap: .3rem;
+        
       }
     }
 
@@ -108,4 +126,17 @@
       border: none;
     }
   }
+}
+
+.profile-review .delete-edit-wrapper {
+  grid-column: 1 / -1;
+}
+
+.no-reviews-container {
+  padding: 1.5rem 0;
+  margin: 1rem 0;
+  color: black;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid $accent-color;
 }

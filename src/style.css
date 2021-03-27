@@ -504,6 +504,12 @@ img {
   margin-top: 2rem;
 }
 
+#login form .btn--primary {
+  background-color: #fdf9df;
+  color: #372C2E;
+  border-color: #de9e48;
+}
+
 .w-100.text-center.mt-2 {
   margin-top: 0.7rem;
   display: -webkit-box;
@@ -865,15 +871,32 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 /* shop basic info */
 .shop-basic-info {
   width: 100%;
-  margin: 1rem auto auto;
-  background-color: rgba(0, 0, 0, 0.7);
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid #de9e48;
   border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .shop-basic-info h2 {
   font-size: 20px;
-  text-align: center;
+}
+
+.shop-basic-info h2, .shop-basic-info p {
+  margin: .25rem auto;
 }
 
 /* reviews */
@@ -886,6 +909,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 }
 
 .review-wrapper .reviews-area {
+  margin: .5rem 0;
   border-bottom: 1px solid black;
   font-size: 14px;
   display: -ms-grid;
@@ -916,9 +940,23 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / span 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.review-wrapper .reviews-area div {
+.review-wrapper .reviews-area .review-img img {
+  width: 32px;
+  height: 32px;
+}
+
+.review-wrapper .reviews-area .layout-grid {
   line-height: 1;
   grid-column: 2 / -1;
   -ms-grid-row: 1;
@@ -932,7 +970,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
   /* only for profile page "at" in h2 */
 }
 
-.review-wrapper .reviews-area div .rating {
+.review-wrapper .reviews-area .layout-grid .rating {
   color: #de9e48;
   font-size: .8rem;
   display: -webkit-box;
@@ -943,7 +981,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
           justify-content: flex-end;
 }
 
-.review-wrapper .reviews-area div h2 {
+.review-wrapper .reviews-area .layout-grid h2 {
   font-size: 16px;
   margin: 0;
   grid-column: 1 / -1;
@@ -960,7 +998,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
           align-items: center;
 }
 
-.review-wrapper .reviews-area div .normal-font-weight {
+.review-wrapper .reviews-area .layout-grid .normal-font-weight {
   font-weight: 400;
 }
 
@@ -1004,6 +1042,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  gap: .3rem;
 }
 
 .review-wrapper .reviews-area:last-of-type,
@@ -1011,9 +1050,22 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
   border: none;
 }
 
+.profile-review .delete-edit-wrapper {
+  grid-column: 1 / -1;
+}
+
+.no-reviews-container {
+  padding: 1.5rem 0;
+  margin: 1rem 0;
+  color: black;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid #de9e48;
+}
+
 /* 2.9. Profile ============= */
 .edit-profile {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.4);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1029,21 +1081,37 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
   padding: 65px .5rem 1rem .5rem;
   position: relative;
   margin-top: 65px;
-  /*img.w-100[src=""] {
-        background-color: red;
-    }*/
 }
 
-.edit-profile .profile-img {
+.edit-profile .profile-img,
+.edit-profile .def-profile-img {
   background-color: #de9e48;
   width: 130px;
   height: 130px;
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
-  border: 1px solid #DE9E48;
+  border: 2px solid #DE9E48;
   position: absolute;
   bottom: calc(100% - 65px);
+}
+
+.edit-profile .def-profile-img {
+  background-color: #403431;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.edit-profile .def-profile-img img {
+  width: 60%;
+  height: 60%;
 }
 
 .edit-profile input,

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { ButtonInput } from './UIkit'
 import firebase from 'firebase/app'
 import { SpinnerCircular } from 'spinners-react'
+import defDrink from '../assets/icons/def-drink.svg'
 
 const DisplayReview = () => {
   const [reviews, setReviews] = useState([])
@@ -105,15 +106,20 @@ const DisplayReview = () => {
   }
 
   const reviewItems = reviews.map(review => {
+    console.log(reviews);
     return (
       <div className="reviews-background reviews-area">
         {(() => {
           if (review.img != 'doesNotExist') {
             return <img src={review.img} className="review-img" />
+          } else {
+            return <div className="review-img">
+              <img src={defDrink} />
+            </div>
           }
         })()}
 
-        <div>
+        <div class="layout-grid">
           <h2 className="u-text-small">{review.drink_name}</h2>
           <p className="category">{review.drink_category}</p>
           <p className="price">{review.price} CAD</p>
@@ -171,6 +177,8 @@ const DisplayReview = () => {
       <div className="Review">
         <div className="shop-basic-info">
           <h2>{shops}</h2>
+          <p>{reviews[0].shop.category}</p>
+          <p>{reviews[0].shop.address}</p>
         </div>
         <div className="review-wrapper">{reviewItems}</div>
       </div>

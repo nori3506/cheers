@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Reviews from './Reviews'
+import defProfile from '../assets/icons/def-profile.svg'
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -214,11 +215,13 @@ export default function Profile() {
                }else {
                  // if there is no img, orange background
                  return (
-                 <div class="profile-img"></div>
+                  <div className="def-profile-img">
+                 <img src={defProfile}/>
+                 </div>
                  )
                }
              })()}
-             
+
             <label for="upload-button" id="upload-img-label">
               Upload Image
             </label>
