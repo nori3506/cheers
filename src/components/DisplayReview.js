@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { ButtonInput } from './UIkit'
 import firebase from 'firebase/app'
 import { SpinnerCircular } from 'spinners-react'
+import defDrink from '../assets/icons/def-drink.svg'
 
 const DisplayReview = () => {
   const [reviews, setReviews] = useState([])
@@ -105,18 +106,23 @@ const DisplayReview = () => {
   }
 
   const reviewItems = reviews.map(review => {
+    console.log(reviews);
     return (
       <div className="reviews-background reviews-area">
         {(() => {
           if (review.img != 'doesNotExist') {
             return <img src={review.img} className="review-img" />
+          } else {
+            return <div className="review-img">
+              <img src={defDrink} />
+            </div>
           }
         })()}
 
-        <div>
+        <div class="layout-grid">
           <h2 className="u-text-small">{review.drink_name}</h2>
-          <p class="category">{review.drink_category}</p>
-          <p class="price">{review.price} CAD</p>
+          <p className="category">{review.drink_category}</p>
+          <p className="price">{review.price} CAD</p>
           {(() => {
             var rating = review.rating
             var star = ''
@@ -129,7 +135,7 @@ const DisplayReview = () => {
               hollowStars = hollowStars + '☆'
             }
             return (
-              <p class="rating">
+              <p className="rating">
                 {star}
                 {hollowStars}
               </p>
@@ -137,15 +143,15 @@ const DisplayReview = () => {
           })()}
         </div>
 
-        <p class="comment">
+        <p className="comment">
           <span>"</span>
           {review.comment}
           <span>"</span>
         </p>
 
-        <div class="bottom-row">
-          <p class="user-name">{review.user.data().name}</p>
-          <div class="delete-edit-wrapper">
+        <div className="bottom-row">
+          <p className="user-name">{review.user.data().name}</p>
+          <div className="delete-edit-wrapper">
             {(() => {
               if (currentUser.uid == review.user.id) {
                 return (
@@ -169,8 +175,10 @@ const DisplayReview = () => {
   if (reviewItems.length) {
     return (
       <div className="Review">
-        <div class="shop-basic-info">
+        <div className="shop-basic-info">
           <h2>{shops}</h2>
+          <p>{reviews[0].shop.category}</p>
+          <p>{reviews[0].shop.address}</p>
         </div>
         <div className="review-wrapper">{reviewItems}</div>
       </div>

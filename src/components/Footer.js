@@ -6,11 +6,12 @@ import Logout from './Logout'
 import homeIcon from '../assets/icons/home.svg'
 import addReviewIcon from '../assets/icons/add-review.svg'
 import profileIcon from '../assets/icons/profile.svg'
+import profileDefaultIcon from '../assets/icons/default_profile_picture.svg'
 
 export default function Footer() {
   const { currentUser } = useAuth()
 
-  const [photoURL, setPhotoURL] = useState('')
+  const [photoURL, setPhotoURL] = useState(profileDefaultIcon)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -34,26 +35,37 @@ export default function Footer() {
                 <img src={homeIcon} alt="Link to Home" />
               </Link>
             </li>
+
             <li className="icon-button--create-review">
               <Link to="/CreateReview">
                 <img src={addReviewIcon} alt="Link to Add Review" />
               </Link>
             </li>
-            <li className="icon-button--portrait" onClick={handleClick}>
-              <img src={photoURL} alt="user portrait" className="icon--portrait" />
 
-              {menuOpen ? (
-                <ul className="profile-menu">
-                  <li>
-                    <Link to="/profile" className="nav-link--profile">
-                      <img src={profileIcon} alt="Link to Profile" />
-                    </Link>
-                  </li>
-                  <li className="icon-button--logout">
-                    <Logout />
-                  </li>
-                </ul>
-              ) : null}
+            <li className="icon-button--profile-menu">
+              <ul className={menuOpen ? 'profile-menu profile-menu-open' : 'profile-menu'}>
+                <li onClick={handleClick} className="icon-button--portrait">
+                  {menuOpen ? (
+                    <img src={addReviewIcon} alt="close sub menu" className="icon--close" />
+                  ) : (
+                    <img
+                      src={photoURL}
+                      alt="user portrait"
+                      className={photoURL === profileDefaultIcon ? null : 'icon--portrait'}
+                    />
+                  )}
+                </li>
+
+                <li className="icon-button--profile">
+                  <Link to="/profile" className="nav-link--profile">
+                    <img src={profileIcon} alt="Link to Profile" />
+                  </Link>
+                </li>
+
+                <li className="icon-button--logout">
+                  <Logout />
+                </li>
+              </ul>
             </li>
           </ul>
         </nav>

@@ -25,6 +25,8 @@ footer {
     height: 56px;
     border: 2px solid $accent-color;
     border-radius: 28px;
+    background-color: $main-color;
+    cursor: pointer;
   }
 
   a {
@@ -46,40 +48,47 @@ footer {
     background-color: white;
   }
 
-  .icon-button--portrait {
-    position: relative;
-  }
-
-  .icon-button--logout {
-    position: relative;
-    cursor: pointer;
-  }
-
   .nav-link--home,
   .nav-link--profile {
     transform: translate(0, -2px);
   }
 
-  .icon--portrait {
-    width: 100%;
-    border-radius: 50%;
-  }
+  // Profile Menu
+  .icon-button--profile-menu {
+    position: relative;
 
-  .profile-menu {
-    position: absolute;
-    bottom: calc(56px + 1.5rem - 2px);
-    // bottom: -2px;
-    left: -2px;
-    display: flex;
-    flex-flow: column-reverse nowrap;
-    gap: 1.5rem;
-    z-index: 0;
+    .profile-menu {
+      li {
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        transition: transform 0.3s ease-in-out;
+      }
 
-    transition: bottom 1s;
+      .icon-button--portrait {
+        z-index: 1003;
 
-    li {
-      background-color: $main-color;
-      // position: absolute;
+        .icon--portrait {
+          width: 100%;
+          border-radius: 50%;
+        }
+      }
+
+      .icon-button--profile {
+        z-index: 1002;
+      }
+
+      .icon-button--logout {
+        z-index: 1001;
+      }
+    }
+
+    .profile-menu-open .icon-button--profile {
+      transform: translateY(calc(-56px - 1.5rem));
+    }
+
+    .profile-menu-open .icon-button--logout {
+      transform: translateY(calc(-112px - 3rem));
     }
   }
 }

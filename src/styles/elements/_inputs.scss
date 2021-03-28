@@ -1,30 +1,32 @@
 input,
 .input,
-select {
-  width: 100%;
-  height: $height_input;
-  padding: 0.5rem 1rem;
-  border: 1px solid $accent-color;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-  color: white;
-}
-
-input::placeholder,
-select:invalid,
-textarea::placeholder {
-  color: rgba(white, 0.8);
-}
-
+select,
 textarea {
   width: 100%;
   padding: 0.5rem 1rem;
   border: 1px solid $accent-color;
   border-radius: 5px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.35);
   color: white;
+}
+
+input,
+.input,
+select {
+  height: $height_input;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border: 2px solid $accent-color;
+  outline: none;
+}
+
+input::placeholder,
+select:invalid,
+textarea::placeholder {
+  color: rgba(white, 0.6);
 }
 
 // Input field on login and signup page
