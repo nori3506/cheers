@@ -136,13 +136,11 @@ export default function CreateReview() {
     setShopCategory(event.target.value)
   }
 
-  const inputPrice = event => {
-    setPrice(parseInt(event.target.value))
+  const inputPrice = (event) =>{
+    setPrice(parseFloat(event.target.value))
   }
 
-  // const inputRating = (event) =>{
-  //   setRating(parseInt(event.target.value))
-  // }
+
 
   const inputRating = event => {
     setRating(parseInt(event))
@@ -172,7 +170,7 @@ export default function CreateReview() {
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
-      <form className="form" onSubmit={handleSubmit}>
+      <form className='review_form search-form'  onSubmit={handleSubmit} >
         {/* <p>Drink name*</p> */}
         <input
           required
@@ -220,14 +218,16 @@ export default function CreateReview() {
           )}
         </PlacesAutocomplete>
 
-        <select required className="shop_category" onChange={inputShopCategory}>
-          <option value="">What is the type of the shop?</option>
-          {placeCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <div class="select-container">
+          <select required className="shop_category" onChange={inputShopCategory}>
+            <option value="">What is the type of the shop?</option>
+            {placeCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <Imageupload onChange={handleImageChange} photoURL={preview} />
         {/* <p>Drink category*</p> */}
@@ -240,24 +240,18 @@ export default function CreateReview() {
           ))}
         </select>
 
-        <input
-          className="price"
-          max="99999"
-          type="number"
-          onChange={inputPrice}
-          placeholder="How much did it cost?"
-        />
+        <input  className= 'price'  max="99999"　step="0.5"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
         {/* <p>Rating</p> */}
         {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
 
-        <ReactStars
-          count={5}
-          value={rating}
-          onChange={inputRating}
-          size={24}
-          activeColor="#ffd700"
-          classNames="input"
-        />
+
+          <ReactStars
+           count={5}
+           value={rating}
+           onChange={inputRating}
+           size={24}
+           activeColor="#de9e48" />
+
 
         <textarea
           className="comment"

@@ -6,10 +6,10 @@ import drinkCategories from '../lib/drinkCategories'
 import ReactStars from 'react-rating-stars-component'
 
 export default function EditReview() {
-  const [review, setReview] = useState('')
-  const [drinkName, setDrinkName] = useState('')
-  const [drinkCategory, setDrinkCategory] = useState('')
-  const [price, setPrice] = useState('')
+  const [review, setReview] = useState("")
+  const [drinkName, setDrinkName] = useState("")
+  const [drinkCategory, setDrinkCategory] = useState("")
+  const [price, setPrice] = useState()
   const [rating, setRating] = useState()
   const [comment, setComment] = useState('')
   const [photoURL, setPhotoURL] = useState('')
@@ -24,8 +24,9 @@ export default function EditReview() {
       const imageFulPath = doc.data().fullPath
       setReview(doc.data())
       setDrinkName(doc.data().drink_name)
-      setDrinkCategory(doc.data().drinkcategory)
+      setDrinkCategory(doc.data().drink_category)
       setPrice(doc.data().price)
+      console.log(doc.data().rating)
       setRating(doc.data().rating)
       setComment(doc.data().comment)
       storage
@@ -37,12 +38,10 @@ export default function EditReview() {
     })
   }, [])
 
-  const inputDrinkName = useCallback(
-    event => {
-      setDrinkName(event.target.value)
-    },
-    [setDrinkName]
-  )
+
+  const inputDrinkName = useCallback((event) => {
+    setDrinkName(event.target.value)
+  }, [setDrinkName]);
 
   const inputDrinkCategory = useCallback(
     event => {
@@ -140,6 +139,31 @@ export default function EditReview() {
     setPhotoURL(window.URL.createObjectURL(files[0]))
   }
 
+    function handleDelete() {
+      if (window.confirm('Are you Sure to Delete This Review?')){
+    db.collection('reviews').doc(review_id).delete().then(() => {
+        console.log("Document successfully deleted!");
+    }).catch((error) => {
+        console.error("Error removing document: ", error);
+    });
+    setDrinkName('')
+    setDrinkCategory('')
+    setPrice('')
+    setRating('')
+    setComment('')
+    setPhotoURL('')
+
+    const promises = []
+    setError("")
+    setMessage("")
+    Promise.all(promises).then(() => {
+      setMessage('Review was successfully deleted')
+    }).catch(() => {
+      setError('Failed to delete review')
+    })
+  }
+  }
+
   return (
     <>
       <Form className="form" onSubmit={updateReview}>
@@ -200,18 +224,17 @@ export default function EditReview() {
           onChange={inputPrice}
           placeholder="Price"
         />
-        {/* <div className='rating MuiFormControl-root'> */}
-        {/* <label >Rating</label> */}
-        {/* <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} /> */}
-        <ReactStars
-          count={5}
-          value={rating}
-          onChange={inputRating}
-          size={24}
-          activeColor="#ffd700"
-          classNames="input"
-        />
-        {/* </div> */}
+      {/* <div className='rating MuiFormControl-root'> */}
+          {/* <label >Rating</label> */}
+          {/* <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} /> */}
+          <ReactStars
+         count={5}
+         value={rating}
+         onChange={inputRating}
+         size={24}
+         activeColor="#de9e48" />
+      {/* </div> */}
+
 
         {/* <TextInput
           fullWidth={true} label={"Comment"} multiline={true} required={true}
@@ -240,6 +263,13 @@ export default function EditReview() {
 
         <Button className="w-100 submit btn--primary" type="submit" variant="primary">
           Update
+        </Button>
+        <Button
+          className="w-100 submit btn--secondary"
+          // type="submit"
+          variant="primary"
+          label={"Delete"} onClick={() => handleDelete()}
+        >Delete
         </Button>
       </Form>
     </>

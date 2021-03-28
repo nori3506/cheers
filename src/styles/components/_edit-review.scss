@@ -1,1 +1,45 @@
-// All styling removed (no specific styling for edit review page)
+.editReview input,
+.editReview select,
+.editReview .MuiSelect-root{
+  padding: 0.5rem;
+  border: 1px solid $accent-color;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+}
+
+.editReview .image_wrapper input{
+  width: 100%;
+}
+
+.editReview{
+  max-width: 800px;
+  margin: auto;
+}
+
+select:invalid {
+  color: rgba(white, 0.6)
+}
+
+.btn-primary{
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-transform: capitalize;
+  background-color: $accent-color;
+  color: $main-color;
+  width: 30%;
+  margin: auto;
+}
+.btn-secondary{
+  padding: 0.5rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-transform: capitalize;
+  background-color: $main-color;
+  color: white;
+  width: 30%;
+  margin: auto;
+}
