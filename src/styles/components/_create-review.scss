@@ -48,8 +48,28 @@ margin-right: 2rem;
 
 .react-stars span:first-child:before {
   content: 'Rating';
-  color: rgba(white, 0.8);
+  color: rgba(white, 0.6);
   font-size: $font-sm;
   margin-right: 2rem;
 }
 
+
+.react-stars{
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid $accent-color;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.35);
+
+}
+
+.select-container{
+
+  select {
+    -webkit-appearance: none;
+    appearance: none; /* デフォルトのスタイルを無効 */
+  }
+  select::-ms-expand {
+    display: none; /* デフォルトのスタイルを無効(IE用) */
+  }
+}

@@ -218,14 +218,16 @@ export default function CreateReview() {
           )}
         </PlacesAutocomplete>
 
-        <select required className="shop_category" onChange={inputShopCategory}>
-          <option value="">What is the type of the shop?</option>
-          {placeCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <div class="select-container">
+          <select required className="shop_category" onChange={inputShopCategory}>
+            <option value="">What is the type of the shop?</option>
+            {placeCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <Imageupload onChange={handleImageChange} photoURL={preview} />
         {/* <p>Drink category*</p> */}

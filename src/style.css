@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Table of Contents
 1. Base
@@ -368,7 +369,7 @@ template {
 }
 
 body {
-  font-family: 'Roboto', helvetica, arial, sans-serif;
+  font-family: "Roboto", helvetica, arial, sans-serif;
   background: url("./assets/images/cheers-bg-8.png") center center no-repeat;
   background-color: #372c2e;
   color: white;
@@ -415,16 +416,9 @@ img {
   height: 100vh;
   z-index: 2000;
   padding: 0 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-flow: column nowrap;
+  justify-content: center;
   background-color: rgba(0, 0, 0, 0.8);
 }
 
@@ -444,37 +438,23 @@ img {
 .login-wrapper,
 .signup-wrapper {
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-flow: column nowrap;
+  justify-content: center;
   height: 100vh;
 }
 
 #signup,
 #login {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-flow: column nowrap;
+  justify-content: center;
   row-gap: 2.5rem;
 }
-
 #signup .logo-wrapper,
 #login .logo-wrapper {
   text-align: center;
 }
-
 #signup img,
 #login img {
   width: 50vw;
@@ -491,7 +471,6 @@ img {
   white-space: nowrap;
   width: 1px;
 }
-
 #signup form .btn--primary,
 #login form .btn--primary {
   margin-top: 2rem;
@@ -505,8 +484,6 @@ img {
 
 .w-100.text-center.mt-2 {
   margin-top: 0.7rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -603,52 +580,37 @@ footer img {
 footer .icon-button--create-review {
   background-color: white;
 }
-
 footer .nav-link--home,
 footer .nav-link--profile {
-  -webkit-transform: translate(0, -2px);
-          transform: translate(0, -2px);
+  transform: translate(0, -2px);
 }
-
 footer .icon-button--profile-menu {
   position: relative;
 }
-
 footer .icon-button--profile-menu .profile-menu li {
   position: absolute;
   top: -2px;
   left: -2px;
-  -webkit-transition: -webkit-transform 0.3s ease-in-out;
-  transition: -webkit-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
-  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
 }
-
 footer .icon-button--profile-menu .profile-menu .icon-button--portrait {
   z-index: 1003;
 }
-
 footer .icon-button--profile-menu .profile-menu .icon-button--portrait .icon--portrait {
   width: 100%;
   border-radius: 50%;
 }
-
 footer .icon-button--profile-menu .profile-menu .icon-button--profile {
   z-index: 1002;
 }
-
 footer .icon-button--profile-menu .profile-menu .icon-button--logout {
   z-index: 1001;
 }
-
 footer .icon-button--profile-menu .profile-menu-open .icon-button--profile {
-  -webkit-transform: translateY(calc(-56px - 1.5rem));
-          transform: translateY(calc(-56px - 1.5rem));
+  transform: translateY(calc(-56px - 1.5rem));
 }
-
 footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
-  -webkit-transform: translateY(calc(-112px - 3rem));
-          transform: translateY(calc(-112px - 3rem));
+  transform: translateY(calc(-112px - 3rem));
 }
 
 /* 2.5. Home ================ */
@@ -658,8 +620,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 }
 .home .search-icon {
   position: relative;
-  -ms-flex-preferred-size: 50px;
-      flex-basis: 50px;
+  flex-basis: 50px;
   padding: 0.5rem;
   border: 1px solid #de9e48;
   border-radius: 5px 0 0 5px;
@@ -671,19 +632,15 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
   top: 50%;
   left: 50%;
   width: 28px;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .home .search-box {
   width: initial;
   border-left: none;
   border-radius: 0 5px 5px 0;
   font-size: 20px;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
-
 .home .close-btn-area {
   text-align: right;
 }
@@ -807,9 +764,28 @@ input.btn-primary {
 
 .react-stars span:first-child:before {
   content: "Rating";
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
   margin-right: 2rem;
+}
+
+.react-stars {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #de9e48;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.select-container select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  /* デフォルトのスタイルを無効 */
+}
+.select-container select::-ms-expand {
+  display: none;
+  /* デフォルトのスタイルを無効(IE用) */
 }
 
 /* 2.7. Edit Review ========= */
@@ -869,26 +845,16 @@ select:invalid {
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid #de9e48;
   border-radius: 5px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 .shop-basic-info h2 {
   font-size: 20px;
 }
-
 .shop-basic-info h2, .shop-basic-info p {
-  margin: .25rem auto;
+  margin: 0.25rem auto;
 }
 
 /* reviews */
@@ -900,7 +866,7 @@ select:invalid {
   margin: 1.5rem 0;
 }
 .review-wrapper .reviews-area {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   border-bottom: 1px solid black;
   font-size: 14px;
   display: grid;
@@ -920,28 +886,16 @@ select:invalid {
   height: 50px;
   -o-object-fit: cover;
      object-fit: cover;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 1;
-  grid-column: 1 / span 1;
-  -ms-grid-row: 1;
-  -ms-grid-row-span: 1;
-  grid-row: 1 / span 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  grid-column: 1/span 1;
+  grid-row: 1/span 1;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
-
 .review-wrapper .reviews-area .review-img img {
   width: 32px;
   height: 32px;
 }
-
 .review-wrapper .reviews-area .layout-grid {
   line-height: 1;
   grid-column: 2/-1;
@@ -951,14 +905,12 @@ select:invalid {
   grid-gap: 0.2rem;
   /* only for profile page "at" in h2 */
 }
-
 .review-wrapper .reviews-area .layout-grid .rating {
   color: #de9e48;
   font-size: 0.8rem;
   display: flex;
   justify-content: flex-end;
 }
-
 .review-wrapper .reviews-area .layout-grid h2 {
   font-size: 16px;
   margin: 0;
@@ -968,7 +920,6 @@ select:invalid {
   flex-flow: row wrap;
   align-items: center;
 }
-
 .review-wrapper .reviews-area .layout-grid .normal-font-weight {
   font-weight: 400;
 }
@@ -993,10 +944,8 @@ select:invalid {
 }
 .review-wrapper .reviews-area .bottom-row .delete-edit-wrapper {
   display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  gap: .3rem;
+  justify-content: flex-end;
+  gap: 0.3rem;
 }
 .review-wrapper .reviews-area:last-of-type,
 .review-wrapper .reviews-area :last-of-type:first-of-type {
@@ -1004,7 +953,7 @@ select:invalid {
 }
 
 .profile-review .delete-edit-wrapper {
-  grid-column: 1 / -1;
+  grid-column: 1/-1;
 }
 
 .no-reviews-container {
@@ -1019,8 +968,6 @@ select:invalid {
 /* 2.9. Profile ============= */
 .edit-profile {
   background-color: rgba(0, 0, 0, 0.4);
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -1030,7 +977,6 @@ select:invalid {
   position: relative;
   margin-top: 65px;
 }
-
 .edit-profile .profile-img,
 .edit-profile .def-profile-img {
   background-color: #de9e48;
@@ -1043,25 +989,16 @@ select:invalid {
   position: absolute;
   bottom: calc(100% - 65px);
 }
-
 .edit-profile .def-profile-img {
   background-color: #403431;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
-
 .edit-profile .def-profile-img img {
   width: 60%;
   height: 60%;
 }
-
 .edit-profile input,
 .edit-profile label {
   color: white;
@@ -1236,19 +1173,16 @@ button {
   border: 1px solid #de9e48;
   background-color: rgba(0, 0, 0, 0.35);
 }
-
 .icon-btn--square img {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 16px;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .icon--close {
-  -webkit-transform: translate(-50%, -50%) rotate(45deg) !important;
-          transform: translate(-50%, -50%) rotate(45deg) !important;
+  transform: translate(-50%, -50%) rotate(45deg) !important;
 }
 
 /* 3.2. Signup ============== */
@@ -1277,21 +1211,11 @@ textarea:focus {
   outline: none;
 }
 
-input::-webkit-input-placeholder,
-select:invalid,
-textarea::-webkit-input-placeholder {
+input::-moz-placeholder, textarea::-moz-placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-input:-ms-input-placeholder,
-select:invalid,
-textarea:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-input::-ms-input-placeholder,
-select:invalid,
-textarea::-ms-input-placeholder {
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -1307,8 +1231,6 @@ textarea::placeholder {
 
 /* 3.3. Header ============== */
 form {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
