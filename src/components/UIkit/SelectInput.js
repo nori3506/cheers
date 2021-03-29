@@ -11,6 +11,7 @@ const SelectInput = (props) => {
         children={props.children}
         value={props.value}
         onChange={props.onChange}
+        placeholder={props.placeholder}
       />
       
     </>

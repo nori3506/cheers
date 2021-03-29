@@ -4,7 +4,12 @@ button {
   border-radius: 5px;
   font-size: 20px;
   text-transform: capitalize;
+
+  &:focus {
+    outline: none;
+  }
 }
+
 
 .btn--primary {
   border: 2px solid $bg-light-color;

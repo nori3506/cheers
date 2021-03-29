@@ -1,75 +1,62 @@
-.review_form{
-      display: flex;
-      flex-flow: column nowrap;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
+// for create/edit review
+.image_wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 
-select:invalid {
-    color: rgba(white, 0.6)
+  // upload image
+  img{
+  width: 60%;
+  margin: 1.5rem auto .5rem auto;
   }
-
-.shop_name input{
-      width: 100%;
-  }
-
-input.btn-primary{
-    padding: 0.5rem;
-    border: 2px solid white;
-    border-radius: 4px;
-    font-size: 1rem;
-    text-transform: capitalize;
-    background-color: $accent-color;
-    color: $main-color;
-    width: 30%;
-    margin: auto;
-  }
-
-.autocomplete-dropdown-container{
-  color: black;
 }
 
+
+// for create/edit review
 .react-stars{
-  padding: 0.5rem;
-  border: 1px solid $accent-color;
-  border-radius: 4px;
-  background-color: transparent;
-  color: white;
-  width: 100%;
-
-
-}
-.react-stars span:first-child:before{
-content:'Rating';
-color: rgba(white, 0.6);
-font-size: 1rem;
-margin-right: 2rem;
-}
-
-.react-stars span:first-child:before {
-  content: 'Rating';
-  color: rgba(white, 0.6);
-  font-size: $font-sm;
-  margin-right: 2rem;
-}
-
-
-.react-stars{
-  width: 100%;
-  padding: 0.5rem 1rem;
+  // ! padding affects alignment
+  padding: 0.7rem 1rem;
   border: 1px solid $accent-color;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.35);
+  color: white;
+  width: 100%;
+  height: $height_input;
 
+  &:focus {
+    outline: none;
+  }
+
+  span {
+    // "Rating" input vertical alignment
+    display: flex !important;
+    align-items: center;
+
+    &:first-child:before{
+      content:'Rating';
+      color: rgba(white, 0.6);
+      font-size: $font-sm;
+      margin-right: 3rem;
+    }
+  }
 }
 
-.select-container{
 
-  select {
-    -webkit-appearance: none;
-    appearance: none; /* デフォルトのスタイルを無効 */
+.review_form{
+  // ! has to be inside .review_form
+  .comment {
+    padding: 1rem;
   }
-  select::-ms-expand {
-    display: none; /* デフォルトのスタイルを無効(IE用) */
+  // submit button
+  .btn--primary {
+    margin-top: 2rem;
   }
+}
+
+.shop_name input{
+  width: 100%;
+}
+
+.autocomplete-dropdown-container{
+  color: black;
 }

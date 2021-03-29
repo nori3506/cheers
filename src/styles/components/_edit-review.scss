@@ -43,3 +43,19 @@ select:invalid {
   width: 30%;
   margin: auto;
 }
+
+
+.edit-review {
+
+  .react-stars span:first-child:before{
+    color: white;
+  }
+
+  .button-wrapper {
+    button {
+      width: 100%;
+    }
+  }
+
+}
+

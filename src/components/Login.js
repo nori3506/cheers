@@ -36,8 +36,8 @@ export default function Login() {
             <div className="logo-wrapper">
               <img src={logo} className="logo-img" />
             </div>
-            {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={hanleSubmit}>
+            {error && <Alert variant="danger">{error}</Alert>}
               <Form.Group id="email">
               <Form.Label className="visually-hidden">Email</Form.Label>
                 <Form.Control placeholder="Email"  type="email" ref={emailRef} required className="input--lg" />

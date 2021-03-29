@@ -166,9 +166,7 @@ export default function EditReview() {
 
   return (
     <>
-      <Form className="form" onSubmit={updateReview}>
-        {message && <Alert variant="success">{message}</Alert>}
-        {error && <Alert variant="danger">{error}</Alert>}
+      <Form className="form edit-review" onSubmit={updateReview}>
         {/* <TextInput
            fullWidth={true} label={"Drink name"} multiline={false} required={true}
           rows={1} value={drinkName} type={"text"} onChange={inputDrinkName}
@@ -197,14 +195,16 @@ export default function EditReview() {
               </option>
             ))}
           </SelectInput> */}
-        <select required={true} value={drinkCategory} onChange={inputDrinkCategory}>
-          <option value="">Select drink category</option>
-          {drinkCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <div class="select-container">
+          <select required={true} value={drinkCategory} onChange={inputDrinkCategory}>
+            <option value="">Select drink category</option>
+            {drinkCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
         {/* </div> */}
         {/* <br /> */}
 
@@ -257,20 +257,23 @@ export default function EditReview() {
         />
 
         <div className="image_wrapper">
-          <img src={photoURL} className="w-100" />
           <input type={'file'} onChange={handleImageChange} />
+          <img src={photoURL} className="w-100" />
         </div>
-
-        <Button className="w-100 submit btn--primary" type="submit" variant="primary">
-          Update
-        </Button>
-        <Button
-          className="w-100 submit btn--secondary"
-          // type="submit"
-          variant="primary"
-          label={"Delete"} onClick={() => handleDelete()}
-        >Delete
-        </Button>
+        {message && <Alert variant="success">{message}</Alert>}
+        {error && <Alert variant="danger">{error}</Alert>}
+        <div class="button-wrapper btn-area--half">
+          <Button
+            className="w-100 submit btn--secondary btn--half" 
+            // type="submit"
+            variant="primary"
+            label={"Delete"} onClick={() => handleDelete()}
+          >Delete
+          </Button>
+          <Button className="w-100 submit btn--primary btn--half" type="submit" variant="primary">
+            Update
+          </Button>
+        </div>
       </Form>
     </>
   )

@@ -7,6 +7,7 @@
   .search-icon {
     position: relative;
     flex-basis: 50px;
+    flex-shrink: 0;
     padding: 0.5rem;
     border: 1px solid $accent-color;
     border-radius: 5px 0 0 5px;
@@ -17,13 +18,12 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 28px;
+      width: 26px;
       transform: translate(-50%, -50%);
     }
   }
 
   .search-box {
-    width: initial;
     border-left: none;
     border-radius: 0 5px 5px 0;
     font-size: 20px;
@@ -70,6 +70,10 @@
       border-bottom: 2px solid $accent-color;
     }
 
+    .shop-list-item {
+      padding: .4rem 0;
+    }
+
     .shop-list-item a {
       display: flex;
       justify-content: space-between;
@@ -77,7 +81,7 @@
       gap: 1rem;
 
       p {
-        margin: 0.5rem 0;
+        margin: 0.2rem 0;
       }
 
       .shop-category {
@@ -86,7 +90,7 @@
         flex: 0 0 36px;
 
         .shop-category-icon--bar {
-          height: 36px;
+          height: 32px;
           transform: translateX(2px);
         }
 
@@ -115,6 +119,7 @@
         text-align: right;
         font-size: 22px;
         color: $accent-color;
+        font-weight: 700;
       }
     }
   }

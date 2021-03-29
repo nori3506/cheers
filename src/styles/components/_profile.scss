@@ -1,3 +1,13 @@
+.nav-item {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .edit-profile {
     background-color:rgba( 0, 0, 0, .4);
     display: flex;
@@ -37,35 +47,73 @@
 
   input,
   label {
-    color: white;
+    text-align: center;
   }
 
   label {
     padding-right: .5rem;
   }
 
-  .MuiFormControl-fullWidth {
-    width: auto !important;
-  }
-
-  .MuiFormLabel-root {
-    font-size: .9rem;
-    font-weight: 300 !important;
-  }
 
   .MuiFormControl-root {
     display: flex !important;
-    flex-flow: row nowrap !important;
+    flex-flow: column nowrap !important;
     justify-content: center;
     height: 19px;
     align-items: center;
-    margin: .3rem;
+    margin: .6rem;
+    row-gap: .2rem;
+
+    .MuiFormLabel-root {
+      font-size: .9rem;
+      font-weight: 400 !important;
+      color: white;
+    }
+
+      // input div
+    .MuiInputBase-root {
+      line-height: 1;
+    }
+
+      // input padding
+    .MuiInputBase-input {
+      padding: 0;
+      font-size: .9rem;
+      font-weight: 300;
+      line-height: 1;
+      height: auto !important;
+      border: none;
+      animation-name:none;
+      animation-duration: 0s;
+      border-radius: 0px;
+      color: $accent-color;
+
+
+      &:focus {
+        width: 100%;
+      }
+    }
+  }
+
+    // gender age div 
+  .makeStyles-formControl-1 {
+    margin: .7rem auto;
+
+    .MuiInput-underline:after {
+      border-bottom: none;
+    }
+
+    // gender age inputs 
+    .MuiInputBase-root {
+      width: 75px;
+    }
+
   }
 
   // div for input
   .MuiInputBase-fullWidth {
-    min-width: 20px !important;
-    max-width: 100px;
+    //min-width: 20px !important;
+    max-width: 80%;
   }
 
   // label modify default
@@ -84,18 +132,6 @@
     margin-top: 0;
   }
 
-  // input padding
-  .MuiInputBase-input {
-    padding: 0;
-    font-size: .9rem;
-    font-weight: 300;
-    line-height: 1;
-    height: auto !important;
-    border: none;
-    min-width: 20px;
-    width: auto;
-    max-width: 200px;
-  }
 
   // deactivate trasform for label
   .MuiInputLabel-marginDense {
@@ -108,7 +144,7 @@
 
   // input div
   .MuiInput-underline:after {
-    border-bottom: 1px solid #DE9E48;
+    border-bottom: 1px solid $accent-color;
   }
 
   // Gender Age Input
@@ -119,63 +155,78 @@
     padding-right: 0 !important;
   }
 
-  .makeStyles-formControl-1 .MuiInput-underline:after {
-    border-bottom: none !important;
-  }
-
-  // input div
-  .MuiInputBase-root {
-    line-height: 1;
-  }
-
-  // gender age div margin
-  .MuiFormControl-root.makeStyles-formControl-1 {
-    margin: .3rem;
-  }
 
   #selectInput .MuiInput-underline:after {
     border-bottom: none;
   }
 
-  // input focused underline
-  .MuiInput-underline:after {
-    border-bottom: 1px solid #DE9E48;
+  
+  .MuiInput-underline {
+    // get rid of default black border-bottom
+    &::before {
+      border-bottom: none;
+    }
+
+    &:hover:not(.Mui-disabled):before  {
+      border-bottom: none;
+    }
+
   }
 
   // label color focused
   .MuiFormLabel-root.Mui-focused {
-    color: #DE9E48;
-  }
-
-  // svg icon
-  .MuiSelect-icon {
     color: white;
-    position: relative
   }
 
-  // Update button
-  button.w-100 {
-    background-color: white;
-    border: 2px solid #DE9E48;
-    border-radius: 5px;
-    width: 150px;
-    padding: .4rem 1.3rem;
+  // svg arrow icons
+  .MuiSelect-icon {
+    color: $accent-color;
+    position: relative;
   }
 
-
-  #upload-button {
-    display: none;
-  }
-
+  // upload image button
   #upload-img-label {
     margin: .5rem;
     text-align: center;
     font-size: .8rem;
     color: white;
-    background-color: rgba(0, 0, 0, .7);
-    border: 1px solid #DE9E48;
+    background-color: transparent;
+    border: 1px solid $accent-color;
     border-radius: 5px;
     padding: .3rem 1rem;
+  }
+
+  #upload-button {
+    display: none;
+  }
+
+  // undate button
+  .btn--secondary {
+    background-color: transparent;
+    color: white;
+
+  }
+  
+
+}
+
+
+// gender age ul options outside of .edit-profile
+#menu- {
+  .MuiList-root{
+    background-color: black;
+    border: 1px solid $accent-color;
+    border-radius: 5px;
+    color: white;
+    font-weight: 300;
+
+    .MuiListItem-root{
+      font-weight: 300;
+      .Mui-selected {
+        background-color: transparent;
+      }
+
+    }
   }
 
 }

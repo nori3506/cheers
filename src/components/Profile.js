@@ -204,8 +204,6 @@ export default function Profile() {
       <Tabs defaultActiveKey="profile">
         <Tab eventKey="profile" title="Profile">
           <Form className="edit-profile" onSubmit={updateUserProfile}>
-            {message && <Alert variant="success">{message}</Alert>}
-            {error && <Alert variant="danger">{error}</Alert>}
             
             {(() =>{
                if(photoURL !== "") {
@@ -213,7 +211,7 @@ export default function Profile() {
                   <img src={photoURL} className="profile-img" />
                 )
                }else {
-                 // if there is no img, orange background
+                 // if there is no img, default img 
                  return (
                   <div className="def-profile-img">
                  <img src={defProfile}/>
@@ -226,9 +224,10 @@ export default function Profile() {
               Upload Image
             </label>
             <input type={'file'} onChange={handlePhoto} id="upload-button" />
+
             <TextInput
               fullWidth={true}
-              label={'User Name:'}
+              label={'User Name'}
               multiline={false}
               required={true}
               rows={1}
@@ -240,7 +239,7 @@ export default function Profile() {
             <TextInput
               required
               fullWidth={true}
-              label={'Email:'}
+              label={'Email'}
               multiline={false}
               required={true}
               rows={1}
@@ -251,7 +250,7 @@ export default function Profile() {
 
             <TextInput
               fullWidth={true}
-              label={'Password:'}
+              label={'Password'}
               multiline={false}
               autoComplete="new-password"
               rows={1}
@@ -261,7 +260,7 @@ export default function Profile() {
 
             <TextInput
               fullWidth={true}
-              label={'Password Confirm:'}
+              label={'Password Confirm'}
               multiline={false}
               rows={1}
               type={'password'}
@@ -270,7 +269,7 @@ export default function Profile() {
 
             <TextInput
               fullWidth={true}
-              label={'Favorite Drink:'}
+              label={'Favorite Drink'}
               multiline={false}
               rows={1}
               value={favDrink}
@@ -279,7 +278,7 @@ export default function Profile() {
             />
 
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Gender:</InputLabel>
+              <InputLabel id="demo-simple-select-required-label">Gender</InputLabel>
               <SelectInput
                 labelId="demo-simple-select-required-label"
                 value={gender}
@@ -291,12 +290,13 @@ export default function Profile() {
               </SelectInput>
             </FormControl>
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Age:</InputLabel>
+              <InputLabel id="demo-simple-select-required-label">Age</InputLabel>
               <SelectInput
                 labelId="demo-simple-select-required-label"
                 value={age}
                 onChange={ageHandleChange}
                 className={classes.selectEmpty}
+                placeholder={"select"}
               >
                 <MenuItem value={10}>10's</MenuItem>
                 <MenuItem value={20}>20's</MenuItem>
@@ -309,7 +309,9 @@ export default function Profile() {
                 <MenuItem value={90}>90's</MenuItem>
               </SelectInput>
             </FormControl>
-            <br />
+
+            {message && <Alert variant="success">{message}</Alert>}
+            {error && <Alert variant="danger">{error}</Alert>}
             <button className="btn--secondary btn--sm" type="submit" variant="primary">
               {isLoading ? 'Loading…' : 'Update'}
             </button>
