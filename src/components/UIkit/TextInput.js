@@ -14,6 +14,8 @@ const TextInput = (props) => {
       type={props.type}
       onChange={props.onChange}
       autoComplete={props.autoComplete}
+      placeholder={props.placeholder}
+      className={props.className}
     />
   )
 }

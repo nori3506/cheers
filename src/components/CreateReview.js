@@ -231,14 +231,16 @@ export default function CreateReview() {
 
         <Imageupload onChange={handleImageChange} photoURL={preview} />
         {/* <p>Drink category*</p> */}
-        <select required className="drink_category" onChange={inputDrinkCategory}>
-          <option value="">What is the type of the drink?</option>
-          {drinkCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <div class="select-container">
+          <select required className="drink_category" onChange={inputDrinkCategory}>
+            <option value="">What is the type of the drink?</option>
+            {drinkCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <input  className= 'price'  max="99999"　step="0.5"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
         {/* <p>Rating</p> */}

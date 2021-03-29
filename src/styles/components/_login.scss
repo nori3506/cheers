@@ -6,6 +6,10 @@
   height: 100vh;
 }
 
+.signup-wrapper {
+  margin: 2rem auto 3rem auto;
+}
+
 // Logo + inputs
 #signup,
 #login {
@@ -50,6 +54,10 @@
             border-color: $accent-color;
         }
     }
+
+    .alert-danger {
+      text-align: center;
+    }
 }
 
 // Link to log-in/signup page 
@@ -61,7 +69,7 @@
   align-items: center;
 
   p {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   p:first-of-type {
