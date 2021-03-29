@@ -278,7 +278,7 @@ export default function Profile() {
             />
 
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Gender</InputLabel>
+              <InputLabel id="demo-simple-select-required-label">Gender:</InputLabel>
               <SelectInput
                 labelId="demo-simple-select-required-label"
                 value={gender}
@@ -290,7 +290,7 @@ export default function Profile() {
               </SelectInput>
             </FormControl>
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Age</InputLabel>
+              <InputLabel id="demo-simple-select-required-label">Age:</InputLabel>
               <SelectInput
                 labelId="demo-simple-select-required-label"
                 value={age}

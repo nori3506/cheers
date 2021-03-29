@@ -195,7 +195,7 @@ export default function EditReview() {
               </option>
             ))}
           </SelectInput> */}
-        <div class="select-container">
+        <div className="select-container">
           <select required={true} value={drinkCategory} onChange={inputDrinkCategory}>
             <option value="">Select drink category</option>
             {drinkCategories.map(category => (
@@ -262,7 +262,7 @@ export default function EditReview() {
         </div>
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
-        <div class="button-wrapper btn-area--half">
+        <div className="button-wrapper btn-area--half">
           <Button
             className="w-100 submit btn--secondary btn--half" 
             // type="submit"
