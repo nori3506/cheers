@@ -377,6 +377,7 @@ body {
   background: url("./assets/images/cheers-bg-8.png") center center no-repeat;
   background-color: #372c2e;
   background-attachment: fixed;
+  background-size: cover;
   color: white;
 }
 
@@ -471,11 +472,7 @@ img {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 100vh;
-}
-
-.signup-wrapper {
-  margin: 2rem auto 3rem auto;
+  min-height: 100vh;
 }
 
 #signup,
@@ -491,7 +488,7 @@ img {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  row-gap: 2.5rem;
+  row-gap: 0;
 }
 
 #signup .logo-wrapper,
@@ -522,13 +519,13 @@ img {
   margin-top: 2rem;
 }
 
-#login form .btn--primary {
+.login-wrapper form .btn--primary {
   background-color: #fdf9df;
   color: #372C2E;
   border-color: #de9e48;
 }
 
-#login .alert-danger {
+.login-wrapper .alert-danger {
   text-align: center;
 }
 
@@ -569,6 +566,15 @@ img {
 }
 
 /* 2.2. Signup ============== */
+.signup-wrapper {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.signup-wrapper #login {
+  row-gap: 0;
+}
+
 /* 2.3. Header ============== */
 header {
   position: fixed;
@@ -1228,7 +1234,7 @@ select:invalid {
           align-items: center;
   border: 1px solid #DE9E48;
   border-radius: 5px;
-  padding: 65px .5rem 1rem .5rem;
+  padding: 65px 1rem 1rem 1rem;
   position: relative;
   margin-top: 65px;
 }
@@ -1264,11 +1270,6 @@ select:invalid {
   height: 60%;
 }
 
-.edit-profile input,
-.edit-profile label {
-  text-align: center;
-}
-
 .edit-profile label {
   padding-right: .5rem;
 }
@@ -1277,13 +1278,10 @@ select:invalid {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
-  -webkit-box-orient: vertical !important;
+  -webkit-box-orient: horizontal !important;
   -webkit-box-direction: normal !important;
-      -ms-flex-flow: column nowrap !important;
-          flex-flow: column nowrap !important;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+      -ms-flex-flow: row nowrap !important;
+          flex-flow: row nowrap !important;
   height: 19px;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -1294,12 +1292,16 @@ select:invalid {
 
 .edit-profile .MuiFormControl-root .MuiFormLabel-root {
   font-size: .9rem;
-  font-weight: 400 !important;
+  font-weight: 300 !important;
   color: white;
 }
 
 .edit-profile .MuiFormControl-root .MuiInputBase-root {
   line-height: 1;
+  width: 100px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .edit-profile .MuiFormControl-root .MuiInputBase-input {
@@ -1321,15 +1323,58 @@ select:invalid {
   width: 100%;
 }
 
+.edit-profile #gender, .edit-profile #age {
+  width: 100%;
+}
+
+.edit-profile #gender .MuiFormControl-root, .edit-profile #age .MuiFormControl-root {
+  margin: 0;
+}
+
+.edit-profile #gender .MuiInputBase-root, .edit-profile #age .MuiInputBase-root {
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+}
+
+.edit-profile #gender .MuiInputBase-root {
+  width: 75px;
+}
+
+.edit-profile #age .MuiInputBase-root {
+  width: 50px;
+}
+
+.edit-profile .gender-age-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  gap: 1rem;
+}
+
+.edit-profile .gender-age-wrapper .MuiFormControl-root {
+  margin: .6rem 0;
+}
+
+.edit-profile .MuiSelect-select {
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-right: 0 !important;
+  width: 50px;
+}
+
 .edit-profile .makeStyles-formControl-3 {
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-box-orient: horizontal !important;
-  -webkit-box-direction: normal !important;
-      -ms-flex-flow: row !important;
-          flex-flow: row !important;
-  margin: .7rem auto;
+  margin: 1rem 0;
 }
 
 .edit-profile .makeStyles-formControl-3 .MuiInput-underline:after {
@@ -1340,8 +1385,12 @@ select:invalid {
   width: 75px;
 }
 
+.edit-profile .password-confirm label {
+  width: 137px;
+}
+
 .edit-profile .MuiInputBase-fullWidth {
-  max-width: 80%;
+  width: auto;
 }
 
 .edit-profile .MuiInputLabel-formControl {
@@ -1371,17 +1420,6 @@ select:invalid {
 
 .edit-profile .MuiInput-underline:after {
   border-bottom: 1px solid #de9e48;
-}
-
-.edit-profile .MuiSelect-select {
-  color: white;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding-right: 0 !important;
 }
 
 .edit-profile #selectInput .MuiInput-underline:after {
@@ -1423,6 +1461,7 @@ select:invalid {
 .edit-profile .btn--secondary {
   background-color: transparent;
   color: white;
+  margin-top: 1rem;
 }
 
 #menu- .MuiList-root {

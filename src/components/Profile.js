@@ -227,7 +227,7 @@ export default function Profile() {
 
             <TextInput
               fullWidth={true}
-              label={'User Name'}
+              label={'User Name:'}
               multiline={false}
               required={true}
               rows={1}
@@ -239,7 +239,7 @@ export default function Profile() {
             <TextInput
               required
               fullWidth={true}
-              label={'Email'}
+              label={'Email:'}
               multiline={false}
               required={true}
               rows={1}
@@ -250,7 +250,7 @@ export default function Profile() {
 
             <TextInput
               fullWidth={true}
-              label={'Password'}
+              label={'Password:'}
               multiline={false}
               autoComplete="new-password"
               rows={1}
@@ -260,16 +260,17 @@ export default function Profile() {
 
             <TextInput
               fullWidth={true}
-              label={'Password Confirm'}
+              label={'Password Confirm:'}
               multiline={false}
               rows={1}
               type={'password'}
               onChange={inputPasswordConfirm}
+              className="password-confirm"
             />
 
             <TextInput
               fullWidth={true}
-              label={'Favorite Drink'}
+              label={'Favorite Drink:'}
               multiline={false}
               rows={1}
               value={favDrink}
@@ -277,38 +278,40 @@ export default function Profile() {
               onChange={inputFavDrink}
             />
 
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Gender:</InputLabel>
-              <SelectInput
-                labelId="demo-simple-select-required-label"
-                value={gender}
-                onChange={genderHandleChange}
-                className={classes.selectEmpty}
-              >
-                <MenuItem value={'male'}>Male</MenuItem>
-                <MenuItem value={'female'}>Female</MenuItem>
-              </SelectInput>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-required-label">Age:</InputLabel>
-              <SelectInput
-                labelId="demo-simple-select-required-label"
-                value={age}
-                onChange={ageHandleChange}
-                className={classes.selectEmpty}
-                placeholder={"select"}
-              >
-                <MenuItem value={10}>10's</MenuItem>
-                <MenuItem value={20}>20's</MenuItem>
-                <MenuItem value={30}>30's</MenuItem>
-                <MenuItem value={40}>40's</MenuItem>
-                <MenuItem value={50}>50's</MenuItem>
-                <MenuItem value={60}>60's</MenuItem>
-                <MenuItem value={70}>70's</MenuItem>
-                <MenuItem value={80}>80's</MenuItem>
-                <MenuItem value={90}>90's</MenuItem>
-              </SelectInput>
-            </FormControl>
+              <div className="gender-age-wrapper">
+                <FormControl className={classes.formControl} id="gender">
+                  <InputLabel id="demo-simple-select-required-label">Gender:</InputLabel>
+                  <SelectInput
+                    labelId="demo-simple-select-required-label"
+                    value={gender}
+                    onChange={genderHandleChange}
+                    className={classes.selectEmpty}
+                  >
+                    <MenuItem value={'male'}>Male</MenuItem>
+                    <MenuItem value={'female'}>Female</MenuItem>
+                  </SelectInput>
+                </FormControl>
+                <FormControl className={classes.formControl} id="age">
+                  <InputLabel id="demo-simple-select-required-label">Age:</InputLabel>
+                  <SelectInput
+                    labelId="demo-simple-select-required-label"
+                    value={age}
+                    onChange={ageHandleChange}
+                    className={classes.selectEmpty}
+                    placeholder={"select"}
+                  >
+                    <MenuItem value={10}>10's</MenuItem>
+                    <MenuItem value={20}>20's</MenuItem>
+                    <MenuItem value={30}>30's</MenuItem>
+                    <MenuItem value={40}>40's</MenuItem>
+                    <MenuItem value={50}>50's</MenuItem>
+                    <MenuItem value={60}>60's</MenuItem>
+                    <MenuItem value={70}>70's</MenuItem>
+                    <MenuItem value={80}>80's</MenuItem>
+                    <MenuItem value={90}>90's</MenuItem>
+                  </SelectInput>
+                </FormControl>
+              </div>
 
             {message && <Alert variant="success">{message}</Alert>}
             {error && <Alert variant="danger">{error}</Alert>}
