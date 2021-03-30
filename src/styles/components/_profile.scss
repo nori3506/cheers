@@ -15,7 +15,7 @@
     align-items: center;
     border: 1px solid #DE9E48;
     border-radius: 5px;
-    padding: 65px .5rem 1rem .5rem;
+    padding: 65px 1rem 1rem 1rem;
     position: relative;
     margin-top: 65px;
 
@@ -47,7 +47,7 @@
 
   input,
   label {
-    text-align: center;
+    //text-align: center;
   }
 
   label {
@@ -57,8 +57,8 @@
 
   .MuiFormControl-root {
     display: flex !important;
-    flex-flow: column nowrap !important;
-    justify-content: center;
+    flex-flow: row nowrap !important;
+    //justify-content: center;
     height: 19px;
     align-items: center;
     margin: .6rem;
@@ -66,13 +66,15 @@
 
     .MuiFormLabel-root {
       font-size: .9rem;
-      font-weight: 400 !important;
+      font-weight: 300 !important;
       color: white;
     }
 
       // input div
     .MuiInputBase-root {
       line-height: 1;
+      width: 100px;
+      flex-grow: 1;
     }
 
       // input padding
@@ -95,12 +97,51 @@
     }
   }
 
+  #gender, #age {
+    width: 100%;
+    .MuiFormControl-root {
+      margin: 0;
+    }
+    .MuiInputBase-root {
+      flex-grow: 0;
+    }
+  }
+
+  #gender .MuiInputBase-root {
+    width: 75px;
+  }
+
+  #age .MuiInputBase-root {
+    width: 50px;
+  }
+
+  .gender-age-wrapper {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+
+    .MuiFormControl-root {
+      margin: .6rem 0;
+    }
+  }
+
+  // Gender Age Input
+  .MuiSelect-select {
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-right: 0 !important;
+    width: 50px;
+  }
+
     // gender age div 
     // class name changes depending on lable value
   .makeStyles-formControl-3 {
-    display: flex !important;
-    flex-flow: row !important;
-    margin: .7rem auto;
+    margin: 1rem 0;
+    //display: flex !important;
+    //flex-flow: row !important;
+    //margin: .7rem auto;
 
     .MuiInput-underline:after {
       border-bottom: none;
@@ -113,10 +154,14 @@
 
   }
 
+  .password-confirm label {
+    width: 137px;
+  }
   // div for input
   .MuiInputBase-fullWidth {
     //min-width: 20px !important;
-    max-width: 80%;
+    //max-width: 80%;
+    width:  auto;
   }
 
   // label modify default
@@ -148,14 +193,6 @@
   // input div
   .MuiInput-underline:after {
     border-bottom: 1px solid $accent-color;
-  }
-
-  // Gender Age Input
-  .MuiSelect-select {
-    color: white;
-    display: flex;
-    align-items: center;
-    padding-right: 0 !important;
   }
 
 
@@ -207,7 +244,7 @@
   .btn--secondary {
     background-color: transparent;
     color: white;
-
+    margin-top: 1rem;
   }
   
 

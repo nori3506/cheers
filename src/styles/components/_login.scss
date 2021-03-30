@@ -3,11 +3,7 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  height: 100vh;
-}
-
-.signup-wrapper {
-  margin: 2rem auto 3rem auto;
+  min-height: 100vh;
 }
 
 // Logo + inputs
@@ -17,7 +13,7 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  row-gap: 2.5rem;
+  row-gap: 0;
 
   .logo-wrapper {
     text-align: center;
@@ -46,7 +42,7 @@
   }
 }
 
-#login {
+.login-wrapper {
     form {
         .btn--primary {
             background-color: $bg-light-color;
