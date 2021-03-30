@@ -2,9 +2,9 @@
 .shop-basic-info {
   width: 100%;
   margin: 1rem auto;
-  padding: 1rem; 
+  padding: 1rem;
   // darker than other elements
-  background-color: rgba(0, 0, 0, .45);
+  background-color: rgba(0, 0, 0, 0.45);
   border: 1px solid $accent-color;
   border-radius: 5px;
   display: flex;
@@ -16,15 +16,16 @@
     font-size: $font-md;
   }
 
-  h2, p {
-    margin: .25rem auto;
+  h2,
+  p {
+    margin: 0.25rem auto;
     text-align: center;
   }
 }
 
 /* reviews */
 .review-wrapper {
-  background-color: #FDF9DF;
+  background-color: #fdf9df;
   border: 1px solid $accent-color;
   border-radius: 5px;
   padding: 0 1rem;
@@ -37,8 +38,8 @@
     display: grid;
     grid-template-columns: 52px 1fr;
     grid-template-rows: auto 1fr auto;
-    grid-gap: .7rem;
-    padding: .8rem 0;
+    grid-gap: 0.7rem;
+    padding: 0.8rem 0;
 
     p {
       color: black;
@@ -56,11 +57,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-        img {
-          padding-top: 4px;
-          width: 32px;
-          height: 32px;
-        }
+      img {
+        padding-top: 4px;
+        width: 32px;
+        height: 32px;
+      }
     }
 
     .layout-grid {
@@ -69,11 +70,11 @@
       grid-row: 1 / span 1;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      grid-row-gap: .2rem;
+      grid-row-gap: 0.2rem;
 
       .rating {
         color: $accent-color;
-        font-size: .8rem;
+        font-size: 0.8rem;
         display: flex;
         justify-content: flex-end;
       }
@@ -119,12 +120,11 @@
       .delete-edit-wrapper {
         display: flex;
         justify-content: flex-end;
-        gap: .3rem;
+        gap: 0.3rem;
 
-        button.btn--secondary:nth-of-type(2) {
-          background-color: $main-color;
-          color: $accent-color;
-        } 
+        button:nth-of-type(2) {
+          border: 2px solid $main-color;
+        }
       }
     }
 
@@ -135,8 +135,6 @@
   }
 }
 
-
-
 .profile-review {
   .delete-edit-wrapper {
     grid-column: 1 / -1;
@@ -145,7 +143,7 @@
 
 // review for profile page
 .review-wrapper .profile-review .layout-grid {
-  grid-row-gap: .4rem;
+  grid-row-gap: 0.4rem;
 }
 
 .no-reviews-container {

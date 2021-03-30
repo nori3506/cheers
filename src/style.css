@@ -946,59 +946,8 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 }
 
 /* 2.7. Edit Review ========= */
-.editReview input,
-.editReview select,
-.editReview .MuiSelect-root {
-  padding: 0.5rem;
-  border: 1px solid #de9e48;
-  border-radius: 4px;
-  background-color: transparent;
-  color: white;
-}
-
-.editReview .image_wrapper input {
-  width: 100%;
-}
-
-.editReview {
-  max-width: 800px;
-  margin: auto;
-}
-
-select:invalid {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.btn-primary {
-  padding: 0.5rem;
-  border: 2px solid white;
-  border-radius: 4px;
-  font-size: 1rem;
-  text-transform: capitalize;
-  background-color: #de9e48;
-  color: #372c2e;
-  width: 30%;
-  margin: auto;
-}
-
-.btn-secondary {
-  padding: 0.5rem;
-  border: 2px solid white;
-  border-radius: 4px;
-  font-size: 1rem;
-  text-transform: capitalize;
-  background-color: #372c2e;
-  color: white;
-  width: 30%;
-  margin: auto;
-}
-
 .edit-review .react-stars span:first-child:before {
   color: white;
-}
-
-.edit-review .button-wrapper button {
-  width: 100%;
 }
 
 /* 2.8. Display Review ====== */
@@ -1029,14 +978,15 @@ select:invalid {
   font-size: 20px;
 }
 
-.shop-basic-info h2, .shop-basic-info p {
-  margin: .25rem auto;
+.shop-basic-info h2,
+.shop-basic-info p {
+  margin: 0.25rem auto;
   text-align: center;
 }
 
 /* reviews */
 .review-wrapper {
-  background-color: #FDF9DF;
+  background-color: #fdf9df;
   border: 1px solid #de9e48;
   border-radius: 5px;
   padding: 0 1rem;
@@ -1053,8 +1003,8 @@ select:invalid {
       grid-template-columns: 52px 1fr;
   -ms-grid-rows: auto 1fr auto;
       grid-template-rows: auto 1fr auto;
-  grid-gap: .7rem;
-  padding: .8rem 0;
+  grid-gap: 0.7rem;
+  padding: 0.8rem 0;
 }
 
 .review-wrapper .reviews-area p {
@@ -1102,13 +1052,13 @@ select:invalid {
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr;
       grid-template-columns: 1fr 1fr 1fr;
-  grid-row-gap: .2rem;
+  grid-row-gap: 0.2rem;
   /* only for profile page "at" in h2 */
 }
 
 .review-wrapper .reviews-area .layout-grid .rating {
   color: #de9e48;
-  font-size: .8rem;
+  font-size: 0.8rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1178,12 +1128,11 @@ select:invalid {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  gap: .3rem;
+  gap: 0.3rem;
 }
 
-.review-wrapper .reviews-area .bottom-row .delete-edit-wrapper button.btn--secondary:nth-of-type(2) {
-  background-color: #372c2e;
-  color: #de9e48;
+.review-wrapper .reviews-area .bottom-row .delete-edit-wrapper button:nth-of-type(2) {
+  border: 2px solid #372c2e;
 }
 
 .review-wrapper .reviews-area:last-of-type,
@@ -1196,7 +1145,7 @@ select:invalid {
 }
 
 .review-wrapper .profile-review .layout-grid {
-  grid-row-gap: .4rem;
+  grid-row-gap: 0.4rem;
 }
 
 .no-reviews-container {

@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { db, storage } from '../firebase/index'
-import Automap from './Automap'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
@@ -136,11 +135,9 @@ export default function CreateReview() {
     setShopCategory(event.target.value)
   }
 
-  const inputPrice = (event) =>{
+  const inputPrice = event => {
     setPrice(parseFloat(event.target.value))
   }
-
-
 
   const inputRating = event => {
     setRating(parseInt(event))
@@ -170,7 +167,7 @@ export default function CreateReview() {
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
-      <form className='review_form search-form'  onSubmit={handleSubmit} >
+      <form className="review_form search-form" onSubmit={handleSubmit}>
         {/* <p>Drink name*</p> */}
         <input
           required
@@ -218,7 +215,7 @@ export default function CreateReview() {
           )}
         </PlacesAutocomplete>
 
-        <div class="select-container">
+        <div className="select-container">
           <select required className="shop_category" onChange={inputShopCategory}>
             <option value="">What is the type of the shop?</option>
             {placeCategories.map(category => (
@@ -231,7 +228,7 @@ export default function CreateReview() {
 
         <Imageupload onChange={handleImageChange} photoURL={preview} />
         {/* <p>Drink category*</p> */}
-        <div class="select-container">
+        <div className="select-container">
           <select required className="drink_category" onChange={inputDrinkCategory}>
             <option value="">What is the type of the drink?</option>
             {drinkCategories.map(category => (
@@ -242,18 +239,24 @@ export default function CreateReview() {
           </select>
         </div>
 
-        <input  className= 'price'  max="99999"　step="0.5"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
+        <input
+          className="price"
+          max="99999"
+          step="0.5"
+          type="number"
+          onChange={inputPrice}
+          placeholder="How much did it cost?"
+        />
         {/* <p>Rating</p> */}
         {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
 
-
-          <ReactStars
-           count={5}
-           value={rating}
-           onChange={inputRating}
-           size={24}
-           activeColor="#de9e48" />
-
+        <ReactStars
+          count={5}
+          value={rating}
+          onChange={inputRating}
+          size={24}
+          activeColor="#de9e48"
+        />
 
         <textarea
           className="comment"

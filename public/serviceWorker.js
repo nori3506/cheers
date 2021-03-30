@@ -1,27 +1,56 @@
-importScripts('/cache-polyfill.js');
+importScripts('/cache-polyfill.js')
 
-self.addEventListener('install', function(e) {
-	e.waitUntil(
-		caches.open('airhorner').then(function(cache) {
-    	return cache.addAll([
-    	'/',
-    	'/index.html',
-    	'/index.html?homescreen=1',
-    	'/?homescreen=1',
-    	'/styles/main.css',
-    	'/scripts/main.min.js',
-    	'/sounds/airhorn.mp3'
-    ]);
-		})
-	);
-});
+const staticCache = 'static'
+const dynamicCache = 'dynamic'
+const appShell = [
+  '/',
+  '/index.html',
+  '/static/js/main.chunk.js',
+  '/static/js/0.chunk.js',
+  '/static/js/bundle.js',
+]
 
-self.addEventListener('fetch', function(event) {
-	console.log(event.request.url);
+self.addEventListener('install', e => {
+  console.log('[Service Worker] Installing Service Worker ...', e)
 
-	event.respondWith(
-    caches.match(event.request).then(function(response) {
-        return response || fetch(event.request);
+  e.waitUntil(
+    caches.open(staticCache).then(cache => {
+      console.log('[Service Worker] Precaching App Shell')
+      return cache.addAll(appShell)
     })
-	);
-});
+  )
+})
+
+self.addEventListener('activate', e => {
+  console.log('[Service Worker] Activating Service Worker ....', e)
+  e.waitUntil(
+    caches.keys().then(keyList => {
+      return Promise.all(
+        keyList.forEach(key => {
+          if (key !== staticCache && key !== dynamicCache) {
+            console.log('[Service Worker] Removing old cache', key)
+            return caches.delete(key)
+          }
+        })
+      )
+    })
+  )
+  return self.clients.claim()
+})
+
+self.addEventListener('fetch', e =>
+  e.respondWith(
+    caches.match(e.request).then(
+      cacheRes =>
+        cacheRes ||
+        fetch(e.request)
+          .then(fetchRes => {
+            return caches.open(dynamicCache).then(cache => {
+              cache.put(e.request.url, fetchRes.clone())
+              return fetchRes
+            })
+          })
+          .catch(err => {})
+    )
+  )
+)

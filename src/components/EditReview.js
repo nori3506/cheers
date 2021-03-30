@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { db, storage } from '../firebase/index'
-import { Form, Button, Alert } from 'react-bootstrap'
-import { SelectInput, TextInput } from './UIkit'
+import { Form, Alert } from 'react-bootstrap'
 import drinkCategories from '../lib/drinkCategories'
 import ReactStars from 'react-rating-stars-component'
 
 export default function EditReview() {
-  const [review, setReview] = useState("")
-  const [drinkName, setDrinkName] = useState("")
-  const [drinkCategory, setDrinkCategory] = useState("")
+  const [review, setReview] = useState('')
+  const [drinkName, setDrinkName] = useState('')
+  const [drinkCategory, setDrinkCategory] = useState('')
   const [price, setPrice] = useState()
   const [rating, setRating] = useState()
   const [comment, setComment] = useState('')
@@ -38,10 +37,12 @@ export default function EditReview() {
     })
   }, [])
 
-
-  const inputDrinkName = useCallback((event) => {
-    setDrinkName(event.target.value)
-  }, [setDrinkName]);
+  const inputDrinkName = useCallback(
+    event => {
+      setDrinkName(event.target.value)
+    },
+    [setDrinkName]
+  )
 
   const inputDrinkCategory = useCallback(
     event => {
@@ -139,42 +140,46 @@ export default function EditReview() {
     setPhotoURL(window.URL.createObjectURL(files[0]))
   }
 
-    function handleDelete() {
-      if (window.confirm('Are you Sure to Delete This Review?')){
-    db.collection('reviews').doc(review_id).delete().then(() => {
-        console.log("Document successfully deleted!");
-    }).catch((error) => {
-        console.error("Error removing document: ", error);
-    });
-    setDrinkName('')
-    setDrinkCategory('')
-    setPrice('')
-    setRating('')
-    setComment('')
-    setPhotoURL('')
+  function handleDelete() {
+    if (window.confirm('Are you Sure to Delete This Review?')) {
+      db.collection('reviews')
+        .doc(review_id)
+        .delete()
+        .then(() => {
+          console.log('Document successfully deleted!')
+        })
+        .catch(error => {
+          console.error('Error removing document: ', error)
+        })
+      setDrinkName('')
+      setDrinkCategory('')
+      setPrice('')
+      setRating('')
+      setComment('')
+      setPhotoURL('')
 
-    const promises = []
-    setError("")
-    setMessage("")
-    Promise.all(promises).then(() => {
-      setMessage('Review was successfully deleted')
-    }).catch(() => {
-      setError('Failed to delete review')
-    })
-  }
+      const promises = []
+      setError('')
+      setMessage('')
+      Promise.all(promises)
+        .then(() => {
+          setMessage('Review was successfully deleted')
+        })
+        .catch(() => {
+          setError('Failed to delete review')
+        })
+    }
   }
 
   return (
     <>
       <Form className="form edit-review" onSubmit={updateReview}>
-        {/* <TextInput
+        {/* <input
            fullWidth={true} label={"Drink name"} multiline={false} required={true}
           rows={1} value={drinkName} type={"text"} onChange={inputDrinkName}
         /> */}
         <input
-          fullWidth={true}
           label="Drink name"
-          multiline={false}
           required={true}
           rows={1}
           value={drinkName}
@@ -187,14 +192,14 @@ export default function EditReview() {
 
         {/* <div class='drink_name MuiFormControl-root'> */}
         {/* <label >Categoty*</label> */}
-        {/* <SelectInput  required={true} value={drinkCategory} onChange={inputDrinkCategory} >
+        {/* <select  required={true} value={drinkCategory} onChange={inputDrinkCategory} >
             <option value="">Select drink category</option>
             {drinkCategories.map(category => (
               <option key={category} value={category}>
                 {category}
               </option>
             ))}
-          </SelectInput> */}
+          </select> */}
         <div className="select-container">
           <select required={true} value={drinkCategory} onChange={inputDrinkCategory}>
             <option value="">Select drink category</option>
@@ -208,7 +213,7 @@ export default function EditReview() {
         {/* </div> */}
         {/* <br /> */}
 
-        {/* <TextInput
+        {/* <input
           fullWidth={true} label={"Price"} multiline={false} required={true}
           rows={1} value={price} type={"text"} onChange={inputPrice}
         /> */}
@@ -224,19 +229,19 @@ export default function EditReview() {
           onChange={inputPrice}
           placeholder="Price"
         />
-      {/* <div className='rating MuiFormControl-root'> */}
-          {/* <label >Rating</label> */}
-          {/* <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} /> */}
-          <ReactStars
-         count={5}
-         value={rating}
-         onChange={inputRating}
-         size={24}
-         activeColor="#de9e48" />
-      {/* </div> */}
+        {/* <div className='rating MuiFormControl-root'> */}
+        {/* <label >Rating</label> */}
+        {/* <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} /> */}
+        <ReactStars
+          count={5}
+          value={rating}
+          onChange={inputRating}
+          size={24}
+          activeColor="#de9e48"
+        />
+        {/* </div> */}
 
-
-        {/* <TextInput
+        {/* <input
           fullWidth={true} label={"Comment"} multiline={true} required={true}
           rows={1} value={comment} type={"text"} onChange={inputComment}
         /> */}
@@ -262,17 +267,13 @@ export default function EditReview() {
         </div>
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
-        <div className="button-wrapper btn-area--half">
-          <Button
-            className="w-100 submit btn--secondary btn--half" 
-            // type="submit"
-            variant="primary"
-            label={"Delete"} onClick={() => handleDelete()}
-          >Delete
-          </Button>
-          <Button className="w-100 submit btn--primary btn--half" type="submit" variant="primary">
+        <div className="btn-area--half">
+          <button className="btn--primary btn--half" type="submit">
             Update
-          </Button>
+          </button>
+          <button className="btn--tertiary btn--half" label="Delete" onClick={() => handleDelete()}>
+            Delete
+          </button>
         </div>
       </Form>
     </>
