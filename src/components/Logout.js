@@ -1,35 +1,31 @@
-import React, { useState } from 'react'
-// import { Button } from 'react-bootstrap'
+import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useHistory } from 'react-router-dom'
 import logoutIcon from '../assets/icons/logout.svg'
 
-const Logout = () => {
-  const [error, setError] = useState('')
+export default function Logout({ setMenuOpen }) {
   const { logout } = useAuth()
   const history = useHistory()
 
-  async function handleLogout() {
-    setError('aaa')
+  const handleLogout = async () => {
     try {
       await logout()
       history.push('/')
+
       // いったん以下おいといて！
       // history.pushState('/login')
     } catch {
-      setError('Failed to Log out')
+      console.log('Failed to Log out')
     }
   }
 
-  return (
-    // <div className="w-100 text-center mt-2">
-    //   <Button variant="link" onClick={handleLogout} className="black-color">
-    //     Log Out
-    //   </Button>
-    // </div>
+  const handleClick = () => {
+    setMenuOpen(false)
 
-    <img src={logoutIcon} alt="Link to Profile" className="icon" onClick={handleLogout} />
-  )
+    if (window.confirm('Are you sure to logout?')) {
+      handleLogout()
+    }
+  }
+
+  return <img src={logoutIcon} alt="Link to Profile" className="icon" onClick={handleClick} />
 }
-
-export default Logout

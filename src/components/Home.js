@@ -74,24 +74,11 @@ export default function Home() {
     let newShops = []
     Promise.all([reviewsQuery.get(), shopsQuery.get()])
       .then(snapshots => {
-        snapshots[0].forEach(newReview => {
-          if (
-            // newReview.data().shop && // this line to be removed once data structure set up
-            // newReview.data().drink_name && // this line to be removed once data structure set up
-            newReview.data().drink_name.toLowerCase().includes(drink)
-          ) {
-            newReviews.push({ ref: newReview.ref, ...newReview.data() })
-          }
-        })
+        snapshots[0].forEach(newReview =>
+          newReviews.push({ ref: newReview.ref, ...newReview.data() })
+        )
 
-        snapshots[1].forEach(newShop => {
-          if (
-            // newShop.data().name && // this line to be removed once data structure set up
-            newShop.data().name.toLowerCase().includes(place)
-          ) {
-            newShops.push({ ref: newShop.ref, ...newShop.data() })
-          }
-        })
+        snapshots[1].forEach(newShop => newShops.push({ ref: newShop.ref, ...newShop.data() }))
 
         const reviewsMatchShop = newReviews.filter(newReview => {
           let match = false
@@ -137,10 +124,7 @@ export default function Home() {
         newReviews.push({ ref: doc.ref, ...doc.data() })
       })
 
-      results[1].forEach(doc => {
-        if (!doc.data().geocode) return // this line to be removed once data structure set up
-        newShops.push({ ref: doc.ref, ...doc.data() })
-      })
+      results[1].forEach(doc => newShops.push({ ref: doc.ref, ...doc.data() }))
 
       const shopsWithReviewNum = newShops
         .map((shop, i) => {

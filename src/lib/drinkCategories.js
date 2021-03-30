@@ -8,7 +8,7 @@ const drinkCategories = [
   'Rum',
   'Tequila',
   'Sake',
-  'liqueur',
+  'Liqueur',
   'Vermouth',
   'Mead',
   'Hard Ciders',

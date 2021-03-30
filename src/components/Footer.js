@@ -63,7 +63,7 @@ export default function Footer() {
                 </li>
 
                 <li className="icon-button--logout">
-                  <Logout />
+                  <Logout setMenuOpen={setMenuOpen} />
                 </li>
               </ul>
             </li>
