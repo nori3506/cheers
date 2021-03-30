@@ -181,14 +181,16 @@ export default function Home() {
                     onChange={handleDrinkChange}
                   />
 
-                  <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
-                    <option value="">Select Drink Category</option>
-                    {drinkCategories.map(category => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
+                  <div className="select-container">
+                    <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
+                      <option value="">Select Drink Category</option>
+                      {drinkCategories.map(category => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
                   </select>
+                  </div>
 
                   <input
                     type="text"
@@ -197,14 +199,16 @@ export default function Home() {
                     onChange={handlePlaceChange}
                   />
 
-                  <select value={placeCategory} onChange={handlePlaceCategoryChange}>
-                    <option value="">Select Place Category</option>
-                    {placeCategories.map(category => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="select-container">
+                    <select value={placeCategory} onChange={handlePlaceCategoryChange}>
+                      <option value="">Select Place Category</option>
+                      {placeCategories.map(category => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
                   <input
                     type="number"

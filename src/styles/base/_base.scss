@@ -8,6 +8,8 @@ body {
   font-family: 'Roboto', helvetica, arial, sans-serif;
   background: url('./assets/images/cheers-bg-8.png') center center no-repeat;
   background-color: $main-color;
+  background-attachment: fixed;
+  background-size: cover;
   color: white;
 }
 
@@ -66,4 +68,16 @@ img {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.alert-danger {
+  color: $alert-color;
+  text-align: center;
+  font-weight: 700;
+}
+
+.alert-success {
+  color: $success-color;
+  text-align: center;
+  font-weight: 700;
 }

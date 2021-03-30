@@ -1,15 +1,62 @@
-.autocomplete-dropdown-container {
-  color: black;
-}
-
-.react-stars {
+// for create/edit review
+.image_wrapper {
   display: flex;
-  align-items: center;
+  flex-flow: column nowrap;
+  justify-content: center;
+
+  // upload image
+  img{
+  width: 60%;
+  margin: 1.5rem auto .5rem auto;
+  }
 }
 
-.react-stars span:first-child:before {
-  content: 'Rating';
-  color: rgba(white, 0.8);
-  font-size: $font-sm;
-  margin-right: 2rem;
+
+// for create/edit review
+.react-stars{
+  // ! padding affects alignment
+  padding: 0.7rem 1rem;
+  border: 1px solid $accent-color;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.35);
+  color: white;
+  width: 100%;
+  height: $height_input;
+
+  &:focus {
+    outline: none;
+  }
+
+  span {
+    // "Rating" input vertical alignment
+    display: flex !important;
+    align-items: center;
+
+    &:first-child:before{
+      content:'Rating';
+      color: rgba(white, 0.6);
+      font-size: $font-sm;
+      margin-right: 3rem;
+    }
+  }
+}
+
+
+.review_form{
+  // ! has to be inside .review_form
+  .comment {
+    padding: 1rem;
+  }
+  // submit button
+  .btn--primary {
+    margin-top: 2rem;
+  }
+}
+
+.shop_name input{
+  width: 100%;
+}
+
+.autocomplete-dropdown-container{
+  color: black;
 }
