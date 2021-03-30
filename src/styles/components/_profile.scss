@@ -26,7 +26,7 @@
         height: 130px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid #DE9E48;
+        border: 2px solid $accent-color;
         position: absolute;
         bottom: calc(100% - 65px);
     }
@@ -96,7 +96,10 @@
   }
 
     // gender age div 
-  .makeStyles-formControl-1 {
+    // class name changes depending on lable value
+  .makeStyles-formControl-3 {
+    display: flex !important;
+    flex-flow: row !important;
     margin: .7rem auto;
 
     .MuiInput-underline:after {

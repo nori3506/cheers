@@ -197,7 +197,7 @@ export default function Home() {
                     onChange={handleDrinkChange}
                   />
 
-                  <div class="select-container">
+                  <div className="select-container">
                     <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
                       <option value="">Select Drink Category</option>
                       {drinkCategories.map(category => (
@@ -215,7 +215,7 @@ export default function Home() {
                     onChange={handlePlaceChange}
                   />
 
-                  <div class="select-container">
+                  <div className="select-container">
                     <select value={placeCategory} onChange={handlePlaceCategoryChange}>
                       <option value="">Select Place Category</option>
                       {placeCategories.map(category => (

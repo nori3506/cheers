@@ -1241,7 +1241,7 @@ select:invalid {
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
-  border: 2px solid #DE9E48;
+  border: 2px solid #de9e48;
   position: absolute;
   bottom: calc(100% - 65px);
 }
@@ -1321,15 +1321,22 @@ select:invalid {
   width: 100%;
 }
 
-.edit-profile .makeStyles-formControl-1 {
+.edit-profile .makeStyles-formControl-3 {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-orient: horizontal !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-flow: row !important;
+          flex-flow: row !important;
   margin: .7rem auto;
 }
 
-.edit-profile .makeStyles-formControl-1 .MuiInput-underline:after {
+.edit-profile .makeStyles-formControl-3 .MuiInput-underline:after {
   border-bottom: none;
 }
 
-.edit-profile .makeStyles-formControl-1 .MuiInputBase-root {
+.edit-profile .makeStyles-formControl-3 .MuiInputBase-root {
   width: 75px;
 }
 
