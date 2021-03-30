@@ -25,7 +25,7 @@ export default function EditReview() {
       setDrinkName(doc.data().drink_name)
       setDrinkCategory(doc.data().drink_category)
       setPrice(doc.data().price)
-      console.log(doc.data().rating)
+      // console.log(doc.data().rating)
       setRating(doc.data().rating)
       setComment(doc.data().comment)
       storage
@@ -218,14 +218,12 @@ export default function EditReview() {
           rows={1} value={price} type={"text"} onChange={inputPrice}
         /> */}
         <input
-          fullWidth={true}
-          label={'Price'}
+          label="Price"
           max="99999"
-          multiline={false}
           required={true}
           rows={1}
           value={price}
-          type={'number'}
+          type="number"
           onChange={inputPrice}
           placeholder="Price"
         />

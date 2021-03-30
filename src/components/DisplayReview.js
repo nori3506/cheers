@@ -105,7 +105,7 @@ const DisplayReview = () => {
   }
 
   const reviewItems = reviews.map(review => {
-    console.log(reviews)
+    // console.log(reviews)
     return (
       <div className="reviews-background reviews-area" key={review.ref.id}>
         {(() => {
