@@ -4,6 +4,9 @@ import { Form, Button, Alert } from 'react-bootstrap'
 import { SelectInput, TextInput } from './UIkit'
 import drinkCategories from '../lib/drinkCategories'
 import ReactStars from 'react-rating-stars-component'
+import { useHistory } from 'react-router-dom'
+
+
 
 export default function EditReview() {
   const [review, setReview] = useState("")
@@ -17,6 +20,7 @@ export default function EditReview() {
   let review_id = window.location.pathname.split('/review/edit/', 2)[1]
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const history = useHistory()
 
   useEffect(() => {
     const reviewRef = db.collection('reviews').doc(review_id)
@@ -57,9 +61,7 @@ export default function EditReview() {
     [setPrice]
   )
 
-  // const inputRating = useCallback((event) => {
-  //   setRating(event.target.value)
-  // }, [setRating]);
+
 
   const inputRating = useCallback(
     event => {
@@ -127,6 +129,7 @@ export default function EditReview() {
     Promise.all(promises)
       .then(() => {
         setMessage('Review was successfully updated')
+
       })
       .catch(() => {
         setError('Failed to update review')
@@ -158,6 +161,8 @@ export default function EditReview() {
     setMessage("")
     Promise.all(promises).then(() => {
       setMessage('Review was successfully deleted')
+      setTimeout(()=>history.push("/"),1500)
+
     }).catch(() => {
       setError('Failed to delete review')
     })
@@ -167,10 +172,7 @@ export default function EditReview() {
   return (
     <>
       <Form className="form edit-review" onSubmit={updateReview}>
-        {/* <TextInput
-           fullWidth={true} label={"Drink name"} multiline={false} required={true}
-          rows={1} value={drinkName} type={"text"} onChange={inputDrinkName}
-        /> */}
+
         <input
           fullWidth={true}
           label="Drink name"
@@ -183,18 +185,6 @@ export default function EditReview() {
           placeholder="Drink name"
         />
 
-        {/* <br /> */}
-
-        {/* <div class='drink_name MuiFormControl-root'> */}
-        {/* <label >Categoty*</label> */}
-        {/* <SelectInput  required={true} value={drinkCategory} onChange={inputDrinkCategory} >
-            <option value="">Select drink category</option>
-            {drinkCategories.map(category => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </SelectInput> */}
         <div className="select-container">
           <select required={true} value={drinkCategory} onChange={inputDrinkCategory}>
             <option value="">Select drink category</option>
@@ -205,13 +195,7 @@ export default function EditReview() {
             ))}
           </select>
         </div>
-        {/* </div> */}
-        {/* <br /> */}
 
-        {/* <TextInput
-          fullWidth={true} label={"Price"} multiline={false} required={true}
-          rows={1} value={price} type={"text"} onChange={inputPrice}
-        /> */}
         <input
           fullWidth={true}
           label={'Price'}
@@ -224,26 +208,14 @@ export default function EditReview() {
           onChange={inputPrice}
           placeholder="Price"
         />
-      {/* <div className='rating MuiFormControl-root'> */}
-          {/* <label >Rating</label> */}
-          {/* <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} /> */}
+
           <ReactStars
          count={5}
          value={rating}
          onChange={inputRating}
          size={24}
          activeColor="#de9e48" />
-      {/* </div> */}
 
-
-        {/* <TextInput
-          fullWidth={true} label={"Comment"} multiline={true} required={true}
-          rows={1} value={comment} type={"text"} onChange={inputComment}
-        /> */}
-        {/* <input
-          fullWidth={true} label={"Comment"} multiline={true} required={true}
-          rows={1} value={comment} type={"text"} onChange={inputComment}
-        /> */}
 
         <textarea
           className="comment"
@@ -264,8 +236,7 @@ export default function EditReview() {
         {error && <Alert variant="danger">{error}</Alert>}
         <div className="button-wrapper btn-area--half">
           <Button
-            className="w-100 submit btn--secondary btn--half" 
-            // type="submit"
+            className="w-100 submit btn--secondary btn--half"
             variant="primary"
             label={"Delete"} onClick={() => handleDelete()}
           >Delete
