@@ -181,7 +181,7 @@ export default function CreateReview() {
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
-      <form className="review_form search-form" onSubmit={handleSubmit}>
+      <form className="review_form" onSubmit={handleSubmit}>
         {/* <p>Drink name*</p> */}
         <input
           required
@@ -201,7 +201,7 @@ export default function CreateReview() {
                   className: 'location-search-input',
                 })}
                 required
-                disabled
+                disabled={!isOnline}
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
@@ -229,6 +229,12 @@ export default function CreateReview() {
             </div>
           )}
         </PlacesAutocomplete>
+
+        {!isOnline ? (
+          <p className="helper-text">
+            Please connect to the internet to get suggestions for this input.
+          </p>
+        ) : null}
 
         <div className="select-container">
           <select required className="shop_category" onChange={inputShopCategory}>

@@ -902,7 +902,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 
 .image_wrapper img {
   width: 60%;
-  margin: 1.5rem auto .5rem auto;
+  margin: 1.5rem auto 0.5rem auto;
 }
 
 .react-stars {
@@ -941,6 +941,11 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 
 .review_form .btn--primary {
   margin-top: 2rem;
+}
+
+.review_form .helper-text {
+  margin: -0.5rem 0.5rem 0.5rem;
+  color: red;
 }
 
 .shop_name input {
