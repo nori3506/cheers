@@ -458,6 +458,11 @@ img {
   font-weight: 700;
 }
 
+.helper-text--error {
+  margin: -0.5rem 0.5rem 0.5rem;
+  color: #F04444;
+}
+
 /* 2 Components ============= */
 /* 2.1. Login =============== */
 .login-wrapper,
@@ -941,11 +946,6 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 
 .review_form .btn--primary {
   margin-top: 2rem;
-}
-
-.review_form .helper-text {
-  margin: -0.5rem 0.5rem 0.5rem;
-  color: red;
 }
 
 .shop_name input {

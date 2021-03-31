@@ -231,7 +231,7 @@ export default function CreateReview() {
         </PlacesAutocomplete>
 
         {!isOnline ? (
-          <p className="helper-text">
+          <p className="helper-text--error">
             Please connect to the internet to get suggestions for this input.
           </p>
         ) : null}
