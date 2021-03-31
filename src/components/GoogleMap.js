@@ -24,7 +24,7 @@ const libraries = ['places']
 
 function Map(props) {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyDD0yhWzFyyF-ipcWomUf39xmycbnf1zSw',
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   })
 

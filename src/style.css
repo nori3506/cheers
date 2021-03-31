@@ -770,6 +770,12 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
           flex-grow: 1;
 }
 
+.home .search-wrapper {
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .home .close-btn-area {
   text-align: right;
 }
@@ -812,7 +818,7 @@ footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
 }
 
 .home .shop-list .shop-list-item {
-  padding: .4rem 0;
+  padding: 0.4rem 0;
 }
 
 .home .shop-list .shop-list-item a {

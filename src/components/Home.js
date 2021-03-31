@@ -166,74 +166,76 @@ export default function Home() {
 
             {modalOpen ? (
               <div className="overlay">
-                <div className="close-btn-area">
-                  <button onClick={handleClose} className="icon-btn--square">
-                    <span className="visually-hidden">Close</span>
-                    <img src={closeIcon} alt="" className="icon--close" />
-                  </button>
+                <div className="search-wrapper">
+                  <div className="close-btn-area">
+                    <button onClick={handleClose} className="icon-btn--square">
+                      <span className="visually-hidden">Close</span>
+                      <img src={closeIcon} alt="" className="icon--close" />
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleSearch} className="form">
+                    <input
+                      type="text"
+                      placeholder="Drink Name"
+                      value={drink}
+                      onChange={handleDrinkChange}
+                    />
+
+                    <div className="select-container">
+                      <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
+                        <option value="">Select Drink Category</option>
+                        {drinkCategories.map(category => (
+                          <option key={category} value={category}>
+                            {category}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <input
+                      type="text"
+                      placeholder="Place Name"
+                      value={place}
+                      onChange={handlePlaceChange}
+                    />
+
+                    <div className="select-container">
+                      <select value={placeCategory} onChange={handlePlaceCategoryChange}>
+                        <option value="">Select Place Category</option>
+                        {placeCategories.map(category => (
+                          <option key={category} value={category}>
+                            {category}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <input
+                      type="number"
+                      placeholder="Price max"
+                      value={priceMax}
+                      onChange={handlePriceMaxChange}
+                    />
+
+                    <input
+                      type="number"
+                      placeholder="Price min"
+                      value={priceMin}
+                      onChange={handlePriceMinChange}
+                    />
+
+                    <div className="btn-area--half">
+                      <button className="btn--primary btn--half" type="submit" disabled={disabled}>
+                        Search
+                      </button>
+
+                      <button className="btn--tertiary btn--half" onClick={handleClose}>
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
                 </div>
-
-                <form onSubmit={handleSearch} className="form">
-                  <input
-                    type="text"
-                    placeholder="Drink Name"
-                    value={drink}
-                    onChange={handleDrinkChange}
-                  />
-
-                  <div className="select-container">
-                    <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
-                      <option value="">Select Drink Category</option>
-                      {drinkCategories.map(category => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                  </select>
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Place Name"
-                    value={place}
-                    onChange={handlePlaceChange}
-                  />
-
-                  <div className="select-container">
-                    <select value={placeCategory} onChange={handlePlaceCategoryChange}>
-                      <option value="">Select Place Category</option>
-                      {placeCategories.map(category => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <input
-                    type="number"
-                    placeholder="Price max"
-                    value={priceMax}
-                    onChange={handlePriceMaxChange}
-                  />
-
-                  <input
-                    type="number"
-                    placeholder="Price min"
-                    value={priceMin}
-                    onChange={handlePriceMinChange}
-                  />
-
-                  <div className="btn-area--half">
-                    <button className="btn--primary btn--half" type="submit" disabled={disabled}>
-                      Search
-                    </button>
-
-                    <button className="btn--tertiary btn--half" onClick={handleClose}>
-                      Cancel
-                    </button>
-                  </div>
-                </form>
               </div>
             ) : null}
 
