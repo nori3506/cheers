@@ -3,6 +3,7 @@ import { db, storage } from '../firebase/index'
 import { Form, Alert } from 'react-bootstrap'
 import drinkCategories from '../lib/drinkCategories'
 import ReactStars from 'react-rating-stars-component'
+import { useHistory } from 'react-router-dom'
 
 export default function EditReview() {
   const [review, setReview] = useState('')
@@ -16,6 +17,7 @@ export default function EditReview() {
   let review_id = window.location.pathname.split('/review/edit/', 2)[1]
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const history = useHistory()
 
   useEffect(() => {
     const reviewRef = db.collection('reviews').doc(review_id)
@@ -57,10 +59,6 @@ export default function EditReview() {
     },
     [setPrice]
   )
-
-  // const inputRating = useCallback((event) => {
-  //   setRating(event.target.value)
-  // }, [setRating]);
 
   const inputRating = useCallback(
     event => {
@@ -164,6 +162,7 @@ export default function EditReview() {
       Promise.all(promises)
         .then(() => {
           setMessage('Review was successfully deleted')
+          setTimeout(() => history.push('/'), 1500)
         })
         .catch(() => {
           setError('Failed to delete review')
@@ -174,10 +173,6 @@ export default function EditReview() {
   return (
     <>
       <Form className="form edit-review" onSubmit={updateReview}>
-        {/* <input
-           fullWidth={true} label={"Drink name"} multiline={false} required={true}
-          rows={1} value={drinkName} type={"text"} onChange={inputDrinkName}
-        /> */}
         <input
           label="Drink name"
           required={true}
@@ -188,18 +183,6 @@ export default function EditReview() {
           placeholder="Drink name"
         />
 
-        {/* <br /> */}
-
-        {/* <div class='drink_name MuiFormControl-root'> */}
-        {/* <label >Categoty*</label> */}
-        {/* <select  required={true} value={drinkCategory} onChange={inputDrinkCategory} >
-            <option value="">Select drink category</option>
-            {drinkCategories.map(category => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select> */}
         <div className="select-container">
           <select required={true} value={drinkCategory} onChange={inputDrinkCategory}>
             <option value="">Select drink category</option>
@@ -210,13 +193,7 @@ export default function EditReview() {
             ))}
           </select>
         </div>
-        {/* </div> */}
-        {/* <br /> */}
 
-        {/* <input
-          fullWidth={true} label={"Price"} multiline={false} required={true}
-          rows={1} value={price} type={"text"} onChange={inputPrice}
-        /> */}
         <input
           label="Price"
           max="99999"
@@ -227,9 +204,7 @@ export default function EditReview() {
           onChange={inputPrice}
           placeholder="Price"
         />
-        {/* <div className='rating MuiFormControl-root'> */}
-        {/* <label >Rating</label> */}
-        {/* <input type='number'  placeholder ='Rating' max="5" value={rating} min='1' name="rating" onChange={inputRating} /> */}
+
         <ReactStars
           count={5}
           value={rating}
@@ -237,16 +212,6 @@ export default function EditReview() {
           size={24}
           activeColor="#de9e48"
         />
-        {/* </div> */}
-
-        {/* <input
-          fullWidth={true} label={"Comment"} multiline={true} required={true}
-          rows={1} value={comment} type={"text"} onChange={inputComment}
-        /> */}
-        {/* <input
-          fullWidth={true} label={"Comment"} multiline={true} required={true}
-          rows={1} value={comment} type={"text"} onChange={inputComment}
-        /> */}
 
         <textarea
           className="comment"
