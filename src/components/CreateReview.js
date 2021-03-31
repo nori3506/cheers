@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -27,10 +27,24 @@ export default function CreateReview() {
   const [preview, setPreview] = useState('')
   const [error, setError] = useState('')
   const [isCreating, setIsCreating] = useState(false)
+  const [isOnline, setNetwork] = useState(window.navigator.onLine)
   const history = useHistory()
 
   let currentUserUid = firebase.auth().currentUser.uid
   let fullPath = ''
+
+  const updateNetwork = () => {
+    setNetwork(window.navigator.onLine)
+  }
+
+  useEffect(() => {
+    window.addEventListener('offline', updateNetwork)
+    window.addEventListener('online', updateNetwork)
+    return () => {
+      window.removeEventListener('offline', updateNetwork)
+      window.removeEventListener('online', updateNetwork)
+    }
+  })
 
   function reviewRegisterForExistShop(existShop) {
     let userRef = db.collection('users').doc(currentUserUid)
@@ -187,6 +201,7 @@ export default function CreateReview() {
                   className: 'location-search-input',
                 })}
                 required
+                disabled
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
