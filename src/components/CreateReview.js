@@ -55,7 +55,6 @@ export default function CreateReview() {
     }).then(() => {
       history.push('/shop/' + existShop.id);
   })
-
   }
 
   function reviewRegisterForNewShop(formatGeoCode) {
