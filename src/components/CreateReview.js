@@ -242,9 +242,8 @@ export default function CreateReview() {
           </select>
         </div>
 
-        <input  className= 'price'  max="99999"　step="0.5"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
-        {/* <p>Rating</p> */}
-        {/* <input className= 'rating' placeholder='Rate the drink' type='number' max="5" min='1' name="rating" onChange={inputRating} /> */}
+        <input  className= 'price'  max="99999" min="0"　step="0.5"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
+
 
 
           <ReactStars
