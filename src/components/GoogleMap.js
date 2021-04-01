@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
-import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api'
+import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api'
 import { Link } from 'react-router-dom'
 import Loading from './Loading'
 import barIcon from '../assets/icons/beer.svg'
@@ -10,7 +10,7 @@ import markerIcon from '../assets/icons/pin.svg'
 const containerStyle = {
   width: '100%',
   height: '250px',
-  borderRadius: '4px',
+  borderRadius: '5px',
 }
 
 const options = {
@@ -20,29 +20,20 @@ const options = {
 
 const zoom = 11
 
-const libraries = ['places']
+const latLngVan = { lat: 49.282729, lng: -123.120738 }
 
 function Map(props) {
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  })
-
   const { shops } = props
 
-  const vancouverLatLng = { lat: 49.282729, lng: -123.120738 }
-
   const [loading, setLoading] = useState(true)
-  const [center, setCenter] = useState(vancouverLatLng)
+  const [center, setCenter] = useState(latLngVan)
   const [bounds, setBounds] = useState(null)
   const [shopsOnMap, setShopsOnMap] = useState(shops)
   const [selected, setSelected] = useState(null)
 
   const mapRef = useRef()
 
-  const handleLoad = useCallback(map => {
-    mapRef.current = map
-  }, [])
+  const handleLoad = useCallback(map => (mapRef.current = map), [])
 
   const handleBoundsChange = () => {
     if (mapRef.current) setBounds(mapRef.current.getBounds())
@@ -68,16 +59,13 @@ function Map(props) {
         setLoading(false)
       },
       () => {
-        setCenter(vancouverLatLng)
+        setCenter(latLngVan)
         setLoading(false)
         console.log('failed to get current location')
       },
       { timeout: 5000 }
     )
   }, [])
-
-  if (loadError) return 'Error loading map'
-  if (!isLoaded) return <Loading />
 
   return (
     <>
@@ -90,7 +78,6 @@ function Map(props) {
         onLoad={handleLoad}
         onBoundsChanged={handleBoundsChange}
       >
-        {/* Child components, such as shops, info windows, etc. */}
         {shopsOnMap.map(shop => (
           <Marker
             key={shop.name}

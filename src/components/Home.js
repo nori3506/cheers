@@ -77,7 +77,6 @@ export default function Home() {
         snapshots[0].forEach(newReview =>
           newReviews.push({ ref: newReview.ref, ...newReview.data() })
         )
-
         snapshots[1].forEach(newShop => newShops.push({ ref: newShop.ref, ...newShop.data() }))
 
         const reviewsMatchShop = newReviews.filter(newReview => {
@@ -120,10 +119,7 @@ export default function Home() {
     let newShops = []
 
     Promise.all([reviewsRef.get(), shopsRef.get()]).then(results => {
-      results[0].forEach(doc => {
-        newReviews.push({ ref: doc.ref, ...doc.data() })
-      })
-
+      results[0].forEach(doc => newReviews.push({ ref: doc.ref, ...doc.data() }))
       results[1].forEach(doc => newShops.push({ ref: doc.ref, ...doc.data() }))
 
       const shopsWithReviewNum = newShops

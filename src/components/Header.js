@@ -1,26 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { storage } from '../firebase/index'
 import backArrowIcon from '../assets/icons/back-arrow.svg'
 
 export default function Header({ title }) {
-  // Fetch user profile image (currently not used) ========== //
   const { currentUser } = useAuth()
-
-  const [photoURL, setPhotoURL] = useState('hey')
-
-  useEffect(() => {
-    if (currentUser && currentUser.photoURL) {
-      storage
-        .ref(currentUser.photoURL)
-        .getDownloadURL()
-        .then(url => {
-          setPhotoURL(url)
-        })
-    }
-  }, [])
-  // ======================================================== //
 
   let history = useHistory()
   let location = useLocation()
