@@ -235,14 +235,15 @@ export default function EditReview() {
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
         <div className="button-wrapper btn-area--half">
+          <Button className="w-100 submit btn--secondary btn--half" type="submit" variant="primary">
+            Update
+          </Button>
           <Button
-            className="w-100 submit btn--secondary btn--half"
+            className="w-100 submit btn--primary btn--half" 
+            // type="submit"
             variant="primary"
             label={"Delete"} onClick={() => handleDelete()}
           >Delete
-          </Button>
-          <Button className="w-100 submit btn--primary btn--half" type="submit" variant="primary">
-            Update
           </Button>
         </div>
       </Form>
