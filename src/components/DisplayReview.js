@@ -2,7 +2,6 @@ import { db } from '../firebase/index'
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
-import { ButtonInput } from './UIkit'
 import firebase from 'firebase/app'
 import { SpinnerCircular } from 'spinners-react'
 import defDrink from '../assets/icons/def-drink.svg'
@@ -106,20 +105,22 @@ const DisplayReview = () => {
   }
 
   const reviewItems = reviews.map(review => {
-    console.log(reviews);
+    // console.log(reviews)
     return (
-      <div className="reviews-background reviews-area">
+      <div className="reviews-background reviews-area" key={review.ref.id}>
         {(() => {
           if (review.img != 'doesNotExist') {
             return <img src={review.img} className="review-img" />
           } else {
-            return <div className="review-img">
-              <img src={defDrink} />
-            </div>
+            return (
+              <div className="review-img">
+                <img src={defDrink} />
+              </div>
+            )
           }
         })()}
 
-        <div class="layout-grid">
+        <div className="layout-grid">
           <h2 className="u-text-small">{review.drink_name}</h2>
           <p className="category">{review.drink_category}</p>
           <p className="price">{review.price} CAD</p>
@@ -159,7 +160,7 @@ const DisplayReview = () => {
                     <button className="btn--secondary btn--xs btn--link">
                       <Link to={'/review/edit/' + review.ref.id}>Edit</Link>
                     </button>
-                    <button onClick={() => handleDelete(review)} className="btn--secondary btn--xs">
+                    <button onClick={() => handleDelete(review)} className="btn--tertiary btn--xs">
                       Delete
                     </button>
                   </>

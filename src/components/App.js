@@ -18,7 +18,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <GuestRoute path="/signup" component={Signup} />
           <PrivateRoute path="/createreview" component={CreateReview} />
-          <PrivateRoute path="/Profile" component={Profile} />
+          <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute exact path={'/shop/:id'} component={DisplayReview} />
           <PrivateRoute exact path={'/review/edit/:id'} component={EditReview} />
         </Switch>

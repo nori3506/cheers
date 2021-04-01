@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { db, storage } from '../firebase/index'
-import Automap from './Automap'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
@@ -28,10 +27,24 @@ export default function CreateReview() {
   const [preview, setPreview] = useState('')
   const [error, setError] = useState('')
   const [isCreating, setIsCreating] = useState(false)
+  const [isOnline, setNetwork] = useState(window.navigator.onLine)
   const history = useHistory()
 
   let currentUserUid = firebase.auth().currentUser.uid
   let fullPath = ''
+
+  const updateNetwork = () => {
+    setNetwork(window.navigator.onLine)
+  }
+
+  useEffect(() => {
+    window.addEventListener('offline', updateNetwork)
+    window.addEventListener('online', updateNetwork)
+    return () => {
+      window.removeEventListener('offline', updateNetwork)
+      window.removeEventListener('online', updateNetwork)
+    }
+  })
 
   function reviewRegisterForExistShop(existShop) {
     let userRef = db.collection('users').doc(currentUserUid)
@@ -136,11 +149,9 @@ export default function CreateReview() {
     setShopCategory(event.target.value)
   }
 
-  const inputPrice = (event) =>{
+  const inputPrice = event => {
     setPrice(parseFloat(event.target.value))
   }
-
-
 
   const inputRating = event => {
     setRating(parseInt(event))
@@ -170,7 +181,7 @@ export default function CreateReview() {
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
-      <form className='review_form search-form'  onSubmit={handleSubmit} >
+      <form className="review_form" onSubmit={handleSubmit}>
         {/* <p>Drink name*</p> */}
         <input
           required
@@ -190,6 +201,7 @@ export default function CreateReview() {
                   className: 'location-search-input',
                 })}
                 required
+                disabled={!isOnline}
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
@@ -218,7 +230,13 @@ export default function CreateReview() {
           )}
         </PlacesAutocomplete>
 
-        <div class="select-container">
+        {!isOnline ? (
+          <p className="helper-text--error">
+            Please connect to the internet to get suggestions for this input.
+          </p>
+        ) : null}
+
+        <div className="select-container">
           <select required className="shop_category" onChange={inputShopCategory}>
             <option value="">What is the type of the shop?</option>
             {placeCategories.map(category => (
@@ -231,7 +249,7 @@ export default function CreateReview() {
 
         <Imageupload onChange={handleImageChange} photoURL={preview} />
         {/* <p>Drink category*</p> */}
-        <div class="select-container">
+        <div className="select-container">
           <select required className="drink_category" onChange={inputDrinkCategory}>
             <option value="">What is the type of the drink?</option>
             {drinkCategories.map(category => (
@@ -242,17 +260,23 @@ export default function CreateReview() {
           </select>
         </div>
 
-        <input  className= 'price'  max="99999" min="0"　step="0.5"　type='number' onChange={inputPrice}　placeholder='How much did it cost?' />
+        <input
+          className="price"
+          max="99999"
+          min="0"
+          step="0.5"
+          type="number"
+          onChange={inputPrice}
+          placeholder="How much did it cost?"
+        />
 
-
-
-          <ReactStars
-           count={5}
-           value={rating}
-           onChange={inputRating}
-           size={24}
-           activeColor="#de9e48" />
-
+        <ReactStars
+          count={5}
+          value={rating}
+          onChange={inputRating}
+          size={24}
+          activeColor="#de9e48"
+        />
 
         <textarea
           className="comment"

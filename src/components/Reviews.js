@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
-import { ButtonInput } from './UIkit'
 import { db } from '../firebase/index'
 import firebase from 'firebase/app'
 import defDrink from '../assets/icons/def-drink.svg'
@@ -75,24 +74,26 @@ const Reviews = () => {
 
   const reviewItems = reviews.map((review, i) => {
     return (
-      <div className="reviews-background reviews-area profile-review">
+      <div className="reviews-background reviews-area profile-review" key={review.ref.id}>
         {(() => {
           if (review.img != 'doesNotExist') {
             return <img src={review.img} className="review-img" />
-          }else {
-            return <div className="review-img">
-              <img src={defDrink} />
-            </div>
+          } else {
+            return (
+              <div className="review-img">
+                <img src={defDrink} />
+              </div>
+            )
           }
         })()}
 
-        <div class="layout-grid">
+        <div className="layout-grid">
           <h2 className="u-text-small">
             {review.drink_name}&#160;<span className="normal-font-weight">at</span>{' '}
             {review.shop.name}
           </h2>
-          <p class="category">{review.drink_category}</p>
-          <p class="price">{review.price} CAD</p>
+          <p className="category">{review.drink_category}</p>
+          <p className="price">{review.price} CAD</p>
           {(() => {
             var rating = review.rating
             var star = ''
@@ -105,7 +106,7 @@ const Reviews = () => {
               hollowStars = hollowStars + '☆'
             }
             return (
-              <p class="rating">
+              <p className="rating">
                 {star}
                 {hollowStars}
               </p>
@@ -113,18 +114,18 @@ const Reviews = () => {
           })()}
         </div>
 
-        <p class="comment">
+        <p className="comment">
           <span>"</span>
           {review.comment}
           <span>"</span>
         </p>
 
-        <div class="bottom-row">
-          <div class="delete-edit-wrapper">
+        <div className="bottom-row">
+          <div className="delete-edit-wrapper">
             <button className="btn--secondary btn--xs btn--link">
               <Link to={'/review/edit/' + review.ref.id}>Edit</Link>
             </button>
-            <button onClick={() => handleDelete(review)} className="btn--secondary btn--xs">
+            <button onClick={() => handleDelete(review)} className="btn--tertiary btn--xs">
               Delete
             </button>
           </div>

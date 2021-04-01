@@ -5,15 +5,14 @@
   justify-content: center;
 
   // upload image
-  img{
-  width: 60%;
-  margin: 1.5rem auto .5rem auto;
+  img {
+    width: 60%;
+    margin: 1.5rem auto 0.5rem auto;
   }
 }
 
-
 // for create/edit review
-.react-stars{
+.react-stars {
   // ! padding affects alignment
   padding: 0.7rem 1rem;
   border: 1px solid $accent-color;
@@ -32,8 +31,8 @@
     display: flex !important;
     align-items: center;
 
-    &:first-child:before{
-      content:'Rating';
+    &:first-child:before {
+      content: 'Rating';
       color: rgba(white, 0.6);
       font-size: $font-sm;
       margin-right: 3rem;
@@ -41,8 +40,7 @@
   }
 }
 
-
-.review_form{
+.review_form {
   // ! has to be inside .review_form
   .comment {
     padding: 1rem;
@@ -53,10 +51,10 @@
   }
 }
 
-.shop_name input{
+.shop_name input {
   width: 100%;
 }
 
-.autocomplete-dropdown-container{
+.autocomplete-dropdown-container {
   color: black;
 }

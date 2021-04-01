@@ -81,3 +81,8 @@ img {
   text-align: center;
   font-weight: 700;
 }
+
+.helper-text--error {
+  margin: -0.5rem 0.5rem 0.5rem;
+  color: $alert-color;
+}

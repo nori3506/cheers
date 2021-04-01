@@ -6,7 +6,7 @@ import Logout from './Logout'
 import homeIcon from '../assets/icons/home.svg'
 import addReviewIcon from '../assets/icons/add-review.svg'
 import profileIcon from '../assets/icons/profile.svg'
-import profileDefaultIcon from '../assets/icons/default_profile_picture.svg'
+import profileDefaultIcon from '../assets/icons/def-profile.svg'
 
 export default function Footer() {
   const { currentUser } = useAuth()
@@ -63,7 +63,7 @@ export default function Footer() {
                 </li>
 
                 <li className="icon-button--logout">
-                  <Logout />
+                  <Logout setMenuOpen={setMenuOpen} />
                 </li>
               </ul>
             </li>
