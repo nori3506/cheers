@@ -12,7 +12,7 @@ textarea {
 
 // 1rem padding eventually looks input .5rem
 textarea {
-  padding: 1rem;
+  padding: .8rem 1rem;
   line-height: 1.4;
 }
 
@@ -37,7 +37,7 @@ textarea::placeholder {
 
 // Input field on login and signup page
 .input--lg {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 // select arrow styling
@@ -48,7 +48,7 @@ textarea::placeholder {
     color: $accent-color;
     font-size: 20px;
     right: 1rem;    
-    top: 14px;
+    top: 12px;
     padding: 0 0 2px;      
     position: absolute;
     pointer-events: none;
@@ -71,7 +71,7 @@ textarea::placeholder {
 
 // for edit review create review
 input[type="file"] {
-  padding-top: .7rem;
+  padding-top: .5rem;
   color: rgba(white, 0.6);
   &::-webkit-file-upload-button {
     background-color:white;
