@@ -123,8 +123,9 @@
         gap: 0.3rem;
 
         button:nth-of-type(2) {
-          border: 2px solid $main-color;
-        }
+          background-color: $main-color;
+          color: white;
+        } 
       }
     }
 

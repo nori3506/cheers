@@ -231,10 +231,10 @@ export default function EditReview() {
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
         <div className="btn-area--half">
-          <button className="btn--primary btn--half" type="submit">
+          <button className="btn--secondary btn--half" type="submit">
             Update
           </button>
-          <button className="btn--tertiary btn--half" label="Delete" onClick={() => handleDelete()}>
+          <button className="btn--primary btn--half" label="Delete" onClick={() => handleDelete()}>
             Delete
           </button>
         </div>
