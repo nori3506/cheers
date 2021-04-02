@@ -65,8 +65,9 @@ export default function CreateReview() {
       user: userRef,
       shop: existShop,
       fullPath: fullPath,
-    })
-    history.push('/shop/' + existShop.id)
+    }).then(() => {
+      history.push('/shop/' + existShop.id);
+  })
   }
 
   function reviewRegisterForNewShop(formatGeoCode) {
@@ -95,8 +96,10 @@ export default function CreateReview() {
       user: userRef,
       shop: shopRef,
       fullPath: fullPath,
-    })
-    history.push('/shop/' + randomID)
+    }).then(() => {
+     history.push('/shop/' + randomID);
+  })
+
   }
 
   async function handleSubmit(e) {
