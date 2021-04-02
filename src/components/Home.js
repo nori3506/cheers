@@ -74,24 +74,10 @@ export default function Home() {
     let newShops = []
     Promise.all([reviewsQuery.get(), shopsQuery.get()])
       .then(snapshots => {
-        snapshots[0].forEach(newReview => {
-          if (
-            // newReview.data().shop && // this line to be removed once data structure set up
-            // newReview.data().drink_name && // this line to be removed once data structure set up
-            newReview.data().drink_name.toLowerCase().includes(drink)
-          ) {
-            newReviews.push({ ref: newReview.ref, ...newReview.data() })
-          }
-        })
-
-        snapshots[1].forEach(newShop => {
-          if (
-            // newShop.data().name && // this line to be removed once data structure set up
-            newShop.data().name.toLowerCase().includes(place)
-          ) {
-            newShops.push({ ref: newShop.ref, ...newShop.data() })
-          }
-        })
+        snapshots[0].forEach(newReview =>
+          newReviews.push({ ref: newReview.ref, ...newReview.data() })
+        )
+        snapshots[1].forEach(newShop => newShops.push({ ref: newShop.ref, ...newShop.data() }))
 
         const reviewsMatchShop = newReviews.filter(newReview => {
           let match = false
@@ -133,14 +119,8 @@ export default function Home() {
     let newShops = []
 
     Promise.all([reviewsRef.get(), shopsRef.get()]).then(results => {
-      results[0].forEach(doc => {
-        newReviews.push({ ref: doc.ref, ...doc.data() })
-      })
-
-      results[1].forEach(doc => {
-        if (!doc.data().geocode) return // this line to be removed once data structure set up
-        newShops.push({ ref: doc.ref, ...doc.data() })
-      })
+      results[0].forEach(doc => newReviews.push({ ref: doc.ref, ...doc.data() }))
+      results[1].forEach(doc => newShops.push({ ref: doc.ref, ...doc.data() }))
 
       const shopsWithReviewNum = newShops
         .map((shop, i) => {
@@ -182,74 +162,76 @@ export default function Home() {
 
             {modalOpen ? (
               <div className="overlay">
-                <div className="close-btn-area">
-                  <button onClick={handleClose} className="icon-btn--square">
-                    <span className="visually-hidden">Close</span>
-                    <img src={closeIcon} alt="" className="icon--close" />
-                  </button>
+                <div className="search-wrapper">
+                  <div className="close-btn-area">
+                    <button onClick={handleClose} className="icon-btn--square">
+                      <span className="visually-hidden">Close</span>
+                      <img src={closeIcon} alt="" className="icon--close" />
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleSearch} className="form">
+                    <input
+                      type="text"
+                      placeholder="Drink Name"
+                      value={drink}
+                      onChange={handleDrinkChange}
+                    />
+
+                    <div className="select-container">
+                      <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
+                        <option value="">Select Drink Category</option>
+                        {drinkCategories.map(category => (
+                          <option key={category} value={category}>
+                            {category}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <input
+                      type="text"
+                      placeholder="Place Name"
+                      value={place}
+                      onChange={handlePlaceChange}
+                    />
+
+                    <div className="select-container">
+                      <select value={placeCategory} onChange={handlePlaceCategoryChange}>
+                        <option value="">Select Place Category</option>
+                        {placeCategories.map(category => (
+                          <option key={category} value={category}>
+                            {category}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <input
+                      type="number"
+                      placeholder="Price max"
+                      value={priceMax}
+                      onChange={handlePriceMaxChange}
+                    />
+
+                    <input
+                      type="number"
+                      placeholder="Price min"
+                      value={priceMin}
+                      onChange={handlePriceMinChange}
+                    />
+
+                    <div className="btn-area--half">
+                      <button className="btn--secondry btn--half" type="submit" disabled={disabled}>
+                        Search
+                      </button>
+
+                      <button className="btn--primary btn--half" onClick={handleClose}>
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
                 </div>
-
-                <form onSubmit={handleSearch} className="form">
-                  <input
-                    type="text"
-                    placeholder="Drink Name"
-                    value={drink}
-                    onChange={handleDrinkChange}
-                  />
-
-                  <div className="select-container">
-                    <select value={drinkCategory} onChange={handleDrinkCategoryChange}>
-                      <option value="">Select Drink Category</option>
-                      {drinkCategories.map(category => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                  </select>
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Place Name"
-                    value={place}
-                    onChange={handlePlaceChange}
-                  />
-
-                  <div className="select-container">
-                    <select value={placeCategory} onChange={handlePlaceCategoryChange}>
-                      <option value="">Select Place Category</option>
-                      {placeCategories.map(category => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <input
-                    type="number"
-                    placeholder="Price max"
-                    value={priceMax}
-                    onChange={handlePriceMaxChange}
-                  />
-
-                  <input
-                    type="number"
-                    placeholder="Price min"
-                    value={priceMin}
-                    onChange={handlePriceMinChange}
-                  />
-
-                  <div className="btn-area--half">
-                    <button className="btn--secondary btn--half" type="submit" disabled={disabled}>
-                      Search
-                    </button>
-
-                    <button className="btn--primary btn--half" onClick={handleClose}>
-                      Cancel
-                    </button>
-                  </div>
-                </form>
               </div>
             ) : null}
 

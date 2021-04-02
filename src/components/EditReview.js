@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { db, storage } from '../firebase/index'
-import { Form, Button, Alert } from 'react-bootstrap'
-import { SelectInput, TextInput } from './UIkit'
+import { Form, Alert } from 'react-bootstrap'
 import drinkCategories from '../lib/drinkCategories'
 import ReactStars from 'react-rating-stars-component'
 import { useHistory } from 'react-router-dom'
 
-
-
 export default function EditReview() {
-  const [review, setReview] = useState("")
-  const [drinkName, setDrinkName] = useState("")
-  const [drinkCategory, setDrinkCategory] = useState("")
+  const [review, setReview] = useState('')
+  const [drinkName, setDrinkName] = useState('')
+  const [drinkCategory, setDrinkCategory] = useState('')
   const [price, setPrice] = useState()
   const [rating, setRating] = useState()
   const [comment, setComment] = useState('')
@@ -30,7 +27,7 @@ export default function EditReview() {
       setDrinkName(doc.data().drink_name)
       setDrinkCategory(doc.data().drink_category)
       setPrice(doc.data().price)
-      console.log(doc.data().rating)
+      // console.log(doc.data().rating)
       setRating(doc.data().rating)
       setComment(doc.data().comment)
       storage
@@ -42,10 +39,12 @@ export default function EditReview() {
     })
   }, [])
 
-
-  const inputDrinkName = useCallback((event) => {
-    setDrinkName(event.target.value)
-  }, [setDrinkName]);
+  const inputDrinkName = useCallback(
+    event => {
+      setDrinkName(event.target.value)
+    },
+    [setDrinkName]
+  )
 
   const inputDrinkCategory = useCallback(
     event => {
@@ -60,8 +59,6 @@ export default function EditReview() {
     },
     [setPrice]
   )
-
-
 
   const inputRating = useCallback(
     event => {
@@ -129,7 +126,6 @@ export default function EditReview() {
     Promise.all(promises)
       .then(() => {
         setMessage('Review was successfully updated')
-
       })
       .catch(() => {
         setError('Failed to update review')
@@ -142,41 +138,43 @@ export default function EditReview() {
     setPhotoURL(window.URL.createObjectURL(files[0]))
   }
 
-    function handleDelete() {
-      if (window.confirm('Are you Sure to Delete This Review?')){
-    db.collection('reviews').doc(review_id).delete().then(() => {
-        console.log("Document successfully deleted!");
-    }).catch((error) => {
-        console.error("Error removing document: ", error);
-    });
-    setDrinkName('')
-    setDrinkCategory('')
-    setPrice('')
-    setRating('')
-    setComment('')
-    setPhotoURL('')
+  function handleDelete() {
+    if (window.confirm('Are you Sure to Delete This Review?')) {
+      db.collection('reviews')
+        .doc(review_id)
+        .delete()
+        .then(() => {
+          console.log('Document successfully deleted!')
+        })
+        .catch(error => {
+          console.error('Error removing document: ', error)
+        })
+      setDrinkName('')
+      setDrinkCategory('')
+      setPrice('')
+      setRating('')
+      setComment('')
+      setPhotoURL('')
 
-    const promises = []
-    setError("")
-    setMessage("")
-    Promise.all(promises).then(() => {
-      setMessage('Review was successfully deleted')
-      setTimeout(()=>history.push("/"),1500)
-
-    }).catch(() => {
-      setError('Failed to delete review')
-    })
-  }
+      const promises = []
+      setError('')
+      setMessage('')
+      Promise.all(promises)
+        .then(() => {
+          setMessage('Review was successfully deleted')
+          setTimeout(() => history.push('/'), 1500)
+        })
+        .catch(() => {
+          setError('Failed to delete review')
+        })
+    }
   }
 
   return (
     <>
       <Form className="form edit-review" onSubmit={updateReview}>
-
         <input
-          fullWidth={true}
           label="Drink name"
-          multiline={false}
           required={true}
           rows={1}
           value={drinkName}
@@ -197,25 +195,23 @@ export default function EditReview() {
         </div>
 
         <input
-          fullWidth={true}
-          label={'Price'}
+          label="Price"
           max="99999"
-          multiline={false}
           required={true}
           rows={1}
           value={price}
-          type={'number'}
+          type="number"
           onChange={inputPrice}
           placeholder="Price"
         />
 
-          <ReactStars
-         count={5}
-         value={rating}
-         onChange={inputRating}
-         size={24}
-         activeColor="#de9e48" />
-
+        <ReactStars
+          count={5}
+          value={rating}
+          onChange={inputRating}
+          size={24}
+          activeColor="#de9e48"
+        />
 
         <textarea
           className="comment"
@@ -234,17 +230,13 @@ export default function EditReview() {
         </div>
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
-        <div className="button-wrapper btn-area--half">
-          <Button className="w-100 submit btn--secondary btn--half" type="submit" variant="primary">
+        <div className="btn-area--half">
+          <button className="btn--secondary btn--half" type="submit">
             Update
-          </Button>
-          <Button
-            className="w-100 submit btn--primary btn--half" 
-            // type="submit"
-            variant="primary"
-            label={"Delete"} onClick={() => handleDelete()}
-          >Delete
-          </Button>
+          </button>
+          <button className="btn--primary btn--half" label="Delete" onClick={() => handleDelete()}>
+            Delete
+          </button>
         </div>
       </Form>
     </>
