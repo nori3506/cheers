@@ -36,15 +36,15 @@ export default function Footer() {
               </Link>
             </li>
 
-            <li className="icon-button--create-review">
+            <li className="icon-btn--create-review">
               <Link to="/CreateReview">
                 <img src={addReviewIcon} alt="Link to Add Review" />
               </Link>
             </li>
 
-            <li className="icon-button--profile-menu">
+            <li className="icon-btn--profile-menu">
               <ul className={menuOpen ? 'profile-menu profile-menu-open' : 'profile-menu'}>
-                <li onClick={handleClick} className="icon-button--portrait">
+                <li onClick={handleClick} className="icon-btn--portrait">
                   {menuOpen ? (
                     <img src={addReviewIcon} alt="close sub menu" className="icon--close" />
                   ) : (
@@ -56,13 +56,13 @@ export default function Footer() {
                   )}
                 </li>
 
-                <li className="icon-button--profile">
+                <li className="icon-btn--profile">
                   <Link to="/profile" className="nav-link--profile">
                     <img src={profileIcon} alt="Link to Profile" />
                   </Link>
                 </li>
 
-                <li className="icon-button--logout">
+                <li className="icon-btn--logout">
                   <Logout setMenuOpen={setMenuOpen} />
                 </li>
               </ul>

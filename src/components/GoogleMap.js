@@ -6,6 +6,7 @@ import barIcon from '../assets/icons/beer.svg'
 import restaurantIcon from '../assets/icons/restaurant.svg'
 import storeIcon from '../assets/icons/store.svg'
 import markerIcon from '../assets/icons/pin.svg'
+import getCurrentLocationIcon from '../assets/icons/get-current-location.svg'
 
 const containerStyle = {
   width: '100%',
@@ -71,9 +72,6 @@ function Map(props) {
 
   return (
     <>
-      <button className="btn--primary" onClick={getCurrentLocation} disabled={disabled}>
-        {disabled ? 'Getting Current Location...' : 'Get Current Location'}
-      </button>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -82,6 +80,15 @@ function Map(props) {
         onLoad={handleLoad}
         onBoundsChanged={handleBoundsChange}
       >
+        <div
+          onClick={getCurrentLocation}
+          disabled={disabled}
+          className={
+            disabled ? 'icon-btn--get-current-location--disabled' : 'icon-btn--get-current-location'
+          }
+        >
+          <img src={getCurrentLocationIcon} alt="" />
+        </div>
         {shopsOnMap.map(shop => (
           <Marker
             key={shop.name}

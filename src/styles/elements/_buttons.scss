@@ -4,6 +4,7 @@ button {
   border-radius: 5px;
   font-size: 18px;
   text-transform: capitalize;
+  cursor: pointer;
 
   &:focus {
     outline: none;
@@ -55,12 +56,31 @@ button {
   display: block;
 }
 
+.icon-btn--get-current-location {
+  position: absolute;
+  top: 16px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+
+  img {
+    width: 28px;
+  }
+}
+
 .icon-btn--square {
-  position: relative;
   width: 28px;
   height: 28px;
+  position: relative;
   border: 1px solid $accent-color;
   background-color: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
 
   img {
     position: absolute;
@@ -71,6 +91,30 @@ button {
   }
 }
 
+.icon-btn--get-current-location--disabled {
+  position: absolute;
+  top: 16px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+
+  img {
+    width: 28px;
+    animation: pulse 1s ease-in-out infinite;
+  }
+}
+
 .icon--close {
   transform: translate(-50%, -50%) rotate(45deg) !important;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.2);
+  }
 }
