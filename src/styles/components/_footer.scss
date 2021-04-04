@@ -44,7 +44,7 @@ footer {
     transform: translate(-50%, -50%);
   }
 
-  .icon-button--create-review {
+  .icon-btn--create-review {
     background-color: white;
   }
 
@@ -54,7 +54,7 @@ footer {
   }
 
   // Profile Menu
-  .icon-button--profile-menu {
+  .icon-btn--profile-menu {
     position: relative;
 
     .profile-menu {
@@ -65,7 +65,7 @@ footer {
         transition: transform 0.3s ease-in-out;
       }
 
-      .icon-button--portrait {
+      .icon-btn--portrait {
         z-index: 1003;
 
         .icon--portrait {
@@ -74,20 +74,20 @@ footer {
         }
       }
 
-      .icon-button--profile {
+      .icon-btn--profile {
         z-index: 1002;
       }
 
-      .icon-button--logout {
+      .icon-btn--logout {
         z-index: 1001;
       }
     }
 
-    .profile-menu-open .icon-button--profile {
+    .profile-menu-open .icon-btn--profile {
       transform: translateY(calc(-56px - 1.5rem));
     }
 
-    .profile-menu-open .icon-button--logout {
+    .profile-menu-open .icon-btn--logout {
       transform: translateY(calc(-112px - 3rem));
     }
   }

@@ -689,7 +689,7 @@ footer img {
           transform: translate(-50%, -50%);
 }
 
-footer .icon-button--create-review {
+footer .icon-btn--create-review {
   background-color: white;
 }
 
@@ -699,11 +699,11 @@ footer .nav-link--profile {
           transform: translate(0, -2px);
 }
 
-footer .icon-button--profile-menu {
+footer .icon-btn--profile-menu {
   position: relative;
 }
 
-footer .icon-button--profile-menu .profile-menu li {
+footer .icon-btn--profile-menu .profile-menu li {
   position: absolute;
   top: -2px;
   left: -2px;
@@ -713,29 +713,29 @@ footer .icon-button--profile-menu .profile-menu li {
   transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
 }
 
-footer .icon-button--profile-menu .profile-menu .icon-button--portrait {
+footer .icon-btn--profile-menu .profile-menu .icon-btn--portrait {
   z-index: 1003;
 }
 
-footer .icon-button--profile-menu .profile-menu .icon-button--portrait .icon--portrait {
+footer .icon-btn--profile-menu .profile-menu .icon-btn--portrait .icon--portrait {
   width: 100%;
   border-radius: 50%;
 }
 
-footer .icon-button--profile-menu .profile-menu .icon-button--profile {
+footer .icon-btn--profile-menu .profile-menu .icon-btn--profile {
   z-index: 1002;
 }
 
-footer .icon-button--profile-menu .profile-menu .icon-button--logout {
+footer .icon-btn--profile-menu .profile-menu .icon-btn--logout {
   z-index: 1001;
 }
 
-footer .icon-button--profile-menu .profile-menu-open .icon-button--profile {
+footer .icon-btn--profile-menu .profile-menu-open .icon-btn--profile {
   -webkit-transform: translateY(calc(-56px - 1.5rem));
           transform: translateY(calc(-56px - 1.5rem));
 }
 
-footer .icon-button--profile-menu .profile-menu-open .icon-button--logout {
+footer .icon-btn--profile-menu .profile-menu-open .icon-btn--logout {
   -webkit-transform: translateY(calc(-112px - 3rem));
           transform: translateY(calc(-112px - 3rem));
 }
@@ -1470,6 +1470,7 @@ button {
   border-radius: 5px;
   font-size: 18px;
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 button:focus {
@@ -1509,7 +1510,7 @@ button:focus {
 .btn-area--half {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr  1fr;
+  -ms-grid-columns: (1fr)[2];
       grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
@@ -1523,12 +1524,35 @@ button:focus {
   display: block;
 }
 
+.icon-btn--get-current-location {
+  position: absolute;
+  top: 16px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.icon-btn--get-current-location img {
+  width: 28px;
+}
+
 .icon-btn--square {
-  position: relative;
   width: 28px;
   height: 28px;
+  position: relative;
   border: 1px solid #de9e48;
   background-color: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
 }
 
 .icon-btn--square img {
@@ -1540,9 +1564,46 @@ button:focus {
           transform: translate(-50%, -50%);
 }
 
+.icon-btn--get-current-location--disabled {
+  position: absolute;
+  top: 16px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.icon-btn--get-current-location--disabled img {
+  width: 28px;
+  -webkit-animation: pulse 1s ease-in-out infinite;
+          animation: pulse 1s ease-in-out infinite;
+}
+
 .icon--close {
   -webkit-transform: translate(-50%, -50%) rotate(45deg) !important;
           transform: translate(-50%, -50%) rotate(45deg) !important;
+}
+
+@-webkit-keyframes pulse {
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
 }
 
 /* 3.2. Signup ============== */

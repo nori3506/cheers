@@ -6,10 +6,12 @@ import barIcon from '../assets/icons/beer.svg'
 import restaurantIcon from '../assets/icons/restaurant.svg'
 import storeIcon from '../assets/icons/store.svg'
 import markerIcon from '../assets/icons/pin.svg'
+import getCurrentLocationIcon from '../assets/icons/get-current-location.svg'
 
 const containerStyle = {
   width: '100%',
   height: '250px',
+  marginTop: '1rem',
   borderRadius: '5px',
 }
 
@@ -25,11 +27,11 @@ const latLngVan = { lat: 49.282729, lng: -123.120738 }
 function Map(props) {
   const { shops } = props
 
-  const [loading, setLoading] = useState(true)
   const [center, setCenter] = useState(latLngVan)
   const [bounds, setBounds] = useState(null)
   const [shopsOnMap, setShopsOnMap] = useState(shops)
   const [selected, setSelected] = useState(null)
+  const [disabled, setDisabled] = useState(false)
 
   const mapRef = useRef()
 
@@ -37,6 +39,23 @@ function Map(props) {
 
   const handleBoundsChange = () => {
     if (mapRef.current) setBounds(mapRef.current.getBounds())
+  }
+
+  const getCurrentLocation = () => {
+    setDisabled(true)
+
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        setCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
+        setDisabled(false)
+      },
+      () => {
+        setCenter(latLngVan)
+        setDisabled(false)
+        console.log('failed to get current location')
+      },
+      { timeout: 5000 }
+    )
   }
 
   useEffect(() => {
@@ -51,25 +70,8 @@ function Map(props) {
     }
   }, [shops, bounds])
 
-  useEffect(() => {
-    console.log('getting current location')
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        setCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
-        setLoading(false)
-      },
-      () => {
-        setCenter(latLngVan)
-        setLoading(false)
-        console.log('failed to get current location')
-      },
-      { timeout: 5000 }
-    )
-  }, [])
-
   return (
     <>
-      {loading ? <Loading /> : null}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -78,6 +80,15 @@ function Map(props) {
         onLoad={handleLoad}
         onBoundsChanged={handleBoundsChange}
       >
+        <div
+          onClick={getCurrentLocation}
+          disabled={disabled}
+          className={
+            disabled ? 'icon-btn--get-current-location--disabled' : 'icon-btn--get-current-location'
+          }
+        >
+          <img src={getCurrentLocationIcon} alt="" />
+        </div>
         {shopsOnMap.map(shop => (
           <Marker
             key={shop.name}
