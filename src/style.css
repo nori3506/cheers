@@ -1032,34 +1032,35 @@ footer .icon-btn--profile-menu .profile-menu-open .icon-btn--logout {
   margin: 0;
 }
 
-.review-wrapper .reviews-area .review-img {
+.review-wrapper .reviews-area .review-img-container {
   border-radius: 50%;
-  border: 2px solid #de9e48 !important;
+  border: 2px solid #de9e48;
   width: 50px;
   height: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  overflow: hidden;
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1 / span 1;
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / span 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  position: relative;
 }
 
-.review-wrapper .reviews-area .review-img img {
-  padding-top: 4px;
-  width: 32px;
-  height: 32px;
+.review-wrapper .reviews-area .review-img-container .review-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  -webkit-transform: translate(-50%, -42%);
+          transform: translate(-50%, -42%);
+}
+
+.review-wrapper .reviews-area .review-img-container .review-img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .review-wrapper .reviews-area .layout-grid {

@@ -13,6 +13,20 @@ const Reviews = () => {
 
   const [reviews, setReviews] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isOnline, setNetwork] = useState(window.navigator.onLine)
+
+  const updateNetwork = () => {
+    setNetwork(window.navigator.onLine)
+  }
+
+  useEffect(() => {
+    window.addEventListener('offline', updateNetwork)
+    window.addEventListener('online', updateNetwork)
+    return () => {
+      window.removeEventListener('offline', updateNetwork)
+      window.removeEventListener('online', updateNetwork)
+    }
+  })
 
   useEffect(() => {
     reviewsRef
@@ -28,7 +42,10 @@ const Reviews = () => {
               .then(shopDoc => {
                 const shop = shopDoc.data()
 
-                if (newReview.fullPath) {
+                if (!isOnline || !newReview.fullPath) {
+                  setReviews(reviews => [...reviews, { ...newReview, shop, img: defDrink }])
+                  setIsLoading(false)
+                } else {
                   storage
                     .ref(newReview.fullPath)
                     .getDownloadURL()
@@ -38,15 +55,9 @@ const Reviews = () => {
                     })
                     .catch(err => {
                       console.log('Error downloading file:', err)
-                      setReviews(reviews => [
-                        ...reviews,
-                        { ...newReview, shop, img: 'doesNotExist' },
-                      ])
+                      setReviews(reviews => [...reviews, { ...newReview, shop, img: defDrink }])
                       setIsLoading(false)
                     })
-                } else {
-                  setReviews(reviews => [...reviews, { ...newReview, shop, img: 'doesNotExist' }])
-                  setIsLoading(false)
                 }
               })
               .catch(err => {
@@ -94,13 +105,13 @@ const Reviews = () => {
   const reviewItems = reviews.map((review, i) => {
     return (
       <div className="reviews-background reviews-area profile-review" key={review.ref.id}>
-        {review.img !== 'doesNotExist' ? (
-          <img src={review.img} className="review-img" alt="drink" />
-        ) : (
-          <div className="review-img">
-            <img src={defDrink} alt="drink default icon" />
-          </div>
-        )}
+        <div className="review-img-container">
+          <img
+            src={review.img}
+            className={review.img === defDrink ? 'review-icon' : 'review-img'}
+            alt="drink"
+          />
+        </div>
 
         <div className="layout-grid">
           <h2 className="u-text-small">
