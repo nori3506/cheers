@@ -122,9 +122,8 @@
         justify-content: flex-end;
         gap: 0.3rem;
 
-        button:nth-of-type(2) {
-          background-color: $main-color;
-          color: white;
+        .btn--tertiary {
+          border: 2px solid $accent-color;
         } 
       }
     }

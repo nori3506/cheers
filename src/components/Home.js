@@ -221,7 +221,7 @@ export default function Home() {
                     />
 
                     <div className="btn-area--half">
-                      <button className="btn--secondry btn--half" type="submit" disabled={disabled}>
+                      <button className="btn--secondary btn--half" type="submit" disabled={disabled}>
                         Search
                       </button>
 
