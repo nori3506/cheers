@@ -715,6 +715,7 @@ footer .icon-btn--profile-menu .profile-menu li {
 
 footer .icon-btn--profile-menu .profile-menu .icon-btn--portrait {
   z-index: 1003;
+  overflow: hidden;
 }
 
 footer .icon-btn--profile-menu .profile-menu .icon-btn--portrait .icon--portrait {
@@ -1450,16 +1451,14 @@ footer .icon-btn--profile-menu .profile-menu-open .icon-btn--logout {
 }
 
 /* 2.10. Loading ============= */
-.spinner-grid {
+.spinner-grid-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  padding-top: 3rem;
 }
 
 /* 3 Elements ============= */
