@@ -70,3 +70,10 @@ self.addEventListener('message', event => {
 })
 
 // Any other custom service worker logic can go here.
+registerRoute(
+  ({ url }) =>
+    url.origin === 'https://fonts.googleapis.com' ||
+    url.origin === 'https://fonts.gstatic.com' ||
+    url.origin === 'https://maps.googleapis.com',
+  new StaleWhileRevalidate()
+)

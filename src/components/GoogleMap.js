@@ -25,7 +25,7 @@ const zoom = 11
 const latLngVan = { lat: 49.282729, lng: -123.120738 }
 
 function Map(props) {
-  const { shops } = props
+  const { shops, isLoading } = props
 
   const [center, setCenter] = useState(latLngVan)
   const [bounds, setBounds] = useState(null)
@@ -69,6 +69,8 @@ function Map(props) {
       setShopsOnMap(newShopsOnMap)
     }
   }, [shops, bounds])
+
+  if (isLoading) return <Loading />
 
   return (
     <>

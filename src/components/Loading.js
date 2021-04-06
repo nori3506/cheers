@@ -3,11 +3,11 @@ import { SpinnerCircular } from 'spinners-react'
 
 export default function Loading() {
   return (
-    <div className="spinner-grid overlay">
+    <div className="spinner-grid-wrapper">
       <SpinnerCircular
-        size={70}
-        thickness={130}
-        speed={117}
+        size={50}
+        thickness={180}
+        speed={150}
         color="#de9e48"
         secondaryColor="black"
       />

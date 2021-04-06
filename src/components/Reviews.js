@@ -1,91 +1,106 @@
 import React, { useState, useEffect } from 'react'
-import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
-import { db } from '../firebase/index'
-import firebase from 'firebase/app'
+import { useAuth } from '../contexts/AuthContext'
+import { db, storage } from '../firebase/index'
+import Loading from './Loading'
 import defDrink from '../assets/icons/def-drink.svg'
+
 const reviewsRef = db.collection('reviews')
-const storage = firebase.storage()
+const shopsRef = db.collection('shops')
 
 const Reviews = () => {
-  const [reviews, setReviews] = useState([])
   const { currentUser } = useAuth()
 
+  const [reviews, setReviews] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
-    reviewsRef.get().then(snapshot => {
-      snapshot.forEach(review => {
-        if (review?.data()?.user?.id == currentUser.uid) {
-          db.collection('shops')
-            .doc(review.data().shop.id)
-            .get()
-            .then(snapshot => {
-              if (review.data().fullPath) {
-                var pathReference = storage.ref(review.data().fullPath)
-                pathReference.getDownloadURL().then(url => {
-                  const shop = snapshot.data()
-                  setReviews(reviews => [
-                    ...reviews,
-                    { ref: review.ref, ...review.data(), shop: shop, img: url },
-                  ])
-                })
-              } else {
-                const shop = snapshot.data()
-                setReviews(reviews => [
-                  ...reviews,
-                  { ref: review.ref, ...review.data(), shop: shop, img: 'doesNotExist' },
-                ])
-              }
-            })
-        }
+    reviewsRef
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(reviewDoc => {
+          const newReview = { ref: reviewDoc.ref, ...reviewDoc.data() }
+
+          if (newReview.user.id === currentUser.uid) {
+            shopsRef
+              .doc(newReview.shop.id)
+              .get()
+              .then(shopDoc => {
+                const shop = shopDoc.data()
+
+                if (newReview.fullPath) {
+                  storage
+                    .ref(newReview.fullPath)
+                    .getDownloadURL()
+                    .then(url => {
+                      setReviews(reviews => [...reviews, { ...newReview, shop, img: url }])
+                      setIsLoading(false)
+                    })
+                    .catch(err => {
+                      console.log('Error downloading file:', err)
+                      setReviews(reviews => [
+                        ...reviews,
+                        { ...newReview, shop, img: 'doesNotExist' },
+                      ])
+                      setIsLoading(false)
+                    })
+                } else {
+                  setReviews(reviews => [...reviews, { ...newReview, shop, img: 'doesNotExist' }])
+                  setIsLoading(false)
+                }
+              })
+              .catch(err => {
+                console.log('Error getting document:', err)
+                setIsLoading(false)
+              })
+          }
+        })
       })
-    })
+      .catch(err => {
+        console.log('Error getting collection:', err)
+        setIsLoading(false)
+      })
   }, [])
 
   function handleDelete(review) {
     const promises = []
     if (window.confirm('Are you Sure to Delete This Review?')) {
-      db.collection('reviews')
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            if (doc.id === review.ref.id) {
-              promises.push(db.collection('reviews').doc(doc.id).delete())
-              Promise.all(promises).then(() => {
-                const newReviews = reviews.filter(review => review.ref.id !== doc.id)
-                setReviews(newReviews)
-                const shopDocRef = db.collection('shops').doc(doc.data().shop.id)
-                let query = db.collection('reviews').where('shop', '==', shopDocRef)
-                query
-                  .get()
-                  .then(querySnapshot => {
-                    if (querySnapshot.empty) {
-                      shopDocRef.delete()
-                    }
-                  })
-                  .catch(function (error) {
-                    console.log('Error getting documents: ', error)
-                  })
-              })
-            }
-          })
+      reviewsRef.get().then(snapshot => {
+        snapshot.forEach(doc => {
+          if (doc.id === review.ref.id) {
+            promises.push(reviewsRef.doc(doc.id).delete())
+            Promise.all(promises).then(() => {
+              const newReviews = reviews.filter(review => review.ref.id !== doc.id)
+              setReviews(newReviews)
+              const shopDocRef = shopsRef.doc(doc.data().shop.id)
+              let query = reviewsRef.where('shop', '==', shopDocRef)
+              query
+                .get()
+                .then(querySnapshot => {
+                  if (querySnapshot.empty) {
+                    shopDocRef.delete()
+                  }
+                })
+                .catch(function (error) {
+                  console.log('Error getting documents: ', error)
+                })
+            })
+          }
         })
+      })
     }
   }
 
   const reviewItems = reviews.map((review, i) => {
     return (
       <div className="reviews-background reviews-area profile-review" key={review.ref.id}>
-        {(() => {
-          if (review.img != 'doesNotExist') {
-            return <img src={review.img} className="review-img" />
-          } else {
-            return (
-              <div className="review-img">
-                <img src={defDrink} />
-              </div>
-            )
-          }
-        })()}
+        {review.img !== 'doesNotExist' ? (
+          <img src={review.img} className="review-img" alt="drink" />
+        ) : (
+          <div className="review-img">
+            <img src={defDrink} alt="drink default icon" />
+          </div>
+        )}
 
         <div className="layout-grid">
           <h2 className="u-text-small">
@@ -94,24 +109,26 @@ const Reviews = () => {
           </h2>
           <p className="category">{review.drink_category}</p>
           <p className="price">{review.price} CAD</p>
-          {(() => {
-            var rating = review.rating
-            var star = ''
-            var hollowStars = ''
-            for (var i = 0; i < rating; i++) {
+          {() => {
+            const rating = review.rating
+            const noRating = 5 - rating
+            let star = ''
+            let hollowStars = ''
+
+            for (let i = 0; i < rating; i++) {
               star = star + '★'
             }
-            var noRating = 5 - rating
-            for (var i = 0; i < noRating; i++) {
+            for (let i = 0; i < noRating; i++) {
               hollowStars = hollowStars + '☆'
             }
+
             return (
               <p className="rating">
                 {star}
                 {hollowStars}
               </p>
             )
-          })()}
+          }}
         </div>
 
         <p className="comment">
@@ -133,6 +150,9 @@ const Reviews = () => {
       </div>
     )
   })
+
+  if (isLoading) return <Loading />
+
   if (reviewItems.length) {
     return <div className="review-wrapper">{reviewItems}</div>
   } else {

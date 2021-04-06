@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import Map from './GoogleMap'
-import Header from './Header'
-import Footer from './Footer'
-import Loading from './Loading'
-import Login from './Login'
 import { db } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
+import Map from './GoogleMap'
+import Header from './Header'
+import Footer from './Footer'
+import Login from './Login'
 import searchIcon from '../assets/icons/thick-borders.svg'
 import closeIcon from '../assets/icons/add-review.svg'
 
 const shopsRef = db.collection('shops')
 const reviewsRef = db.collection('reviews')
+const usersRef = db.collection('users')
 
 export default function Home() {
   const { currentUser } = useAuth()
@@ -27,7 +27,7 @@ export default function Home() {
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [disabled, setDisabled] = useState(true)
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleModalOpen = () => setModalOpen(true)
   const handleClose = () => setModalOpen(false)
@@ -41,7 +41,7 @@ export default function Home() {
     e.preventDefault()
     setModalOpen(false)
     setDisabled(true)
-    setLoading(true)
+    setIsLoading(true)
     setReviews([])
     setShops([])
 
@@ -105,12 +105,12 @@ export default function Home() {
         setReviews(reviewsMatchShop)
         setShops(shopsMatchReview)
         setDisabled(false)
-        setLoading(false)
+        setIsLoading(false)
       })
       .catch(error => {
         console.log('Failed to search: ', error)
         setDisabled(false)
-        setLoading(false)
+        setIsLoading(false)
       })
   }
 
@@ -118,7 +118,7 @@ export default function Home() {
     let newReviews = []
     let newShops = []
 
-    Promise.all([reviewsRef.get(), shopsRef.get()]).then(results => {
+    Promise.all([reviewsRef.get(), shopsRef.get(), usersRef.get()]).then(results => {
       results[0].forEach(doc => newReviews.push({ ref: doc.ref, ...doc.data() }))
       results[1].forEach(doc => newShops.push({ ref: doc.ref, ...doc.data() }))
 
@@ -137,14 +137,13 @@ export default function Home() {
       setReviews(newReviews)
       setShops(shopsWithReviewNum)
       setDisabled(false)
-      setLoading(false)
+      setIsLoading(false)
     })
   }, [currentUser])
 
   if (currentUser) {
     return (
       <>
-        {loading ? <Loading /> : null}
         <Header />
         <div className="container wrapper">
           <div className="home">
@@ -235,7 +234,7 @@ export default function Home() {
               </div>
             ) : null}
 
-            <Map shops={shops} />
+            <Map shops={shops} isLoading={isLoading} />
           </div>
         </div>
         <Footer />
