@@ -147,7 +147,7 @@ const DisplayReview = () => {
           <h2 className="u-text-small">{review.drink_name}</h2>
           <p className="category">{review.drink_category}</p>
           <p className="price">{review.price} CAD</p>
-          {() => {
+          {(() => {
             const rating = review.rating
             const noRating = 5 - rating
             let star = ''
@@ -166,7 +166,7 @@ const DisplayReview = () => {
                 {hollowStars}
               </p>
             )
-          }}
+          })()}
         </div>
 
         <p className="comment">
