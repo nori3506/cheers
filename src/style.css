@@ -401,6 +401,8 @@ img {
 
 .wrapper {
   padding: 0 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .wrapper--narrow {
@@ -408,8 +410,6 @@ img {
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
   padding-top: 50px;
   padding-bottom: 84px;
 }
