@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import logo from '../assets/icons/logo.svg'
 
 export default function Login() {
-  const nameRef = useRef()
+  // const nameRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
@@ -34,7 +34,7 @@ export default function Login() {
           <Card.Body id="login">
             <h2 className="text-center mb-4 visually-hidden">Log In</h2>
             <div className="logo-wrapper">
-              <img src={logo} className="logo-img" />
+              <img src={logo} className="logo-img" alt='logo-img'/>
             </div>
             <Form onSubmit={hanleSubmit}>
               {error && <Alert variant="danger">{error}</Alert>}

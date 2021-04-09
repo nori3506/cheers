@@ -140,9 +140,9 @@ export default function CreateReview() {
     setComment(event.target.value)
   }
 
-  const inputImage = event => {
-    setImage(event.target.files[0])
-  }
+  // const inputImage = event => {
+  //   setImage(event.target.files[0])
+  // }
 
   const inputDrinkCategory = event => {
     setDrinkCategory(event.target.value)
