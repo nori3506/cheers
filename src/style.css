@@ -552,7 +552,7 @@ img {
 
 .login-wrapper form .btn--primary {
   background-color: #fdf9df;
-  color: #372C2E;
+  color: #372c2e;
   border-color: #de9e48;
 }
 
@@ -590,10 +590,7 @@ img {
 }
 
 .w-100.text-center.mt-2 p:nth-of-type(2) a {
-  color: white;
-  text-decoration: underline;
-  -webkit-text-decoration-color: #de9e48;
-          text-decoration-color: #de9e48;
+  color: #de9e48;
 }
 
 /* 2.2. Signup ============== */

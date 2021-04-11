@@ -45,26 +45,25 @@
   }
 }
 
-
 // Onlu Login
 .login-wrapper {
   #login {
     row-gap: 1rem;
   }
-    form {
-        .btn--primary {
-            background-color: $bg-light-color;
-            color: #372C2E;
-            border-color: $accent-color;
-        }
+  form {
+    .btn--primary {
+      background-color: $bg-light-color;
+      color: #372c2e;
+      border-color: $accent-color;
     }
+  }
 
-    .alert-danger {
-      text-align: center;
-    }
+  .alert-danger {
+    text-align: center;
+  }
 }
 
-// Link to log-in/signup page 
+// Link to log-in/signup page
 .w-100.text-center.mt-2 {
   margin-top: 0.7rem;
   display: flex;
@@ -84,9 +83,7 @@
     margin: 0.4rem 0;
 
     a {
-      color: white;
-      text-decoration: underline;
-      text-decoration-color: $accent-color;
+      color: $accent-color;
     }
   }
 }
