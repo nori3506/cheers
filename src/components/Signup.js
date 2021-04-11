@@ -38,7 +38,7 @@ export default function Signup() {
           <Card.Body id="login">
             <h2 className="text-center mb-4 visually-hidden">Sign Up</h2>
             <div className="logo-wrapper">
-              <img src={logo} className="logo-img" />
+              <img src={logo} className="logo-img" alt='logo-img'/>
             </div>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={hanleSubmit}>

@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Form, Button, Alert, Tabs, Tab } from 'react-bootstrap'
+import { Form, Alert, Tabs, Tab } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { db, storage } from '../firebase/index'
 import { SelectInput, TextInput } from './UIkit'
@@ -145,13 +145,13 @@ export default function Profile() {
         .doc(currentUser.uid)
         .get()
         .then(doc => {
-          if (doc.data().age != age) {
+          if (doc.data().age !== age) {
             db.collection('users').doc(currentUser.uid).update({ age: age })
           }
-          if (doc.data().gender != gender) {
+          if (doc.data().gender !== gender) {
             db.collection('users').doc(currentUser.uid).update({ gender: gender })
           }
-          if (doc.data().favDrink != favDrink) {
+          if (doc.data().favDrink !== favDrink) {
             db.collection('users').doc(currentUser.uid).update({ favDrink: favDrink })
           }
         })
@@ -204,17 +204,17 @@ export default function Profile() {
       <Tabs defaultActiveKey="profile">
         <Tab eventKey="profile" title="Profile">
           <Form className="edit-profile" onSubmit={updateUserProfile}>
-            
+
             {(() =>{
                if(photoURL !== "") {
-                return (                
-                  <img src={photoURL} className="profile-img" />
+                return (
+                  <img src={photoURL} className="profile-img" alt='profile-img' />
                 )
                }else {
-                 // if there is no img, default img 
+                 // if there is no img, default img
                  return (
                   <div className="def-profile-img">
-                 <img src={defProfile}/>
+                 <img src={defProfile} alt='default-img'/>
                  </div>
                  )
                }

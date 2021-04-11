@@ -6,7 +6,6 @@ import ReactStars from 'react-rating-stars-component'
 import { useHistory } from 'react-router-dom'
 
 export default function EditReview() {
-  const [review, setReview] = useState('')
   const [drinkName, setDrinkName] = useState('')
   const [drinkCategory, setDrinkCategory] = useState('')
   const [price, setPrice] = useState()
@@ -23,7 +22,6 @@ export default function EditReview() {
     const reviewRef = db.collection('reviews').doc(review_id)
     reviewRef.get().then(doc => {
       const imageFulPath = doc.data().fullPath
-      setReview(doc.data())
       setDrinkName(doc.data().drink_name)
       setDrinkCategory(doc.data().drink_category)
       setPrice(doc.data().price)
@@ -105,19 +103,19 @@ export default function EditReview() {
         .doc(review_id)
         .get()
         .then(doc => {
-          if (doc.data().drink_name != drinkName) {
+          if (doc.data().drink_name !== drinkName) {
             db.collection('reviews').doc(review_id).update({ drink_name: drinkName })
           }
-          if (doc.data().drinkcategory != drinkCategory) {
+          if (doc.data().drinkcategory !== drinkCategory) {
             db.collection('reviews').doc(review_id).update({ drinkcategory: drinkCategory })
           }
-          if (doc.data().price != price) {
+          if (doc.data().price !== price) {
             db.collection('reviews').doc(review_id).update({ price: price })
           }
-          if (doc.data().rating != rating) {
+          if (doc.data().rating !== rating) {
             db.collection('reviews').doc(review_id).update({ rating: rating })
           }
-          if (doc.data().comment != comment) {
+          if (doc.data().comment !== comment) {
             db.collection('reviews').doc(review_id).update({ comment: comment })
           }
         })
@@ -226,7 +224,7 @@ export default function EditReview() {
 
         <div className="image_wrapper">
           <input type={'file'} onChange={handleImageChange} />
-          <img src={photoURL} className="w-100" />
+          <img src={photoURL} className="w-100" alt='drinkphoto' />
         </div>
         {message && <Alert variant="success">{message}</Alert>}
         {error && <Alert variant="danger">{error}</Alert>}
