@@ -5,7 +5,6 @@ import { Link, useHistory } from 'react-router-dom'
 import logo from '../assets/icons/logo.svg'
 
 export default function Login() {
-  // const nameRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
