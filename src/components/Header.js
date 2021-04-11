@@ -3,12 +3,11 @@ import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import backArrowIcon from '../assets/icons/back-arrow.svg'
 
-export default function Header({ title }) {
+const Header = () => {
   const { currentUser } = useAuth()
-
-  let history = useHistory()
-  let location = useLocation()
-  let pageTitle
+  const history = useHistory()
+  const location = useLocation()
+  let pageTitle = ''
 
   switch (location.pathname) {
     case '/':
@@ -25,13 +24,11 @@ export default function Header({ title }) {
         pageTitle = 'Location'
       } else if (location.pathname.includes('/review')) {
         pageTitle = 'Edit a review'
-      } else {
-        pageTitle = ''
       }
   }
 
-  return (
-    currentUser && (
+  if (currentUser) {
+    return (
       <header>
         <div className="wrapper">
           <Link to="/" className="back-arrow">
@@ -41,5 +38,9 @@ export default function Header({ title }) {
         <h1 className="page-title">{pageTitle}</h1>
       </header>
     )
-  )
+  } else {
+    return null
+  }
 }
+
+export default Header
