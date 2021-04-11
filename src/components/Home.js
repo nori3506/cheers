@@ -221,12 +221,11 @@ export default function Home() {
                     />
 
                     <div className="btn-area--half">
-                      <button className="btn--secondry btn--half" type="submit" disabled={disabled}>
-                        Search
-                      </button>
-
-                      <button className="btn--primary btn--half" onClick={handleClose}>
+                      <button className="btn--secondary btn--half" onClick={handleClose}>
                         Cancel
+                      </button>
+                      <button className="btn--primary btn--half" type="submit" disabled={disabled}>
+                        Search
                       </button>
                     </div>
                   </form>

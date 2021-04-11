@@ -5,22 +5,25 @@ import { Alert } from 'react-bootstrap'
 import { db, storage } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 
+const reviewsRef = db.collection('reviews')
+
 export default function EditReview() {
+  const history = useHistory()
+
   const [review, setReview] = useState('')
   const [drinkName, setDrinkName] = useState('')
   const [drinkCategory, setDrinkCategory] = useState('')
-  const [price, setPrice] = useState()
-  const [rating, setRating] = useState()
+  const [price, setPrice] = useState(0)
+  const [rating, setRating] = useState(3)
   const [comment, setComment] = useState('')
   const [photoURL, setPhotoURL] = useState('')
   const [image, setImage] = useState(null)
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
-
-  const history = useHistory()
+  const [errMsg, setErrMsg] = useState('')
+  const [successMsg, setSuccessMsg] = useState('')
+  const [popupOpen, setPopupOpen] = useState(false)
 
   const review_id = window.location.pathname.split('/review/edit/', 2)[1]
-  const reviewRef = db.collection('reviews').doc(review_id)
+  const reviewRef = reviewsRef.doc(review_id)
 
   useEffect(() => {
     reviewRef.get().then(doc => {
@@ -56,8 +59,8 @@ export default function EditReview() {
   const handleUpdate = e => {
     e.preventDefault()
 
-    setError('')
-    setMessage('')
+    setErrMsg('')
+    setSuccessMsg('')
 
     if (image !== null) {
       const randomID = Math.random().toString(32).substring(2)
@@ -66,8 +69,12 @@ export default function EditReview() {
 
       storageRef
         .put(image)
-        .then(res => reviewRef.update({ fullPath }).catch(err => console.log(err)))
-        .catch(err => console.log('Failed to download image', err))
+        .then(res =>
+          reviewRef
+            .update({ fullPath })
+            .catch(err => console.log('Failed to update path to image', err))
+        )
+        .catch(err => console.log('Failed to upload image', err))
     }
 
     reviewRef
@@ -78,106 +85,139 @@ export default function EditReview() {
         rating,
         comment,
       })
-      .then(() => setMessage('Review is successfully updated!'))
+      .then(() => setSuccessMsg('Review is successfully updated!'))
       .catch(err => {
-        setError('Failed to update review')
+        setErrMsg('Failed to update review')
         console.log('Failed to update review: ', err)
       })
   }
 
-  const handleDelete = () => {
-    if (window.confirm('Are you sure to delete this review?')) {
-      setDrinkName('')
-      setDrinkCategory('')
-      setPrice('')
-      setRating('')
-      setComment('')
-      setPhotoURL('')
-      setError('')
-      setMessage('')
+  const handlePopupOpen = e => {
+    e.preventDefault()
+    setPopupOpen(true)
+  }
+  const handlePopupClose = () => setPopupOpen(false)
 
-      reviewRef
-        .delete()
-        .then(() => {
-          setMessage('Review was successfully deleted')
+  const handleDelete = () => {
+    handlePopupClose()
+    setDrinkName('')
+    setDrinkCategory('')
+    setPrice('')
+    setRating('')
+    setComment('')
+    setPhotoURL('')
+    setErrMsg('')
+    setSuccessMsg('')
+
+    reviewRef.delete().then(() => {
+      reviewsRef
+        .where('shop', '==', review.shop)
+        .get()
+        .then(querySnapshot => {
+          if (querySnapshot.empty) {
+            review.shop.delete()
+          }
+          setSuccessMsg('Review is successfully deleted.')
+          setReview('')
           setTimeout(() => history.push('/'), 1500)
         })
         .catch(err => {
-          setError('Failed to delete review')
+          setErrMsg('Failed to delete review.')
           console.error('Failed to delete review: ', err)
         })
-    }
+    })
+  }
+
+  const Popup = () => {
+    return (
+      <div className="overlay--trans">
+        <div className="popup">
+          <p className="popup-message">Are you sure to delete this review?</p>
+          <div className="btn-area--half">
+            <button onClick={handlePopupClose} className="btn--secondary btn--half">
+              Cancel
+            </button>
+            <button onClick={handleDelete} className="btn--primary btn--half">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <form className="edit-review" onSubmit={handleUpdate}>
-      <input
-        label="Drink name"
-        required={true}
-        rows={1}
-        value={drinkName}
-        type="text"
-        onChange={handleDrinkNameChange}
-        placeholder="Drink name"
-      />
+    <>
+      {popupOpen ? <Popup /> : null}
 
-      <div className="select-container">
-        <select required={true} value={drinkCategory} onChange={handleDrinkCategoryChange}>
-          <option value="">Select drink category</option>
-          {drinkCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div>
+      <form className="edit-review">
+        <input
+          label="Drink name"
+          required={true}
+          rows={1}
+          value={drinkName}
+          type="text"
+          onChange={handleDrinkNameChange}
+          placeholder="Drink name"
+        />
 
-      <input
-        label="Price"
-        max="99999"
-        required={true}
-        rows={1}
-        value={price}
-        type="number"
-        onChange={handlePriceChange}
-        placeholder="Price"
-      />
+        <div className="select-container">
+          <select required={true} value={drinkCategory} onChange={handleDrinkCategoryChange}>
+            <option value="">Select drink category</option>
+            {drinkCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <ReactStars
-        count={5}
-        value={rating}
-        onChange={handleRatingChange}
-        size={24}
-        activeColor="#de9e48"
-      />
+        <input
+          label="Price"
+          max="99999"
+          required={true}
+          rows={1}
+          value={price}
+          type="number"
+          onChange={handlePriceChange}
+          placeholder="Price"
+        />
 
-      <textarea
-        className="comment"
-        required={true}
-        value={comment}
-        placeholder="Please write a review"
-        name="comment"
-        rows="4"
-        cols="40"
-        onChange={handleCommentChange}
-      />
+        <ReactStars
+          count={5}
+          value={rating}
+          onChange={handleRatingChange}
+          size={24}
+          activeColor="#de9e48"
+        />
 
-      <div className="image_wrapper">
-        <input type="file" onChange={handleImageChange} />
-        <img src={photoURL} className="w-100" alt="drink" />
-      </div>
+        <textarea
+          className="comment"
+          value={comment}
+          placeholder="Please write a review"
+          name="comment"
+          rows="4"
+          cols="40"
+          onChange={handleCommentChange}
+        />
 
-      {message && <Alert variant="success">{message}</Alert>}
-      {error && <Alert variant="danger">{error}</Alert>}
+        <div className="image_wrapper">
+          <input type="file" onChange={handleImageChange} />
+          {photoURL ? <img src={photoURL} className="w-100" alt="drink" /> : null}
+        </div>
 
-      <div className="btn-area--half">
-        <button className="btn--secondary btn--half" type="submit">
-          Update
-        </button>
-        <button className="btn--primary btn--half" label="Delete" onClick={handleDelete}>
-          Delete
-        </button>
-      </div>
-    </form>
+        {successMsg && <Alert variant="success">{successMsg}</Alert>}
+        {errMsg && <Alert variant="danger">{errMsg}</Alert>}
+
+        <div className="btn-area--half">
+          <button className="btn--secondary btn--half" label="Delete" onClick={handlePopupOpen}>
+            Delete
+          </button>
+          <button className="btn--primary btn--half" onClick={handleUpdate}>
+            Update
+          </button>
+        </div>
+      </form>
+    </>
   )
 }

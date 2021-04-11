@@ -12,12 +12,13 @@ const Reviews = () => {
   const { currentUser } = useAuth()
 
   const [reviews, setReviews] = useState([])
+  const [deleteReviewId, setDeleteReviewId] = useState('')
+  const [deleteShopId, setDeleteShopId] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [popupOpen, setPopupOpen] = useState(false)
   const [isOnline, setNetwork] = useState(window.navigator.onLine)
 
-  const updateNetwork = () => {
-    setNetwork(window.navigator.onLine)
-  }
+  const updateNetwork = () => setNetwork(window.navigator.onLine)
 
   useEffect(() => {
     window.addEventListener('offline', updateNetwork)
@@ -26,7 +27,7 @@ const Reviews = () => {
       window.removeEventListener('offline', updateNetwork)
       window.removeEventListener('online', updateNetwork)
     }
-  })
+  }, [])
 
   useEffect(() => {
     reviewsRef
@@ -73,33 +74,58 @@ const Reviews = () => {
       })
   }, [])
 
-  function handleDelete(review) {
-    const promises = []
-    if (window.confirm('Are you Sure to Delete This Review?')) {
-      reviewsRef.get().then(snapshot => {
-        snapshot.forEach(doc => {
-          if (doc.id === review.ref.id) {
-            promises.push(reviewsRef.doc(doc.id).delete())
-            Promise.all(promises).then(() => {
-              const newReviews = reviews.filter(review => review.ref.id !== doc.id)
-              setReviews(newReviews)
-              const shopDocRef = shopsRef.doc(doc.data().shop.id)
-              let query = reviewsRef.where('shop', '==', shopDocRef)
-              query
-                .get()
-                .then(querySnapshot => {
-                  if (querySnapshot.empty) {
-                    shopDocRef.delete()
-                  }
-                })
-                .catch(function (error) {
-                  console.log('Error getting documents: ', error)
-                })
-            })
-          }
-        })
+  const handlePopupOpen = review => {
+    setPopupOpen(true)
+    setDeleteReviewId(review.ref.id)
+    setDeleteShopId(review.shop.id)
+  }
+  const handlePopupClose = () => {
+    setPopupOpen(false)
+    setDeleteReviewId('')
+    setDeleteShopId('')
+  }
+  const handleDelete = (reviewId, shopId) => {
+    handlePopupClose()
+
+    reviewsRef
+      .doc(reviewId)
+      .delete()
+      .then(() => {
+        const newReviews = reviews.filter(review => review.ref.id !== reviewId)
+        setReviews(newReviews)
+
+        const shopRef = shopsRef.doc(shopId)
+        reviewsRef
+          .where('shop', '==', shopRef)
+          .get()
+          .then(querySnapshot => {
+            if (querySnapshot.empty) {
+              shopRef.delete()
+            }
+          })
+          .catch(err => console.log('Error getting documents: ', err))
       })
-    }
+  }
+
+  const Popup = () => {
+    return (
+      <div className="overlay--trans">
+        <div className="popup">
+          <p className="popup-message">Are you sure to delete this review?</p>
+          <div className="btn-area--half">
+            <button onClick={handlePopupClose} className="btn--secondary btn--half">
+              Cancel
+            </button>
+            <button
+              onClick={() => handleDelete(deleteReviewId, deleteShopId)}
+              className="btn--primary btn--half"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   const reviewItems = reviews.map((review, i) => {
@@ -153,7 +179,7 @@ const Reviews = () => {
             <button className="btn--secondary btn--xs btn--link">
               <Link to={'/review/edit/' + review.ref.id}>Edit</Link>
             </button>
-            <button onClick={() => handleDelete(review)} className="btn--tertiary btn--xs">
+            <button onClick={() => handlePopupOpen(review)} className="btn--tertiary btn--xs">
               Delete
             </button>
           </div>
@@ -165,7 +191,12 @@ const Reviews = () => {
   if (isLoading) return <Loading />
 
   if (reviewItems.length) {
-    return <div className="review-wrapper">{reviewItems}</div>
+    return (
+      <>
+        {popupOpen ? <Popup /> : null}
+        <div className="review-wrapper">{reviewItems}</div>
+      </>
+    )
   } else {
     return <div className="reviews-background no-reviews-container">Your Reviews are not found</div>
   }
