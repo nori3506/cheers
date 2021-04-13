@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react'
+import { useAuth } from '../contexts/AuthContext'
 import { useHistory } from 'react-router-dom'
+import { Alert } from 'react-bootstrap'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import ReactStars from 'react-rating-stars-component'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { db, storage } from '../firebase/index'
 import drinkCategories from '../lib/drinkCategories'
 import placeCategories from '../lib/placeCategories'
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import Imageupload from './imageUpload'
-import ReactStars from 'react-rating-stars-component'
-import { Alert } from 'react-bootstrap'
 
+const reviewsRef = db.collection('reviews')
 const shopsRef = db.collection('shops')
+const usersRef = db.collection('users')
 
 export default function CreateReview() {
+  const { currentUser } = useAuth()
+
+  const history = useHistory()
+
   const [drinkName, setDrinkName] = useState('')
-  const [price, setPrice] = useState('')
+  const [price, setPrice] = useState(0)
   const [rating, setRating] = useState(3)
   const [comment, setComment] = useState('')
   const [drinkCategory, setDrinkCategory] = useState('Others')
@@ -28,14 +35,8 @@ export default function CreateReview() {
   const [error, setError] = useState('')
   const [isCreating, setIsCreating] = useState(false)
   const [isOnline, setNetwork] = useState(window.navigator.onLine)
-  const history = useHistory()
 
-  let currentUserUid = firebase.auth().currentUser.uid
-  let fullPath = ''
-
-  const updateNetwork = () => {
-    setNetwork(window.navigator.onLine)
-  }
+  const updateNetwork = () => setNetwork(window.navigator.onLine)
 
   useEffect(() => {
     window.addEventListener('offline', updateNetwork)
@@ -46,65 +47,70 @@ export default function CreateReview() {
     }
   })
 
+  const userRef = usersRef.doc(currentUser.uid)
+  let fullPath = ''
+
   function reviewRegisterForExistShop(existShop) {
-    let userRef = db.collection('users').doc(currentUserUid)
     const randomPhotoId = Math.random().toString(32).substring(2)
+
     if (image !== null) {
       fullPath = 'reviewPhoto/' + randomPhotoId + image.name
-      let storageRef = storage.ref().child(fullPath)
-      storageRef.put(image)
+      storage.ref().child(fullPath).put(image)
     }
 
-    db.collection('reviews').doc().set({
-      drink_name: drinkName,
-      price: price,
-      rating: rating,
-      comment: comment,
-      drink_category: drinkCategory,
-      shop_category: shopCategory,
-      user: userRef,
-      shop: existShop,
-      fullPath: fullPath,
-    }).then(() => {
-      history.push('/shop/' + existShop.id);
-  })
+    reviewsRef
+      .doc()
+      .set({
+        drink_name: drinkName,
+        price,
+        rating,
+        comment,
+        drink_category: drinkCategory,
+        shop_category: shopCategory,
+        user: userRef,
+        shop: existShop,
+        fullPath,
+      })
+      .then(() => history.push('/shop/' + existShop.id))
   }
 
   function reviewRegisterForNewShop(formatGeoCode) {
-    let randomID = Math.random().toString(32).substring(2)
+    const randomShopId = Math.random().toString(32).substring(2)
     const randomPhotoId = Math.random().toString(32).substring(2)
+    const shopRef = shopsRef.doc(randomShopId)
+
     if (image !== null) {
       fullPath = 'reviewPhoto/' + randomPhotoId + image.name
-      let storageRef = storage.ref().child(fullPath)
-      storageRef.put(image)
+      storage.ref().child(fullPath).put(image)
     }
-    db.collection('shops').doc(randomID).set({
+
+    shopRef.set({
       name: shopName,
       address: formattedAddress,
       geocode: formatGeoCode,
       category: shopCategory,
     })
-    let shopRef = db.collection('shops').doc(randomID)
-    let userRef = db.collection('users').doc(currentUserUid)
-    db.collection('reviews').doc().set({
-      drink_name: drinkName,
-      price: price,
-      rating: rating,
-      comment: comment,
-      drink_category: drinkCategory,
-      shop_category: shopCategory,
-      user: userRef,
-      shop: shopRef,
-      fullPath: fullPath,
-    }).then(() => {
-     history.push('/shop/' + randomID);
-  })
 
+    reviewsRef
+      .doc()
+      .set({
+        drink_name: drinkName,
+        price,
+        rating,
+        comment,
+        drink_category: drinkCategory,
+        shop_category: shopCategory,
+        user: userRef,
+        shop: shopRef,
+        fullPath,
+      })
+      .then(() => history.push('/shop/' + randomShopId))
   }
 
   async function handleSubmit(e) {
     e.preventDefault()
     setIsCreating(true)
+
     try {
       let formatGeoCode = new firebase.firestore.GeoPoint(Number(geoCode[0]), Number(geoCode[1]))
       await shopsRef.get().then(querySnapshot => {
@@ -132,31 +138,13 @@ export default function CreateReview() {
     }
   }
 
-  const inputDrinkName = event => {
-    setDrinkName(event.target.value)
-  }
-
-  const inputComment = event => {
-    setComment(event.target.value)
-  }
-
-  const inputDrinkCategory = event => {
-    setDrinkCategory(event.target.value)
-  }
-
-  const inputShopCategory = event => {
-    setShopCategory(event.target.value)
-  }
-
-  const inputPrice = event => {
-    setPrice(parseFloat(event.target.value))
-  }
-
-  const inputRating = event => {
-    setRating(parseInt(event))
-  }
-
-  const handleChange = address => {
+  const handleDrinkNameChange = e => setDrinkName(e.target.value)
+  const handleCommentChange = e => setComment(e.target.value)
+  const handleDrinkCategoryChange = e => setDrinkCategory(e.target.value)
+  const handleShopCategoryChange = e => setShopCategory(e.target.value)
+  const handlePriceChange = e => setPrice(parseFloat(e.target.value))
+  const handleRatingChange = e => setRating(parseInt(e))
+  const handlePlaceChange = address => {
     setShopName(address.split(',', 1)[0])
     setAddress(address)
     geocodeByAddress(address)
@@ -164,34 +152,31 @@ export default function CreateReview() {
         setFormattedAddress(results[0].formatted_address)
         return getLatLng(results[0])
       })
-      .then(latlng => {
-        console.log(latlng)
-        setGeoCode([latlng.lat, latlng.lng])
-      })
-      .catch(error => console.error('Error', error))
+      .then(latlng => setGeoCode([latlng.lat, latlng.lng]))
+      .catch(err => console.error('Error', err))
   }
-
-  const handleImageChange = event => {
-    const { files } = event.target
-    setImage(event.target.files[0])
-    setPreview(window.URL.createObjectURL(files[0]))
+  const handleImageChange = e => {
+    setImage(e.target.files[0])
+    setPreview(window.URL.createObjectURL(e.target.files[0]))
   }
 
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
       <form className="review_form" onSubmit={handleSubmit}>
-        {/* <p>Drink name*</p> */}
         <input
           required
           className="drink_name"
           placeholder="What did you drink?"
           name="drink_name"
-          onChange={inputDrinkName}
+          onChange={handleDrinkNameChange}
         />
 
-        {/* <p>Shop*</p> */}
-        <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleChange}>
+        <PlacesAutocomplete
+          value={address}
+          onChange={handlePlaceChange}
+          onSelect={handlePlaceChange}
+        >
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div className="shop_name">
               <input
@@ -236,7 +221,7 @@ export default function CreateReview() {
         ) : null}
 
         <div className="select-container">
-          <select required className="shop_category" onChange={inputShopCategory}>
+          <select required className="shop_category" onChange={handleShopCategoryChange}>
             <option value="">What is the type of the shop?</option>
             {placeCategories.map(category => (
               <option key={category} value={category}>
@@ -247,9 +232,9 @@ export default function CreateReview() {
         </div>
 
         <Imageupload onChange={handleImageChange} photoURL={preview} />
-        {/* <p>Drink category*</p> */}
+
         <div className="select-container">
-          <select required className="drink_category" onChange={inputDrinkCategory}>
+          <select required className="drink_category" onChange={handleDrinkCategoryChange}>
             <option value="">What is the type of the drink?</option>
             {drinkCategories.map(category => (
               <option key={category} value={category}>
@@ -260,19 +245,20 @@ export default function CreateReview() {
         </div>
 
         <input
+          required
           className="price"
           max="99999"
           min="0"
           step="0.5"
           type="number"
-          onChange={inputPrice}
+          onChange={handlePriceChange}
           placeholder="How much did it cost?"
         />
 
         <ReactStars
           count={5}
           value={rating}
-          onChange={inputRating}
+          onChange={handleRatingChange}
           size={24}
           activeColor="#de9e48"
         />
@@ -283,7 +269,7 @@ export default function CreateReview() {
           name="comment"
           rows="4"
           cols="40"
-          onChange={inputComment}
+          onChange={handleCommentChange}
         />
 
         <button className="btn--primary" type="submit" disabled={isCreating ? true : false}>

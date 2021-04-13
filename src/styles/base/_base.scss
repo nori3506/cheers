@@ -46,18 +46,40 @@ img {
   padding-bottom: $footer-height;
 }
 
-.overlay {
+.overlay,
+.overlay--trans {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
   z-index: 2000;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  background-color: #372c2e;
+  background-color: $main-color;
+}
+
+.overlay--trans {
+  background-color: rgba($main-color, 0.8);
+}
+
+.popup {
+  width: 280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  border: 1px solid $accent-color;
+  border-radius: 5px;
+  background-color: $main-color;
+
+  .popup-message {
+    text-align: center;
+  }
+
+  .btn-area--half {
+    margin: 1rem 0;
+  }
 }
 
 .visually-hidden {
@@ -73,13 +95,13 @@ img {
 .alert-danger {
   color: $alert-color;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .alert-success {
   color: $success-color;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .helper-text--error {
