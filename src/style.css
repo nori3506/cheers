@@ -443,7 +443,7 @@ img {
 .popup {
   width: 280px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0 1rem;
   border: 1px solid #de9e48;
   border-radius: 5px;
   background-color: #372c2e;
@@ -451,6 +451,10 @@ img {
 
 .popup .popup-message {
   text-align: center;
+}
+
+.popup .btn-area--half {
+  margin: 1rem 0;
 }
 
 .visually-hidden {
@@ -465,20 +469,20 @@ img {
 }
 
 .alert-danger {
-  color: #F04444;
+  color: #dd6c6c;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .alert-success {
-  color: #50B861;
+  color: #de9e48;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .helper-text--error {
   margin: -0.5rem 0.5rem 0.5rem;
-  color: #F04444;
+  color: #dd6c6c;
 }
 
 /* 2 Components ============= */

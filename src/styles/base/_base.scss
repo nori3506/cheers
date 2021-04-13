@@ -68,13 +68,17 @@ img {
 .popup {
   width: 280px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0 1rem;
   border: 1px solid $accent-color;
   border-radius: 5px;
   background-color: $main-color;
 
   .popup-message {
     text-align: center;
+  }
+
+  .btn-area--half {
+    margin: 1rem 0;
   }
 }
 
@@ -91,13 +95,13 @@ img {
 .alert-danger {
   color: $alert-color;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .alert-success {
   color: $success-color;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .helper-text--error {
