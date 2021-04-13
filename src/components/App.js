@@ -11,10 +11,16 @@ import CreateReview from './CreateReview'
 import DisplayReview from './DisplayReview'
 import Profile from './Profile'
 import EditReview from './EditReview'
+import {Helmet} from "react-helmet";
+const  googleMapApiKey= `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`
 
 function App() {
   return (
-    <Router>
+    <>
+      <Helmet>
+        <script src={googleMapApiKey}></script>
+      </Helmet>
+      <Router>
       <AuthProvider>
         <Header />
         <Switch>
@@ -27,7 +33,8 @@ function App() {
         </Switch>
         <Footer />
       </AuthProvider>
-    </Router>
+      </Router>
+    </>
   )
 }
 
