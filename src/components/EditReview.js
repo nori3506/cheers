@@ -150,7 +150,7 @@ export default function EditReview() {
     <>
       {popupOpen ? <Popup /> : null}
 
-      <form className="edit-review">
+      <form className="edit-review" onSubmit={handleUpdate}>
         <input
           label="Drink name"
           required={true}
@@ -173,9 +173,9 @@ export default function EditReview() {
         </div>
 
         <input
+          required
           label="Price"
           max="99999"
-          required={true}
           rows={1}
           value={price}
           type="number"
@@ -213,7 +213,7 @@ export default function EditReview() {
           <button className="btn--secondary btn--half" label="Delete" onClick={handlePopupOpen}>
             Delete
           </button>
-          <button className="btn--primary btn--half" onClick={handleUpdate}>
+          <button type="submit" className="btn--primary btn--half">
             Update
           </button>
         </div>
