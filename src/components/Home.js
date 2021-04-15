@@ -65,13 +65,16 @@ export default function Home() {
       .then(snapshots => {
         snapshots[0].forEach(newReview => {
           console.log(newReview.data())
-          if (drink && newReview.data().drink_name.toLowerCase().includes(drink.toLowerCase())) {
+          if (
+            !drink ||
+            (drink && newReview.data().drink_name.toLowerCase().includes(drink.toLowerCase()))
+          ) {
             newReviews.push({ ref: newReview.ref, ...newReview.data() })
           }
         })
         snapshots[1].forEach(newShop => {
           console.log(newShop.data())
-          if (shop && newShop.data().name.toLowerCase().includes(shop.toLowerCase())) {
+          if (!shop || (shop && newShop.data().name.toLowerCase().includes(shop.toLowerCase()))) {
             newShops.push({ ref: newShop.ref, ...newShop.data() })
           }
         })
