@@ -23,7 +23,7 @@ const Footer = () => {
         .ref(currentUser.photoURL)
         ?.getDownloadURL()
         .then(url => setPhotoURL(url))
-  }, [])
+  }, [currentUser])
 
   const handleMenuToggle = () => setMenuOpen(prev => !prev)
   const handleMenuClose = () => setMenuOpen(false)
