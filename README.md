@@ -1,5 +1,7 @@
 # Cheers!
 
+![app-icon-144x144](https://user-images.githubusercontent.com/43653589/114967506-8c956b00-9eaf-11eb-83c5-5d696b39fa1f.png)
+
 ## Problem to tackle
 Have you ever hesitated to order cocktails you have never tried in a bar or restaurant or have you ever wondered whether you would like the taste of a bottle of drinks you never tried before?  It’s not easy  to guess the drink's taste from their name.
 And also, it’s too expensive to just try.
@@ -20,6 +22,7 @@ Cheers! have 3 main features.
 ## Tech/framework
  - React.js
  - Firebase
+ - PWA
 
 ## API Reference
 1. Google Maps API https://developers.google.com/mapsMaps 
