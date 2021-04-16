@@ -10,8 +10,20 @@ Cheers! is the platform to share reviews of alcohol.
 ## Why Cheers?
 There are existing review apps such as yelp, google Maps, and trip advisor, but most of their users focusing on food menus and it is difficult to get drink information.
 
+## Features
+Cheers! have 3 main features. 
+
+1. Search for drinks you are looking for. You can search by drink name, drink category, shop name, Shop category, and price range.
+2. Check reviews of drinks.
+3. Post your own reviews.
 
 ## Tech/framework
  - React.js
  - Firebase
 
+## API Reference
+1. Google Maps API https://developers.google.com/mapsMaps 
+2. Places Autocomplete JavaScript API https://developers.google.com/maps/documentation/javascript/overview
+
+## Images
+![frontpage](https://user-images.githubusercontent.com/43653589/114967130-d598ef80-9eae-11eb-9611-c5c10197c69e.png)
