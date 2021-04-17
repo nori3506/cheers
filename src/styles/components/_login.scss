@@ -87,3 +87,16 @@
     }
   }
 }
+@media only screen and (min-width: $tablet-breakpoint) {
+  .signup-wrapper,
+  .login-wrapper {
+    margin: 0 auto;
+    max-width: 500px;
+    #signup,
+    #login {
+      img {
+        width: 220px;
+      }
+    }
+  }
+}
