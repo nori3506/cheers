@@ -19,11 +19,11 @@ export default function Home() {
 
   const [modalOpen, setModalOpen] = useState(false)
   const [drink, setDrink] = useState('')
-  const [place, setPlace] = useState('')
-  const [priceMax, setPriceMax] = useState(undefined)
+  const [shop, setShop] = useState('')
+  const [priceMax, setPriceMax] = useState(99999)
   const [priceMin, setPriceMin] = useState(0)
   const [drinkCategory, setDrinkCategory] = useState('')
-  const [placeCategory, setPlaceCategory] = useState('')
+  const [shopCategory, setShopCategory] = useState('')
   const [shops, setShops] = useState([])
   const [reviews, setReviews] = useState([])
   const [disabled, setDisabled] = useState(true)
@@ -31,10 +31,10 @@ export default function Home() {
 
   const handleModalOpen = () => setModalOpen(true)
   const handleClose = () => setModalOpen(false)
-  const handleDrinkChange = e => setDrink(e.target.value.toLowerCase())
+  const handleDrinkChange = e => setDrink(e.target.value)
   const handleDrinkCategoryChange = e => setDrinkCategory(e.target.value)
-  const handlePlaceChange = e => setPlace(e.target.value.toLowerCase())
-  const handlePlaceCategoryChange = e => setPlaceCategory(e.target.value)
+  const handleShopChange = e => setShop(e.target.value)
+  const handleShopCategoryChange = e => setShopCategory(e.target.value)
   const handlePriceMaxChange = e => setPriceMax(Number(e.target.value))
   const handlePriceMinChange = e => setPriceMin(Number(e.target.value))
   const handleSearch = e => {
@@ -45,39 +45,39 @@ export default function Home() {
     setReviews([])
     setShops([])
 
-    let reviewsQuery
-    if (drinkCategory && priceMax) {
-      reviewsQuery = reviewsRef
-        .where('drink_category', '==', drinkCategory)
-        .where('price', '<=', priceMax)
-        .where('price', '>=', priceMin)
-    } else if (drinkCategory) {
-      reviewsQuery = reviewsRef
-        .where('drink_category', '==', drinkCategory)
-        .where('price', '>=', priceMin)
-      console.log(priceMin)
-    } else if (priceMax) {
-      reviewsQuery = reviewsRef.where('price', '<=', priceMax).where('price', '>=', priceMin)
-    } else {
-      reviewsQuery = reviewsRef.where('price', '>=', priceMin)
+    let reviewsQuery = reviewsRef
+    if (drinkCategory) {
+      reviewsQuery = reviewsQuery.where('drink_category', '==', drinkCategory)
     }
+    if (priceMax) {
+      reviewsQuery = reviewsQuery.where('price', '<=', priceMax)
+    }
+    reviewsQuery = reviewsQuery.where('price', '>=', priceMin)
 
-    let shopsQuery
-    if (placeCategory) {
-      shopsQuery = shopsRef.where('category', '==', placeCategory)
-      console.log(shopsQuery, placeCategory)
-    } else {
-      shopsQuery = shopsRef
+    let shopsQuery = shopsRef
+    if (shopCategory) {
+      shopsQuery = shopsQuery.where('category', '==', shopCategory)
     }
 
     let newReviews = []
     let newShops = []
     Promise.all([reviewsQuery.get(), shopsQuery.get()])
       .then(snapshots => {
-        snapshots[0].forEach(newReview =>
-          newReviews.push({ ref: newReview.ref, ...newReview.data() })
-        )
-        snapshots[1].forEach(newShop => newShops.push({ ref: newShop.ref, ...newShop.data() }))
+        snapshots[0].forEach(newReview => {
+          console.log(newReview.data())
+          if (
+            !drink ||
+            (drink && newReview.data().drink_name.toLowerCase().includes(drink.toLowerCase()))
+          ) {
+            newReviews.push({ ref: newReview.ref, ...newReview.data() })
+          }
+        })
+        snapshots[1].forEach(newShop => {
+          console.log(newShop.data())
+          if (!shop || (shop && newShop.data().name.toLowerCase().includes(shop.toLowerCase()))) {
+            newShops.push({ ref: newShop.ref, ...newShop.data() })
+          }
+        })
 
         const reviewsMatchShop = newReviews.filter(newReview => {
           let match = false
@@ -191,12 +191,12 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Place Name"
-                      value={place}
-                      onChange={handlePlaceChange}
+                      value={shop}
+                      onChange={handleShopChange}
                     />
 
                     <div className="select-container">
-                      <select value={placeCategory} onChange={handlePlaceCategoryChange}>
+                      <select value={shopCategory} onChange={handleShopCategoryChange}>
                         <option value="">Select Place Category</option>
                         {placeCategories.map(category => (
                           <option key={category} value={category}>
@@ -221,12 +221,12 @@ export default function Home() {
                     />
 
                     <div className="btn-area--half">
-                      <button className="btn--secondary btn--half" type="submit" disabled={disabled}>
-                        Search
-                      </button>
 
-                      <button className="btn--primary btn--half" onClick={handleClose}>
+                      <button className="btn--secondary btn--half" onClick={handleClose}>
                         Cancel
+                      </button>
+                      <button className="btn--primary btn--half" type="submit" disabled={disabled}>
+                        Search
                       </button>
                     </div>
                   </form>

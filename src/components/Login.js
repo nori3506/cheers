@@ -5,7 +5,6 @@ import { Link, useHistory } from 'react-router-dom'
 import logo from '../assets/icons/logo.svg'
 
 export default function Login() {
-  const nameRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
@@ -29,22 +28,34 @@ export default function Login() {
 
   return (
     <>
-      <div class="login-wrapper">
+      <div className="login-wrapper">
         <Card>
           <Card.Body id="login">
             <h2 className="text-center mb-4 visually-hidden">Log In</h2>
             <div className="logo-wrapper">
-              <img src={logo} className="logo-img" />
+              <img src={logo} className="logo-img" alt='logo-img'/>
             </div>
             <Form onSubmit={hanleSubmit}>
-            {error && <Alert variant="danger">{error}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
               <Form.Group id="email">
-              <Form.Label className="visually-hidden">Email</Form.Label>
-                <Form.Control placeholder="Email"  type="email" ref={emailRef} required className="input--lg" />
+                <Form.Label className="visually-hidden">Email</Form.Label>
+                <Form.Control
+                  placeholder="Email"
+                  type="email"
+                  ref={emailRef}
+                  required
+                  className="input--lg"
+                />
               </Form.Group>
               <Form.Group id="password">
                 <Form.Label className="visually-hidden">Password</Form.Label>
-                <Form.Control placeholder="Password" type="password" ref={passwordRef} required className="input--lg" />
+                <Form.Control
+                  placeholder="Password"
+                  type="password"
+                  ref={passwordRef}
+                  required
+                  className="input--lg"
+                />
               </Form.Group>
               <button type="submit" disabled={loading} className="btn--primary">
                 Login
@@ -54,10 +65,11 @@ export default function Login() {
         </Card>
         <div className="w-100 text-center mt-2">
           <p>New to use?</p>
-          <p id="link-to-signup"><Link to="/signup">Sign Up</Link></p>
+          <p id="link-to-signup">
+            <Link to="/signup">Sign Up</Link>
+          </p>
         </div>
       </div>
-
     </>
   )
 }

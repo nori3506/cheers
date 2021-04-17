@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React from 'react'
 
 export default function Imageupload(props) {
   return (
@@ -7,8 +7,8 @@ export default function Imageupload(props) {
       <div className="image_wrapper">
         <input className="drink_image" type={'file'} onChange={props.onChange} />
         {(() => {
-            if (!props.photoURL == "") {
-              return <img src={props.photoURL} className="w-100" />
+            if (!props.photoURL === "") {
+              return <img src={props.photoURL} alt='drinkimage' className="w-100" />
             }
         })()}
       </div>

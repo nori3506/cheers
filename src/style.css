@@ -401,6 +401,8 @@ img {
 
 .wrapper {
   padding: 0 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .wrapper--narrow {
@@ -408,20 +410,19 @@ img {
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
   padding-top: 50px;
   padding-bottom: 84px;
 }
 
-.overlay {
+.overlay,
+.overlay--trans {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
   z-index: 2000;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -433,6 +434,27 @@ img {
       -ms-flex-pack: center;
           justify-content: center;
   background-color: #372c2e;
+}
+
+.overlay--trans {
+  background-color: rgba(55, 44, 46, 0.8);
+}
+
+.popup {
+  width: 280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  border: 1px solid #de9e48;
+  border-radius: 5px;
+  background-color: #372c2e;
+}
+
+.popup .popup-message {
+  text-align: center;
+}
+
+.popup .btn-area--half {
+  margin: 1rem 0;
 }
 
 .visually-hidden {
@@ -447,20 +469,20 @@ img {
 }
 
 .alert-danger {
-  color: #F04444;
+  color: #dd6c6c;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .alert-success {
-  color: #50B861;
+  color: #de9e48;
   text-align: center;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .helper-text--error {
   margin: -0.5rem 0.5rem 0.5rem;
-  color: #F04444;
+  color: #dd6c6c;
 }
 
 /* 2 Components ============= */
@@ -534,7 +556,7 @@ img {
 
 .login-wrapper form .btn--primary {
   background-color: #fdf9df;
-  color: #372C2E;
+  color: #372c2e;
   border-color: #de9e48;
 }
 
@@ -572,10 +594,7 @@ img {
 }
 
 .w-100.text-center.mt-2 p:nth-of-type(2) a {
-  color: white;
-  text-decoration: underline;
-  -webkit-text-decoration-color: #de9e48;
-          text-decoration-color: #de9e48;
+  color: #de9e48;
 }
 
 /* 2.2. Signup ============== */
@@ -1032,34 +1051,35 @@ footer .icon-btn--profile-menu .profile-menu-open .icon-btn--logout {
   margin: 0;
 }
 
-.review-wrapper .reviews-area .review-img {
+.review-wrapper .reviews-area .review-img-container {
   border-radius: 50%;
-  border: 2px solid #de9e48 !important;
+  border: 2px solid #de9e48;
   width: 50px;
   height: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  overflow: hidden;
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1 / span 1;
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / span 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  position: relative;
 }
 
-.review-wrapper .reviews-area .review-img img {
-  padding-top: 4px;
-  width: 32px;
-  height: 32px;
+.review-wrapper .reviews-area .review-img-container .review-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  -webkit-transform: translate(-50%, -42%);
+          transform: translate(-50%, -42%);
+}
+
+.review-wrapper .reviews-area .review-img-container .review-img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .review-wrapper .reviews-area .layout-grid {
@@ -1449,7 +1469,7 @@ footer .icon-btn--profile-menu .profile-menu-open .icon-btn--logout {
   background-color: transparent;
 }
 
-/* 2.10. Loading ============= */
+/* 2.10. Loading ============ */
 .spinner-grid-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;

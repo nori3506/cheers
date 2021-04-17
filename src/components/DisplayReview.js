@@ -5,29 +5,43 @@ import { db, storage } from '../firebase/index'
 import Loading from './Loading'
 import defDrink from '../assets/icons/def-drink.svg'
 
+const reviewsRef = db.collection('reviews')
+const usersRef = db.collection('users')
+
 const DisplayReview = () => {
   const { currentUser } = useAuth()
 
   const [reviews, setReviews] = useState([])
-  const [shopInfo, setShopInfo] = useState([])
+  const [shop, setShop] = useState([])
+  const [deleteReviewId, setDeleteReviewId] = useState('')
+  const [deleteShopId, setDeleteShopId] = useState('')
+  const [popupOpen, setPopupOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isShallowLoading, setIsShallowLoading] = useState(true)
+  const [isOnline, setNetwork] = useState(window.navigator.onLine)
 
   const pathName = window.location.pathname
   const fbPathName = pathName.replace('/shop', 'shops')
   const shopRef = db.doc(fbPathName)
-  const usersRef = db.collection('users')
-  const reviewsRef = db.collection('reviews')
+
+  const updateNetwork = () => setNetwork(window.navigator.onLine)
+
+  useEffect(() => {
+    window.addEventListener('offline', updateNetwork)
+    window.addEventListener('online', updateNetwork)
+    return () => {
+      window.removeEventListener('offline', updateNetwork)
+      window.removeEventListener('online', updateNetwork)
+    }
+  })
 
   useEffect(() => {
     shopRef
       .get()
       .then(shopDoc => {
         if (shopDoc.exists) {
-          const shop = shopDoc.data()
-          setShopInfo(shop)
+          setShop(shopDoc.data())
           setIsLoading(false)
-
           reviewsRef
             .where('shop', '==', shopRef)
             .get()
@@ -41,7 +55,13 @@ const DisplayReview = () => {
                   .then(snapshot => {
                     const user = { id: snapshot.id, ...snapshot.data() }
 
-                    if (newReview.fullPath) {
+                    if (!isOnline || !newReview.fullPath) {
+                      setReviews(reviews => [
+                        ...reviews,
+                        { ...newReview, shop, user, img: defDrink },
+                      ])
+                      setIsShallowLoading(false)
+                    } else {
                       storage
                         .ref(newReview.fullPath)
                         .getDownloadURL()
@@ -56,29 +76,16 @@ const DisplayReview = () => {
                           console.log('Error downloading file:', err)
                           setReviews(reviews => [
                             ...reviews,
-                            { ...newReview, shop, user, img: 'doesNotExist' },
+                            { ...newReview, shop, user, img: defDrink },
                           ])
                           setIsShallowLoading(false)
                         })
-                    } else {
-                      setReviews(reviews => [
-                        ...reviews,
-                        { ...newReview, shop, user, img: 'doesNotExist' },
-                      ])
-                      setIsShallowLoading(false)
                     }
                   })
                   .catch(err => {
                     console.log('Error getting document:', err)
-                    setReviews(reviews => [
-                      ...reviews,
-                      {
-                        ...newReview,
-                        shop,
-                        user: { id: undefined, name: 'unknow user' },
-                        img: 'doesNotExist',
-                      },
-                    ])
+                    const user = { id: undefined, name: 'unknow user' }
+                    setReviews(reviews => [...reviews, { ...newReview, shop, user, img: defDrink }])
                     setIsShallowLoading(false)
                   })
               })
@@ -98,51 +105,75 @@ const DisplayReview = () => {
       })
   }, [])
 
-  function handleDelete(review) {
-    const promises = []
-    if (window.confirm('Are you Sure to Delete This Review?')) {
-      reviewsRef.get().then(snapshot => {
-        snapshot.forEach(doc => {
-          if (doc.id === review.ref.id) {
-            promises.push(reviewsRef.doc(doc.id).delete())
-            Promise.all(promises).then(() => {
-              const newReviews = reviews.filter(review => review.ref.id !== doc.id)
-              setReviews(newReviews)
-              const shopDocRef = db.collection('shops').doc(doc.data().shop.id)
-              let query = reviewsRef.where('shop', '==', shopDocRef)
-              query
-                .get()
-                .then(querySnapshot => {
-                  if (querySnapshot.empty) {
-                    shopDocRef.delete()
-                  }
-                })
-                .catch(function (error) {
-                  console.log('Error getting documents: ', error)
-                })
-            })
-          }
-        })
+  const handlePopupOpen = review => {
+    setPopupOpen(true)
+    setDeleteReviewId(review.ref.id)
+    setDeleteShopId(review.shop.id)
+  }
+  const handlePopupClose = () => {
+    setPopupOpen(false)
+    setDeleteReviewId('')
+    setDeleteShopId('')
+  }
+  const handleDelete = (reviewId, shopId) => {
+    handlePopupClose()
+
+    reviewsRef
+      .doc(reviewId)
+      .delete()
+      .then(() => {
+        const newReviews = reviews.filter(review => review.ref.id !== reviewId)
+        setReviews(newReviews)
+
+        reviewsRef
+          .where('shop', '==', shopRef)
+          .get()
+          .then(querySnapshot => {
+            if (querySnapshot.empty) {
+              shopRef.delete()
+            }
+          })
+          .catch(err => console.log('Error getting documents: ', err))
       })
-    }
+  }
+
+  const Popup = () => {
+    return (
+      <div className="overlay--trans">
+        <div className="popup">
+          <p className="popup-message">Are you sure to delete this review?</p>
+          <div className="btn-area--half">
+            <button onClick={handlePopupClose} className="btn--secondary btn--half">
+              Cancel
+            </button>
+            <button
+              onClick={() => handleDelete(deleteReviewId, deleteShopId)}
+              className="btn--primary btn--half"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   const reviewItems = reviews.map(review => {
     return (
       <div className="reviews-background reviews-area" key={review.ref.id}>
-        {review.img !== 'doesNotExist' && review.img !== 'doesExist' ? (
-          <img src={review.img} className="review-img" alt="drink" />
-        ) : (
-          <div className="review-img">
-            <img src={defDrink} alt="drink icon" />
-          </div>
-        )}
+        <div className="review-img-container">
+          <img
+            src={review.img}
+            className={review.img === defDrink ? 'review-icon' : 'review-img'}
+            alt="drink"
+          />
+        </div>
 
         <div className="layout-grid">
           <h2 className="u-text-small">{review.drink_name}</h2>
           <p className="category">{review.drink_category}</p>
           <p className="price">{review.price} CAD</p>
-          {() => {
+          {(() => {
             const rating = review.rating
             const noRating = 5 - rating
             let star = ''
@@ -161,7 +192,7 @@ const DisplayReview = () => {
                 {hollowStars}
               </p>
             )
-          }}
+          })()}
         </div>
 
         <p className="comment">
@@ -178,7 +209,7 @@ const DisplayReview = () => {
                 <button className="btn--secondary btn--xs btn--link">
                   <Link to={'/review/edit/' + review.ref.id}>Edit</Link>
                 </button>
-                <button onClick={() => handleDelete(review)} className="btn--tertiary btn--xs">
+                <button onClick={() => handlePopupOpen(review)} className="btn--tertiary btn--xs">
                   Delete
                 </button>
               </>
@@ -192,14 +223,18 @@ const DisplayReview = () => {
   if (isLoading) return <Loading />
 
   return (
-    <div className="page-location">
-      <div className="shop-basic-info">
-        <h2>{shopInfo.name}</h2>
-        <p>{shopInfo.category}</p>
-        <p>{shopInfo.address}</p>
+    <>
+      {popupOpen ? <Popup /> : null}
+
+      <div className="page-location">
+        <div className="shop-basic-info">
+          <h2>{shop.name}</h2>
+          <p>{shop.category}</p>
+          <p>{shop.address}</p>
+        </div>
+        {isShallowLoading ? <Loading /> : <div className="review-wrapper">{reviewItems}</div>}
       </div>
-      {isShallowLoading ? <Loading /> : <div className="review-wrapper">{reviewItems}</div>}
-    </div>
+    </>
   )
 }
 
