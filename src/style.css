@@ -597,6 +597,20 @@ img {
   color: #de9e48;
 }
 
+@media only screen and (min-width: 600px) {
+  .signup-wrapper,
+  .login-wrapper {
+    margin: 0 auto;
+    max-width: 500px;
+  }
+  .signup-wrapper #signup img,
+  .signup-wrapper #login img,
+  .login-wrapper #signup img,
+  .login-wrapper #login img {
+    width: 220px;
+  }
+}
+
 /* 2.2. Signup ============== */
 .signup-wrapper {
   padding-top: 2rem;
