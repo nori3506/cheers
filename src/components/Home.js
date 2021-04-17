@@ -221,6 +221,7 @@ export default function Home() {
                     />
 
                     <div className="btn-area--half">
+
                       <button className="btn--secondary btn--half" onClick={handleClose}>
                         Cancel
                       </button>

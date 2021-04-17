@@ -1171,9 +1171,8 @@ footer .icon-btn--profile-menu .profile-menu-open .icon-btn--logout {
   gap: 0.3rem;
 }
 
-.review-wrapper .reviews-area .bottom-row .delete-edit-wrapper button:nth-of-type(2) {
-  background-color: #372c2e;
-  color: white;
+.review-wrapper .reviews-area .bottom-row .delete-edit-wrapper .btn--tertiary {
+  border: 2px solid #de9e48;
 }
 
 .review-wrapper .reviews-area:last-of-type,
